@@ -1,6 +1,11 @@
 itemGroup.tabSpellBooks=符咒书
 
 item.spell_book.name=符咒书
+item.apple_mana.name=水晶苹果
+item.mana_crystal.name=魔力水晶
+
+tile.mana_crystal_ore.name=魔力水晶源
+tile.mana_crystal_block.name=魔力水晶块
 
 spell.blazefire=烈焰火球
 spell.ghastfire=恶魂火球
