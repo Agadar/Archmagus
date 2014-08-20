@@ -1,10 +1,9 @@
-package com.agadar.archmagus.client;
+package com.agadar.archmagus;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.agadar.archmagus.CommonProxy;
 import com.agadar.archmagus.entity.EntityRisenSkeleton;
 import com.agadar.archmagus.entity.EntityRisenWitherSkeleton;
 import com.agadar.archmagus.entity.EntityRisenZombie;
@@ -27,6 +26,7 @@ import com.agadar.archmagus.render.RenderSummonedWolf;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
+/** The proxy that is used client-side. */
 public class ClientProxy extends CommonProxy 
 {
 	@Override

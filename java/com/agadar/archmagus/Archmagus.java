@@ -30,7 +30,7 @@ public class Archmagus
 	public static final String MODID = "archmagus";
 	public static final String VERSION = "0.6.0";
 	public static final String NAME = "Archmagus";
-	public static final String CLIENTSIDE = "com.agadar.archmagus.client.ClientProxy";
+	public static final String CLIENTSIDE = "com.agadar.archmagus.ClientProxy";
 	public static final String SERVERSIDE = "com.agadar.archmagus.CommonProxy";
 	
 	/** The message channel for this mod. */

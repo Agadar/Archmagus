@@ -78,18 +78,9 @@ public class ItemPotionBase extends ItemPotion
 	{
 		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
-		effects.add(new PotionEffect(ModPotions.manaRegen.id, (int)(900 * getDurationModifier(splash, amplification, extended)), amplification));		
+		effects.add(new PotionEffect(ModPotions.manaRegen.id, (int)(900 * BrewingRecipes.brewing().getDurationModifier(splash, amplification, extended)), amplification));		
 		BrewingRecipes.brewing().setEffects(itemStack, effects);
 		return itemStack;
-	}
-	
-	/** Calculates a duration modifier for potion effects depending on the given parameters. */
-	private static float getDurationModifier(boolean splash, int amplification, boolean extended)
-	{
-		float modifier = splash ? 0.75F : 1.0F;		
-		for (int i = 0; i < amplification; i++)
-			modifier /= 2;
-		return extended ? modifier * 8 / 3 : modifier;
 	}
 	
 	@Override
@@ -140,5 +131,12 @@ public class ItemPotionBase extends ItemPotion
         this.bottleSplash = par1IconRegister.registerIcon(Archmagus.MODID + ":bottle_splash");
         this.manaOverlayIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":mana_potion_overlay");
         this.manaRegenOverlayIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":mana_regen_potion_overlay");
+    }
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack p_77636_1_)
+    {
+        return false;
     }
 }
