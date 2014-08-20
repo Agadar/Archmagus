@@ -1,6 +1,11 @@
 itemGroup.tabSpellBooks=符咒书
 
 item.spell_book.name=符咒书
+item.apple_mana.name=水晶苹果
+item.mana_crystal.name=魔力水晶
+
+tile.mana_crystal_ore.name=魔力水晶源
+tile.mana_crystal_block.name=魔力水晶块
 
 spell.blazefire=烈焰火球
 spell.ghastfire=恶魂火球
@@ -54,3 +59,7 @@ potion.shield.frost=霜之护盾
 potion.feared=恐惧
 potion.immunity.projectile=折矢
 potion.immunity.knockback=磐石
+potion.mana.instant=瞬间魔力
+potion.mana.instant.postfix=瞬间魔力
+potion.mana.regen=魔力涌动
+potion.mana.regen.postfix=魔力涌动
