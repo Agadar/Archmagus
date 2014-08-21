@@ -18,7 +18,7 @@ public class SpellSummon extends Spell
 	/** The constructor of the entity this spell summons. 
 	 *  It is assumed the only parameter is a World reference. */
 	@SuppressWarnings("rawtypes")
-	private final Constructor entityConstr;
+	protected final Constructor entityConstr;
 	
 	@SuppressWarnings({ "rawtypes" })
 	public SpellSummon(int par1, String par2Name, Class par3EntityClass)

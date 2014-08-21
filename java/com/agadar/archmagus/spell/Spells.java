@@ -5,6 +5,7 @@ import com.agadar.archmagus.entity.EntityRisenWitherSkeleton;
 import com.agadar.archmagus.entity.EntityRisenZombie;
 import com.agadar.archmagus.entity.EntityRisenZombiePigman;
 import com.agadar.archmagus.entity.EntitySummonedCaveSpider;
+import com.agadar.archmagus.entity.EntitySummonedHorse;
 import com.agadar.archmagus.entity.EntitySummonedSpider;
 import com.agadar.archmagus.entity.EntitySummonedWitch;
 import com.agadar.archmagus.entity.EntitySummonedWolf;
@@ -16,6 +17,7 @@ import com.agadar.archmagus.spell.shield.SpellFrostShield;
 import com.agadar.archmagus.spell.shield.SpellStormShield;
 import com.agadar.archmagus.spell.shield.SpellWaterShield;
 import com.agadar.archmagus.spell.summon.SpellSummon;
+import com.agadar.archmagus.spell.summon.SpellSummonMount;
 import com.agadar.archmagus.spell.targeted.SpellBlazeFire;
 import com.agadar.archmagus.spell.targeted.SpellGhastFire;
 import com.agadar.archmagus.spell.targeted.SpellTeleport;
@@ -47,6 +49,7 @@ public class Spells
 	public final static Spell frostShield = new SpellFrostShield(18);
 	public final static Spell blazestorm = new SpellBlazeStorm(19);
 	public final static Spell lightningstorm = new SpellLightningStorm(20);
+	public final static Spell raise_zombie_horse = new SpellSummonMount(21, "zombie_horse", EntitySummonedHorse.class);
 	//public final static Spell polymorph = new SpellPolymorph(21);
 	
 	/** Registers a new spell at the given id. */

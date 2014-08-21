@@ -201,13 +201,14 @@ public class ItemSpellBook extends Item
         IIcon teleportIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":teleport_book");
         IIcon witherIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":wither_book");
         IIcon skeletonIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":skeleton_book");
+        IIcon zombieIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":zombie_book");
         icons[Spells.blazefire.effectId] = blazefireIcon;
         icons[Spells.ghastfire.effectId] = skeletonIcon;
         icons[Spells.witherblast.effectId] = witherIcon;
         icons[Spells.summon_wolf.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":wolf_book");
         icons[Spells.raise_skeleton.effectId] = skeletonIcon;
         icons[Spells.raise_wither_skeleton.effectId] = witherIcon;
-        icons[Spells.raise_zombie.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":zombie_book");
+        icons[Spells.raise_zombie.effectId] = zombieIcon;
         icons[Spells.raise_zombie_pigman.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":zombie_pigman_book");
         icons[Spells.summon_witch.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":witch_book");
         icons[Spells.summon_spider.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":spider_book");
@@ -221,5 +222,6 @@ public class ItemSpellBook extends Item
         icons[Spells.frostShield.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":frost_shield_book");
         icons[Spells.blazestorm.effectId] = blazefireIcon;
         icons[Spells.lightningstorm.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":lightning_book");      
+        icons[Spells.raise_zombie_horse.effectId] = zombieIcon;
     }
 }

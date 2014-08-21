@@ -83,7 +83,11 @@ public abstract class Spell
     public String getTranslatedName(int par1)
     {
         String s = StatCollector.translateToLocal(this.getName());
-        return s + " " + StatCollector.translateToLocal("spell.level." + par1);
+        
+        if (this.getMinLevel() != this.getMaxLevel())
+        	return s + " " + StatCollector.translateToLocal("spell.level." + par1);
+        
+        return s;
     }
     
     /** Ensures that a given level lies between this spell's minimum and maximum levels. */
