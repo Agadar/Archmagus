@@ -2,6 +2,8 @@ package com.agadar.archmagus.misc;
 
 import org.lwjgl.opengl.GL11;
 
+import com.agadar.archmagus.potion.ModPotions;
+
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
@@ -38,18 +40,23 @@ public class GuiManaBar extends Gui
 		
 		mc.getTextureManager().bindTexture(modIcons);
 		GL11.glEnable(GL11.GL_BLEND);
-		int width = event.resolution.getScaledWidth();
-        int height = event.resolution.getScaledHeight();
-		int left = width / 2 + 91;
-        int top = height - GuiIngameForge.right_height;
+		int left = event.resolution.getScaledWidth() / 2 + 91;
+        int top = event.resolution.getScaledHeight() - GuiIngameForge.right_height;
         int currentMana = props.getCurrentMana();
-        int maxMana = props.getMaxMana() / 2;
+        int maxMana = props.getMaxMana() / 2;        
+        int regen = -1;
+        
+        if (mc.thePlayer.isPotionActive(ModPotions.manaRegen))
+        	regen = mc.ingameGUI.getUpdateCounter() % 25;
         
         for (int i = 0; i < maxMana; ++i)
         {
             int idx = i * 2 + 1;
             int x = left - i * 8 - 9;
             int y = top;
+            
+        	if (i == regen)
+        		y -= 2;
 
             this.drawTexturedModalRect(x, y, 0, 0, 9, 9);
             
