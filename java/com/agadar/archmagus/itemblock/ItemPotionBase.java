@@ -24,9 +24,7 @@ public class ItemPotionBase extends ItemPotion
 	@SideOnly(Side.CLIENT)
 	private IIcon bottleSplash;
 	@SideOnly(Side.CLIENT)
-    private IIcon manaOverlayIcon;
-	@SideOnly(Side.CLIENT)
-	private IIcon manaRegenOverlayIcon;
+	private IIcon overlayIcon;
     
 	public ItemPotionBase()
 	{
@@ -66,7 +64,7 @@ public class ItemPotionBase extends ItemPotion
 	/** Returns an item stack of a Mana potion. */
 	public static ItemStack getManaPotionStack(boolean splash, int amplification)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
+		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16482 : 8194);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
 		effects.add(new PotionEffect(ModPotions.mana.id, 1, amplification));		
 		BrewingRecipes.brewing().setEffects(itemStack, effects);
@@ -76,7 +74,7 @@ public class ItemPotionBase extends ItemPotion
 	/** Returns an item stack of a Mana Regeneration potion. */
 	public static ItemStack getManaRegenPotionStack(boolean splash, int amplification, boolean extended)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
+		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16398 : 8206);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
 		effects.add(new PotionEffect(ModPotions.manaRegen.id, (int)(900 * BrewingRecipes.brewing().getDurationModifier(splash, amplification, extended)), amplification));		
 		BrewingRecipes.brewing().setEffects(itemStack, effects);
@@ -92,36 +90,10 @@ public class ItemPotionBase extends ItemPotion
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
+    public IIcon getIconFromDamageForRenderPass(int p_77618_1_, int p_77618_2_)
     {
-        return 16777215;
+        return p_77618_2_ == 0 ? this.overlayIcon : super.getIconFromDamageForRenderPass(p_77618_1_, p_77618_2_);
     }
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public IIcon getIcon(ItemStack par1ItemStack, int par2Pass)
-	{
-		if (par2Pass == 0)
-		{
-			List<PotionEffect> effects = this.getEffects(par1ItemStack);
-			
-			if (effects.size() > 0)
-			{
-				int potionId = effects.get(0).getPotionID();
-				
-				if (potionId == ModPotions.mana.id)
-				{
-					return this.manaOverlayIcon;
-				}
-				else if (potionId == ModPotions.manaRegen.id)
-				{
-					return this.manaRegenOverlayIcon;
-				}
-			}
-		}
-		
-		return super.getIcon(par1ItemStack, par2Pass);
-	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -129,14 +101,13 @@ public class ItemPotionBase extends ItemPotion
     {
 		this.bottleDrinkable = par1IconRegister.registerIcon(Archmagus.MODID + ":bottle_drinkable");
         this.bottleSplash = par1IconRegister.registerIcon(Archmagus.MODID + ":bottle_splash");
-        this.manaOverlayIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":mana_potion_overlay");
-        this.manaRegenOverlayIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":mana_regen_potion_overlay");
+        this.overlayIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":potion_overlay");
     }
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack p_77636_1_)
+    public boolean hasEffect(ItemStack par1ItemStack, int pass)
     {
-        return false;
+		return false;
     }
 }

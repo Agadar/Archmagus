@@ -43,8 +43,8 @@ public class ModPotions
 		feared = new PotionBase(getUniquePotionId(), true, 4393481).setIconIndex(6, 0).setPotionName("potion.feared");
 		projectileImmunity = new PotionBase(getUniquePotionId(), false, 0).setIconIndex(7, 0).setPotionName("potion.immunity.projectile");
 		knockbackImmunity = new PotionBase(getUniquePotionId(), false, 0).setIconIndex(0, 1).setPotionName("potion.immunity.knockback");
-		mana = new PotionBase(getUniquePotionId(), false, 5926017).setIconIndex(1, 1).setPotionName("potion.mana.instant");
-		manaRegen = new PotionBase(getUniquePotionId(), false, 5926017).setIconIndex(1, 1).setPotionName("potion.mana.regen");
+		mana = new PotionBase(getUniquePotionId(), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.instant");
+		manaRegen = new PotionBase(getUniquePotionId(), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.regen");
 	}
 	
 	/** Returns the next unique Potion Id. */
