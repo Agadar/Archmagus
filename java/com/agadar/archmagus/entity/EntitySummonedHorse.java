@@ -24,7 +24,7 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
             UUID uuid = UUID.fromString(this.dataWatcher.getWatchableObjectString(21));
             return uuid == null ? null : this.worldObj.func_152378_a(uuid);
         }
-        catch (IllegalArgumentException illegalargumentexception)
+        catch (IllegalArgumentException e)
         {
             return null;
         }
@@ -55,6 +55,7 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
     {
         Object p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
         this.setHorseType(3);
+        this.setGrowingAge(0);
         return (IEntityLivingData)p_110161_1_1;
     }
 }
