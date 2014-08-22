@@ -49,8 +49,8 @@ public class Spells
 	public final static Spell frostShield = new SpellFrostShield(18);
 	public final static Spell blazestorm = new SpellBlazeStorm(19);
 	public final static Spell lightningstorm = new SpellLightningStorm(20);
-	public final static Spell raise_zombie_horse = new SpellSummonMount(21, "zombie_horse", EntitySummonedHorse.class);
-	//public final static Spell polymorph = new SpellPolymorph(21);
+	public final static Spell raise_zombie_horse = new SpellSummonMount(21, "zombie_horse", EntitySummonedHorse.class, 3);
+	public final static Spell raise_skeleton_horse = new SpellSummonMount(22, "skeleton_horse", EntitySummonedHorse.class, 4);
 	
 	/** Registers a new spell at the given id. */
 	public static void registerSpell(Spell par1Spell, int par2effectId)

@@ -223,5 +223,6 @@ public class ItemSpellBook extends Item
         icons[Spells.blazestorm.effectId] = blazefireIcon;
         icons[Spells.lightningstorm.effectId] = par1IconRegister.registerIcon(Archmagus.MODID + ":lightning_book");      
         icons[Spells.raise_zombie_horse.effectId] = zombieIcon;
+        icons[Spells.raise_skeleton_horse.effectId] = skeletonIcon;
     }
 }

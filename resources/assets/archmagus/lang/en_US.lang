@@ -20,6 +20,7 @@ spell.summon.witch=Summon Witch
 spell.summon.spider=Summon Spider
 spell.summon.cave_spider=Summon Cave Spider
 spell.summon.zombie_horse=Raise Zombie Horse
+spell.summon.skeleton_horse=Raise Skeleton Horse
 spell.teleport=Teleport
 spell.respawn=Respawn
 spell.polymorph=Polymorph
@@ -50,7 +51,7 @@ entity.risen_zombie_pigman.name=Zombie Pigman
 entity.summoned_witch.name=Witch
 entity.summoned_spider.name=Spider
 entity.summoned_cave_spider.name=Cave Spider
-entity.risen_zombie_horse=Zombie Horse
+entity.risen_horse.name=Risen Horse
 
 potion.polymorphed=Polymorphed
 potion.shield.fire=Fire Shield

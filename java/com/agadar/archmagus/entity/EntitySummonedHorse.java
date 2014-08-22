@@ -11,9 +11,10 @@ import net.minecraft.world.World;
 
 public class EntitySummonedHorse extends EntityHorse implements ISummoned
 {
-	public EntitySummonedHorse(World p_i1685_1_) 
+	public EntitySummonedHorse(World world) 
 	{
-		super(p_i1685_1_);		
+		// TODO: code
+		super(world);		
 	}
 	
 	/** Returns the player who tamed this horse. */
@@ -33,6 +34,7 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
 	@Override
 	public boolean interact(EntityPlayer p_70085_1_)
     {
+		// TODO: Code
 		return super.interact(p_70085_1_);
     }
 	
@@ -54,7 +56,6 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
 	public IEntityLivingData onSpawnWithEgg(IEntityLivingData p_110161_1_)
     {
         Object p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
-        this.setHorseType(3);
         this.setGrowingAge(0);
         return (IEntityLivingData)p_110161_1_1;
     }

@@ -17,6 +17,6 @@ public class ModEntities
 		EntityRegistry.registerGlobalEntityID(EntitySummonedWitch.class, "summoned_witch", EntityRegistry.findGlobalUniqueEntityId());
 		EntityRegistry.registerGlobalEntityID(EntitySummonedSpider.class, "summoned_spider", EntityRegistry.findGlobalUniqueEntityId());
 		EntityRegistry.registerGlobalEntityID(EntitySummonedCaveSpider.class, "summoned_cave_spider", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntitySummonedHorse.class, "risen_zombie_horse", EntityRegistry.findGlobalUniqueEntityId());
+		EntityRegistry.registerGlobalEntityID(EntitySummonedHorse.class, "risen_horse", EntityRegistry.findGlobalUniqueEntityId());
 	}
 }
