@@ -4,6 +4,10 @@ import java.util.UUID;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -13,8 +17,13 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
 {
 	public EntitySummonedHorse(World world) 
 	{
-		// TODO: code
-		super(world);	
+		super(world);			
+		this.tasks.taskEntries.clear();
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(1, new EntityAIFollowOwnerHorse(this, 1.0D, 10.0F, 2.0F));
+        this.tasks.addTask(2, new EntityAIWander(this, 0.7D));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(4, new EntityAILookIdle(this));
 	}
 	
 	/** Returns the player who tamed this horse. */
@@ -32,10 +41,24 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
     }
 	
 	@Override
-	public boolean interact(EntityPlayer p_70085_1_)
+	public boolean interact(EntityPlayer player)
     {
-		// TODO: Code
-		return super.interact(p_70085_1_);
+		if (this.isAdultHorse() && this.riddenByEntity == null && this.getTamedBy() == player)
+		{
+			player.rotationYaw = this.rotationYaw;
+			player.rotationPitch = this.rotationPitch;
+			this.setEatingHaystack(false);
+			this.setRearing(false);
+
+			if (!this.worldObj.isRemote)
+			{
+				player.mountEntity(this);
+			}
+			
+			return true;
+		}
+		
+		return false;
     }
 	
 	@Override
