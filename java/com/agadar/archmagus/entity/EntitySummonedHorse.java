@@ -14,7 +14,7 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
 	public EntitySummonedHorse(World world) 
 	{
 		// TODO: code
-		super(world);		
+		super(world);	
 	}
 	
 	/** Returns the player who tamed this horse. */
@@ -57,6 +57,7 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
     {
         Object p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
         this.setGrowingAge(0);
+        this.setHorseSaddled(true);
         return (IEntityLivingData)p_110161_1_1;
     }
 }
