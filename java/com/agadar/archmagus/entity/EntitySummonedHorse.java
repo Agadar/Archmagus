@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntitySummonedHorse extends EntityHorse 
+public class EntitySummonedHorse extends EntityHorse implements ISummoned
 {
 	public EntitySummonedHorse(World p_i1685_1_) 
 	{

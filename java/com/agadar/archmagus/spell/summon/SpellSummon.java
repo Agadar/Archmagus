@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import com.agadar.archmagus.entity.EntitySummoned;
+import com.agadar.archmagus.entity.EntitySummonedHorse;
+import com.agadar.archmagus.entity.ISummoned;
 import com.agadar.archmagus.spell.Spell;
 
 import net.minecraft.entity.EntityCreature;
@@ -76,16 +78,8 @@ public class SpellSummon extends Spell
 	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-
-		@SuppressWarnings("unchecked")
-		List<EntitySummoned> entities = par2World.getEntitiesWithinAABB(EntitySummoned.class, par3EntityPlayer.boundingBox.expand(20.0D, 20.0D, 20.0D));
-
-		for (EntitySummoned entity : entities)
-		{
-			if (entity.getOwner() == par3EntityPlayer)
-				entity.attackEntityFrom(DamageSource.generic, entity.getMaxHealth());
-		}
-
+		this.killExistingMinions(par2World, par3EntityPlayer);
+		
 		try 
 		{
 			int[] xSpawnOffset = { -2, 0, 2, 0 };
@@ -105,6 +99,37 @@ public class SpellSummon extends Spell
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+		}
+	}
+	
+	/** Kills all of the player's existing summoned minions. 
+	 *  Should be called every time before new minions are summoned. 
+	 *  Kills off EntitySummoned and EntitySummonedHorse, both which implement ISummoned. */
+	protected void killExistingMinions(World par1World, EntityPlayer par2EntityPlayer) 
+	{
+		@SuppressWarnings("unchecked")
+		List<ISummoned> minions = par1World.getEntitiesWithinAABB(ISummoned.class, par2EntityPlayer.boundingBox.expand(20.0D, 20.0D, 20.0D));
+
+		for (ISummoned minion : minions)
+		{
+			if (minion instanceof EntitySummoned)
+			{
+				EntitySummoned entitySummoned = (EntitySummoned) minion;
+				
+				if (entitySummoned.getOwner() == par2EntityPlayer)
+				{
+					entitySummoned.attackEntityFrom(DamageSource.generic, entitySummoned.getMaxHealth());	
+				}
+			}
+			else if (minion instanceof EntitySummonedHorse)
+			{
+				EntitySummonedHorse entitySummonedHorse = (EntitySummonedHorse) minion;
+				
+				if (entitySummonedHorse.getTamedBy() == par2EntityPlayer)
+				{
+					entitySummonedHorse.attackEntityFrom(DamageSource.generic, entitySummonedHorse.getMaxHealth());	
+				}
+			}
 		}
 	}
 }

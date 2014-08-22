@@ -1,10 +1,7 @@
 package com.agadar.archmagus.spell.summon;
 
-import java.util.List;
-
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import com.agadar.archmagus.entity.EntitySummonedHorse;
@@ -28,15 +25,7 @@ public class SpellSummonMount extends SpellSummon
 	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-
-		@SuppressWarnings("unchecked")
-		List<EntitySummonedHorse> entities = par2World.getEntitiesWithinAABB(EntitySummonedHorse.class, par3EntityPlayer.boundingBox.expand(20.0D, 20.0D, 20.0D));
-
-		for (EntitySummonedHorse entity : entities)
-		{
-			if (entity.getTamedBy() == par3EntityPlayer)
-				entity.attackEntityFrom(DamageSource.generic, entity.getMaxHealth());
-		}
+		this.killExistingMinions(par2World, par3EntityPlayer);
 
 		try 
 		{

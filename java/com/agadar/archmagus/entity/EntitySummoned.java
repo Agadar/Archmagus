@@ -14,7 +14,7 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public abstract class EntitySummoned extends EntityTameable 
+public abstract class EntitySummoned extends EntityTameable implements ISummoned
 {
 	public EntitySummoned(World par1World) 
 	{
