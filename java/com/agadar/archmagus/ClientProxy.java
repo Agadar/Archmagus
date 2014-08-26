@@ -2,7 +2,6 @@ package com.agadar.archmagus;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelHorse;
-import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -11,12 +10,13 @@ import com.agadar.archmagus.entity.EntityRisenWitherSkeleton;
 import com.agadar.archmagus.entity.EntityRisenZombie;
 import com.agadar.archmagus.entity.EntityRisenZombiePigman;
 import com.agadar.archmagus.entity.EntitySummonedCaveSpider;
-import com.agadar.archmagus.entity.EntitySummonedHorse;
+import com.agadar.archmagus.entity.EntityRisenHorse;
 import com.agadar.archmagus.entity.EntitySummonedSpider;
 import com.agadar.archmagus.entity.EntitySummonedWitch;
 import com.agadar.archmagus.entity.EntitySummonedWolf;
 import com.agadar.archmagus.misc.GuiManaBar;
 import com.agadar.archmagus.model.ModelSummonedWolf;
+import com.agadar.archmagus.render.RenderRisenHorse;
 import com.agadar.archmagus.render.RenderRisenSkeleton;
 import com.agadar.archmagus.render.RenderRisenWitherSkeleton;
 import com.agadar.archmagus.render.RenderRisenZombie;
@@ -44,7 +44,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntitySummonedWitch.class, new RenderSummonedWitch());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySummonedSpider.class, new RenderSummonedSpider());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySummonedCaveSpider.class, new RenderSummonedCaveSpider());
-		RenderingRegistry.registerEntityRenderingHandler(EntitySummonedHorse.class, new RenderHorse(new ModelHorse(), 0.75F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityRisenHorse.class, new RenderRisenHorse(new ModelHorse(), 0.75F));
 		
 		/** Gui renderers. */
 		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));

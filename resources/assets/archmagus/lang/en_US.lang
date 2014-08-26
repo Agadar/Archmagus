@@ -21,6 +21,7 @@ spell.summon.spider=Summon Spider
 spell.summon.cave_spider=Summon Cave Spider
 spell.summon.zombie_horse=Raise Zombie Horse
 spell.summon.skeleton_horse=Raise Skeleton Horse
+spell.summon.wither_horse=Raise Wither Horse
 spell.teleport=Teleport
 spell.respawn=Respawn
 spell.polymorph=Polymorph

@@ -5,7 +5,7 @@ import com.agadar.archmagus.entity.EntityRisenWitherSkeleton;
 import com.agadar.archmagus.entity.EntityRisenZombie;
 import com.agadar.archmagus.entity.EntityRisenZombiePigman;
 import com.agadar.archmagus.entity.EntitySummonedCaveSpider;
-import com.agadar.archmagus.entity.EntitySummonedHorse;
+import com.agadar.archmagus.entity.EntityRisenHorse;
 import com.agadar.archmagus.entity.EntitySummonedSpider;
 import com.agadar.archmagus.entity.EntitySummonedWitch;
 import com.agadar.archmagus.entity.EntitySummonedWolf;
@@ -49,8 +49,9 @@ public class Spells
 	public final static Spell frostShield = new SpellFrostShield(18);
 	public final static Spell blazestorm = new SpellBlazeStorm(19);
 	public final static Spell lightningstorm = new SpellLightningStorm(20);
-	public final static Spell raise_zombie_horse = new SpellSummonMount(21, "zombie_horse", EntitySummonedHorse.class, 3);
-	public final static Spell raise_skeleton_horse = new SpellSummonMount(22, "skeleton_horse", EntitySummonedHorse.class, 4);
+	public final static Spell raise_zombie_horse = new SpellSummonMount(21, "zombie_horse", EntityRisenHorse.class, 3);
+	public final static Spell raise_skeleton_horse = new SpellSummonMount(22, "skeleton_horse", EntityRisenHorse.class, 4);
+	public final static Spell raise_wither_horse = new SpellSummonMount(23, "wither_horse", EntityRisenHorse.class, 5);
 	
 	/** Registers a new spell at the given id. */
 	public static void registerSpell(Spell par1Spell, int par2effectId)

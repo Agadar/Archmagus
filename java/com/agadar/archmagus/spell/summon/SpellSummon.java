@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import com.agadar.archmagus.entity.EntitySummoned;
-import com.agadar.archmagus.entity.EntitySummonedHorse;
+import com.agadar.archmagus.entity.EntityRisenHorse;
 import com.agadar.archmagus.entity.ISummoned;
 import com.agadar.archmagus.spell.Spell;
 
@@ -121,9 +121,9 @@ public class SpellSummon extends Spell
 					entitySummoned.attackEntityFrom(DamageSource.generic, entitySummoned.getMaxHealth());	
 				}
 			}
-			else if (minion instanceof EntitySummonedHorse)
+			else if (minion instanceof EntityRisenHorse)
 			{
-				EntitySummonedHorse entitySummonedHorse = (EntitySummonedHorse) minion;
+				EntityRisenHorse entitySummonedHorse = (EntityRisenHorse) minion;
 				
 				if (entitySummonedHorse.getTamedBy() == par2EntityPlayer)
 				{

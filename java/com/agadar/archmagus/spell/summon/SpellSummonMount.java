@@ -3,7 +3,7 @@ package com.agadar.archmagus.spell.summon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-import com.agadar.archmagus.entity.EntitySummonedHorse;
+import com.agadar.archmagus.entity.EntityRisenHorse;
 
 /** Summons a mount for the player. */
 public class SpellSummonMount extends SpellSummon 
@@ -38,7 +38,7 @@ public class SpellSummonMount extends SpellSummon
 
 		try 
 		{
-			EntitySummonedHorse entity = (EntitySummonedHorse) entityConstr.newInstance(par2World);
+			EntityRisenHorse entity = (EntityRisenHorse) entityConstr.newInstance(par2World);
 			entity.setLocationAndAngles(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, entity.rotationYaw, 0.0F);					
 			entity.setHorseSaddled(true);				
 			entity.setTamedBy(par3EntityPlayer);
