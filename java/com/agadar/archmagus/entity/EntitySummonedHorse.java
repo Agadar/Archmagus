@@ -83,14 +83,23 @@ public class EntitySummonedHorse extends EntityHorse implements ISummoned
         }
     }
 	
-	@Override
-	public IEntityLivingData onSpawnWithEgg(IEntityLivingData p_110161_1_)
+	public IEntityLivingData onSpawnWithEgg(IEntityLivingData par1EntityData, EntityPlayer par2Player, int par3HorseType)
+	{
+		Object entityData = this.onSpawnWithEgg(par1EntityData);
+        this.setGrowingAge(0);
+		this.setHorseType(par3HorseType);
+		this.interact(par2Player);
+        return (IEntityLivingData) entityData;
+	}
+	
+	/*@Override
+	public IEntityLivingData onSpawnWithEgg(IEntityLivingData par1EntityData)
     {
-        Object p_110161_1_1 = super.onSpawnWithEgg(p_110161_1_);
+        Object entityData = super.onSpawnWithEgg(par1EntityData);
         this.setGrowingAge(0);
         this.setHorseSaddled(true);
-        return (IEntityLivingData)p_110161_1_1;
-    }
+        return (IEntityLivingData) entityData;
+    }*/
 	
 	@Override
 	protected Item getDropItem()

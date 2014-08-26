@@ -1,6 +1,5 @@
 package com.agadar.archmagus.spell.summon;
 
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -9,12 +8,13 @@ import com.agadar.archmagus.entity.EntitySummonedHorse;
 /** Summons a mount for the player. */
 public class SpellSummonMount extends SpellSummon 
 {
-	/** The vanilla horse type this spell's summoned mount is.
+	/** The horse type this spell's summoned mount is.
 	 *  0 = white horse (canvas);
 	 *  1 = donkey;
 	 *  2 = mule;
 	 *  3 = zombie;
-	 *  4 = skeleton. */
+	 *  4 = skeleton; 
+	 *  5 = wither skeleton (non-vanilla). */
 	protected final int horseType;
 	
 	@SuppressWarnings("rawtypes")
@@ -38,15 +38,14 @@ public class SpellSummonMount extends SpellSummon
 
 		try 
 		{
-			EntityCreature entity = (EntityCreature) entityConstr.newInstance(par2World);
-			entity.setLocationAndAngles(par3EntityPlayer.posX + 2, par3EntityPlayer.posY, par3EntityPlayer.posZ, entity.rotationYaw, 0.0F);					
-			String comSendName = par3EntityPlayer.getCommandSenderName();
-			((EntitySummonedHorse) entity).setTamedBy(par3EntityPlayer);
-			entity.setCustomNameTag(comSendName + "'s Mount");
-			entity.setAlwaysRenderNameTag(true);
+			EntitySummonedHorse entity = (EntitySummonedHorse) entityConstr.newInstance(par2World);
+			entity.setLocationAndAngles(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, entity.rotationYaw, 0.0F);					
+			entity.setHorseSaddled(true);				
+			entity.setTamedBy(par3EntityPlayer);
+			entity.rotationYaw = par3EntityPlayer.rotationYaw;
+			entity.rotationPitch = par3EntityPlayer.rotationPitch;
 			par2World.spawnEntityInWorld(entity);
-			entity.onSpawnWithEgg(null);
-			((EntitySummonedHorse) entity).setHorseType(this.horseType);
+			entity.onSpawnWithEgg(null, par3EntityPlayer, this.horseType);
 		} 
 		catch (Exception e) 
 		{
