@@ -67,6 +67,8 @@ public class EntityAIFollowOwnerHorse extends EntityAIBase
         this.field_75343_h = 0;
         this.field_75344_i = this.thePet.getNavigator().getAvoidsWater();
         this.thePet.getNavigator().setAvoidsWater(false);
+        this.thePet.setEatingHaystack(false);
+		this.thePet.setRearing(false);
     }
 
     /**
