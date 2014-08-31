@@ -6,6 +6,7 @@ import com.agadar.archmagus.spell.Spells;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,13 +21,11 @@ public class HandlerOnLivingUpdate
 			EntityPlayer player = (EntityPlayer) event.entity;
 			ItemStack heldItem = player.getHeldItem();
 			
-			if (heldItem != null && heldItem.getItem() == ModItemsBlocks.spell_book && heldItem.stackTagCompound != null) 
+			if (heldItem != null && heldItem.getItem() == ModItemsBlocks.spell_book) 
 			{
-				double particleChance = player.worldObj.rand.nextDouble();
-				short id = heldItem.stackTagCompound.getShort("id");
-				Spell spell = Spells.spellList[id];
+				Spell spell = Spells.spellList[((NBTTagCompound) heldItem.stackTagCompound.getTag("spell")).getShort("id")];
 				
-				if (particleChance < spell.getParticleAmount())
+				if (player.worldObj.rand.nextDouble() < spell.getParticleAmount())
 				{
 					double d0 = player.worldObj.rand.nextGaussian() * 0.02D;
 		            double d1 = player.worldObj.rand.nextGaussian() * 0.02D;

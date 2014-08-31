@@ -9,7 +9,7 @@ public class ModEventHandlers
 	/** Registers this mod's event handlers. */
 	public static void registerModEventHandlers() 
 	{
-		/** For assigning mana pools to players when they are constructed. */
+		/** For handling mana-related events. */
 		MinecraftForge.EVENT_BUS.register(new HandlerManaEvents());
 		
 		/** For making mobs drop spell books. */
@@ -25,7 +25,7 @@ public class ModEventHandlers
 		FMLCommonHandler.instance().bus().register(new HandlerOnPlayerPostTick());
 		
 		/** For spawning particles around entities holding spell books. */
-		//MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());
+		MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());
 		
 		/** For altering the player's model in case he is polymorphed. */
 		//MinecraftForge.EVENT_BUS.register(new HandlerOnRenderLiving());
