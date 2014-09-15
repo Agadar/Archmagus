@@ -19,6 +19,9 @@ spell.summon.zombie_pigman=召唤僵尸猪人
 spell.summon.witch=召唤女巫
 spell.summon.spider=召唤蜘蛛
 spell.summon.cave_spider=召唤洞穴蜘蛛
+spell.summon.zombie_horse=召唤僵尸马
+spell.summon.skeleton_horse=召唤骷髅马
+spell.summon.wither_horse=召唤凋零马
 spell.teleport=传送
 spell.respawn=重生
 spell.polymorph=变形
@@ -49,6 +52,7 @@ entity.risen_zombie_pigman.name=僵尸猪人
 entity.summoned_witch.name=女巫
 entity.summoned_spider.name=蜘蛛
 entity.summoned_cave_spider.name=洞穴蜘蛛
+entity.risen_horse.name=亡灵马
 
 potion.polymorphed=变形
 potion.shield.fire=火之护盾
