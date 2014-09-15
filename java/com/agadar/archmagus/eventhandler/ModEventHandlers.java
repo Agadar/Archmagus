@@ -25,7 +25,7 @@ public class ModEventHandlers
 		FMLCommonHandler.instance().bus().register(new HandlerOnPlayerPostTick());
 		
 		/** For spawning particles around entities holding spell books. */
-		MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());
+		//MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());
 		
 		/** For altering the player's model in case he is polymorphed. */
 		//MinecraftForge.EVENT_BUS.register(new HandlerOnRenderLiving());

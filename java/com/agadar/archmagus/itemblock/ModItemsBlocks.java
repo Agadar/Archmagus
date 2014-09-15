@@ -66,26 +66,26 @@ public class ModItemsBlocks
 		ItemStack redstone = new ItemStack(Items.redstone);
 		
 		/** Potion of Mana. */
-		ItemStack mana = ItemPotionBase.getManaPotionStack(false, 0); 
+		ItemStack mana = ItemPotionBase.getManaStack(false, 0); 
 		/** Potion of Mana (Amplified). */
-		ItemStack manaAmpl = ItemPotionBase.getManaPotionStack(false, 1);
+		ItemStack manaAmpl = ItemPotionBase.getManaStack(false, 1);
 		/** Splash Potion of Mana. */
-		ItemStack manaSplash = ItemPotionBase.getManaPotionStack(true, 0);
+		ItemStack manaSplash = ItemPotionBase.getManaStack(true, 0);
 		/** Splash Potion of Mana (Amplified). */
-		ItemStack manaSplashAmpl = ItemPotionBase.getManaPotionStack(true, 1);
+		ItemStack manaSplashAmpl = ItemPotionBase.getManaStack(true, 1);
 				
 		/** Potion of Mana Regeneration. */
-		ItemStack regen = ItemPotionBase.getManaRegenPotionStack(false, 0, false);
+		ItemStack regen = ItemPotionBase.getManaRegenStack(false, 0, false);
 		/** Potion of Mana Regeneration (Amplified). */
-		ItemStack regenAmpl = ItemPotionBase.getManaRegenPotionStack(false, 1, false);
+		ItemStack regenAmpl = ItemPotionBase.getManaRegenStack(false, 1, false);
 		/** Potion of Mana Regeneration (Extended). */
-		ItemStack regenExt = ItemPotionBase.getManaRegenPotionStack(false, 0, true);
+		ItemStack regenExt = ItemPotionBase.getManaRegenStack(false, 0, true);
 		/** Splash Potion of Mana Regeneration. */
-		ItemStack regenSplash = ItemPotionBase.getManaRegenPotionStack(true, 0, false);
+		ItemStack regenSplash = ItemPotionBase.getManaRegenStack(true, 0, false);
 		/** Splash Potion of Mana Regeneration (Amplified). */
-		ItemStack regenSplashAmpl = ItemPotionBase.getManaRegenPotionStack(true, 1, false);
+		ItemStack regenSplashAmpl = ItemPotionBase.getManaRegenStack(true, 1, false);
 		/** Splash Potion of Mana Regeneration (Extended). */
-		ItemStack regenSplashExt = ItemPotionBase.getManaRegenPotionStack(true, 0, true);
+		ItemStack regenSplashExt = ItemPotionBase.getManaRegenStack(true, 0, true);
 
 		/** Awkward Potion + Mana Crystal -> Potion of Mana. */
 		BrewingRecipes.brewing().addBrewing(awkward, new ItemStack(mana_crystal), mana);

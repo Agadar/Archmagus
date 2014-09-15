@@ -14,6 +14,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 
@@ -39,32 +40,32 @@ public class ItemPotionBase extends ItemPotion
     public void getSubItems(Item par1Item, CreativeTabs par2CreativeTab, List par3List)
     {
 		/** Potion of Mana. */
-		par3List.add(getManaPotionStack(false, 0));
+		par3List.add(getManaStack(false, 0));
 		/** Potion of Mana (Amplified). */
-		par3List.add(getManaPotionStack(false, 1));
+		par3List.add(getManaStack(false, 1));
 		/** Splash Potion of Mana. */
-		par3List.add(getManaPotionStack(true, 0));
+		par3List.add(getManaStack(true, 0));
 		/** Splash Potion of Mana (Amplified). */
-		par3List.add(getManaPotionStack(true, 1));
+		par3List.add(getManaStack(true, 1));
 		
 		/** Potion of Mana Regeneration. */
-		par3List.add(getManaRegenPotionStack(false, 0, false));
+		par3List.add(getManaRegenStack(false, 0, false));
 		/** Potion of Mana Regeneration (Amplified). */
-		par3List.add(getManaRegenPotionStack(false, 1, false));
+		par3List.add(getManaRegenStack(false, 1, false));
 		/** Potion of Mana Regeneration (Extended). */
-		par3List.add(getManaRegenPotionStack(false, 0, true));
+		par3List.add(getManaRegenStack(false, 0, true));
 		/** Splash Potion of Mana Regeneration. */
-		par3List.add(getManaRegenPotionStack(true, 0, false));
+		par3List.add(getManaRegenStack(true, 0, false));
 		/** Splash Potion of Mana Regeneration (Amplified). */
-		par3List.add(getManaRegenPotionStack(true, 1, false));
+		par3List.add(getManaRegenStack(true, 1, false));
 		/** Splash Potion of Mana Regeneration (Extended). */
-		par3List.add(getManaRegenPotionStack(true, 0, true));
+		par3List.add(getManaRegenStack(true, 0, true));
     }
 	
 	/** Returns an item stack of a Mana potion. */
-	public static ItemStack getManaPotionStack(boolean splash, int amplification)
+	public static ItemStack getManaStack(boolean splash, int amplification)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16482 : 8194);		
+		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
 		effects.add(new PotionEffect(ModPotions.mana.id, 1, amplification));		
 		BrewingRecipes.brewing().setEffects(itemStack, effects);
@@ -72,11 +73,22 @@ public class ItemPotionBase extends ItemPotion
 	}
 	
 	/** Returns an item stack of a Mana Regeneration potion. */
-	public static ItemStack getManaRegenPotionStack(boolean splash, int amplification, boolean extended)
+	public static ItemStack getManaRegenStack(boolean splash, int amplification, boolean extended)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16398 : 8206);		
+		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
 		effects.add(new PotionEffect(ModPotions.manaRegen.id, (int)(900 * BrewingRecipes.brewing().getDurationModifier(splash, amplification, extended)), amplification));		
+		BrewingRecipes.brewing().setEffects(itemStack, effects);
+		return itemStack;
+	}
+	
+	/** Returns an item stack of a Restoration potion. */
+	public static ItemStack getRestorationStack(boolean splash, int amplification)
+	{
+		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
+		List<PotionEffect> effects = new ArrayList<PotionEffect>();
+		effects.add(new PotionEffect(ModPotions.mana.id, 1, amplification));	
+		effects.add(new PotionEffect(Potion.heal.id, 1, amplification));
 		BrewingRecipes.brewing().setEffects(itemStack, effects);
 		return itemStack;
 	}
@@ -90,11 +102,20 @@ public class ItemPotionBase extends ItemPotion
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int p_77618_1_, int p_77618_2_)
+	public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
     {
-        return p_77618_2_ == 0 ? this.overlayIcon : super.getIconFromDamageForRenderPass(p_77618_1_, p_77618_2_);
+		return 16777215;
     }
 	
+	@Override
+	public IIcon getIcon(ItemStack par1ItemStack, int par2Pass)
+	{
+		if (par2Pass == 0)
+			return this.overlayIcon;
+
+		return super.getIcon(par1ItemStack, par2Pass);
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister par1IconRegister)
@@ -108,6 +129,6 @@ public class ItemPotionBase extends ItemPotion
 	@SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack par1ItemStack, int pass)
     {
-		return false;
+		return pass == 0;
     }
 }
