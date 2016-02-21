@@ -68,7 +68,7 @@ public class EntityRisenHorse extends EntityHorse implements ISummoned
         {
         	EntityLivingBase owner = this.getTamedBy();
             
-            if (owner == null || owner.isDead)// || this.riddenByEntity == null) 
+            if (owner == null || owner.isDead || this.riddenByEntity == null) 
             	this.attackEntityFrom(DamageSource.generic, this.getMaxHealth());
         }
     }
