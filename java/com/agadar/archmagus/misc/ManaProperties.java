@@ -14,11 +14,23 @@ public class ManaProperties implements IExtendedEntityProperties
 	/** The index at which the player's current mana is stored in the player's DataWatcher. */
 	public static final int MANA_WATCHER = 20;
 	/** The player to which this instance belongs to. */
-	private EntityPlayer player;
+	private final EntityPlayer player;
 	/** The maximum amount of mana this player can have. */
 	private int maxMana;
 	/** A timer used for naturally regenerating mana. */
 	public int manaTimer;
+	
+	/** Used to register these extended properties for the given player. */
+	public static final void register(EntityPlayer player)
+	{
+		player.registerExtendedProperties(NAME, new ManaProperties(player));
+	}
+	
+	/** Returns the ExtendedPlayer properties for the given player. */
+	public static final ManaProperties get(EntityPlayer player)
+	{
+		return (ManaProperties) player.getExtendedProperties(NAME);
+	}
 	
 	public ManaProperties(EntityPlayer player)
 	{
@@ -50,6 +62,12 @@ public class ManaProperties implements IExtendedEntityProperties
 		currentMana = Math.min(currentMana + amount, this.maxMana);
 		this.player.getDataWatcher().updateObject(MANA_WATCHER, currentMana);
 	}
+	
+	/** Fully replenishes all mana points. */
+	public void replenishMana()
+	{
+		this.player.getDataWatcher().updateObject(MANA_WATCHER, this.maxMana);
+	}
 
 	/** Returns the maximum amount of mana this player has. */
 	public int getMaxMana() 
@@ -67,18 +85,6 @@ public class ManaProperties implements IExtendedEntityProperties
 	public int getCurrentMana()
 	{
 		return this.player.getDataWatcher().getWatchableObjectInt(MANA_WATCHER);
-	}
-	
-	/** Used to register these extended properties for the given player during the EntityConstructing event. */
-	public static final void register(EntityPlayer player)
-	{
-		player.registerExtendedProperties(NAME, new ManaProperties(player));
-	}
-	
-	/** Returns the ExtendedPlayer properties for the given player. */
-	public static final ManaProperties get(EntityPlayer player)
-	{
-		return (ManaProperties) player.getExtendedProperties(NAME);
 	}
 	
 	@Override
