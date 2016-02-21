@@ -78,7 +78,7 @@ public class HandlerOnLivingDrops
 			else if (skeletonType == 1)
 			{
 				randomDrop(event, Spells.raise_wither_skeleton, (short) 1, 5);
-				randomDrop(event, Spells.raise_wither_horse, (short) 1, 5);
+				//randomDrop(event, Spells.raise_wither_horse, (short) 1, 5);
 			}
 		}
 		else if (entityClass.equals(EntityWolf.class))
