@@ -1,7 +1,7 @@
 package com.agadar.archmagus.eventhandler;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 /** Responsible for registering this mod's event handlers.  */
 public class ModEventHandlers 

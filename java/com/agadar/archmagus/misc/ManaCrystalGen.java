@@ -9,7 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
 
 /** Responsible for generating mana crystal ores in the Nether. */
 public class ManaCrystalGen implements IWorldGenerator 
@@ -17,7 +17,7 @@ public class ManaCrystalGen implements IWorldGenerator
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
 	{
-		switch(world.provider.dimensionId)
+		switch(world.provider.getDimensionId())
 		{
 		case -1:
 			this.generateNether(world, random, chunkX * 16, chunkZ * 16);

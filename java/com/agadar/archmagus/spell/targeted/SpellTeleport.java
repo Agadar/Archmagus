@@ -59,12 +59,12 @@ public class SpellTeleport extends Spell implements ISpellTargeted
 		int distance = distances[getNormalizedLevel(par1Level) - 1];
 		Minecraft mc = Minecraft.getMinecraft();
 
-		if((mc.renderViewEntity.rayTrace(distance, 1.0F) != null))
+		if((mc.getRenderViewEntity().rayTrace(distance, 1.0F) != null))
 		{
 			par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-			int blockHitX = mc.renderViewEntity.rayTrace(distance, 1.0F).blockX;
-			int blockHitY = mc.renderViewEntity.rayTrace(distance, 1.0F).blockY;
-			int blockHitZ = mc.renderViewEntity.rayTrace(distance, 1.0F).blockZ;
+			int blockHitX = mc.getRenderViewEntity().rayTrace(distance, 1.0F).blockX;
+			int blockHitY = mc.getRenderViewEntity().rayTrace(distance, 1.0F).blockY;
+			int blockHitZ = mc.getRenderViewEntity().rayTrace(distance, 1.0F).blockZ;
 			par3EntityPlayer.setPositionAndUpdate(blockHitX, blockHitY + 1, blockHitZ);
 			par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
 		} 

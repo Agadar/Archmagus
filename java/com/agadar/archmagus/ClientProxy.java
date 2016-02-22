@@ -4,8 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import com.agadar.archmagus.entity.EntityRisenSkeleton;
+/*import com.agadar.archmagus.entity.EntityRisenSkeleton;
 import com.agadar.archmagus.entity.EntityRisenWitherSkeleton;
 import com.agadar.archmagus.entity.EntityRisenZombie;
 import com.agadar.archmagus.entity.EntityRisenZombiePigman;
@@ -24,10 +26,7 @@ import com.agadar.archmagus.render.RenderRisenZombiePigman;
 import com.agadar.archmagus.render.RenderSummonedCaveSpider;
 import com.agadar.archmagus.render.RenderSummonedSpider;
 import com.agadar.archmagus.render.RenderSummonedWitch;
-import com.agadar.archmagus.render.RenderSummonedWolf;
-
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import com.agadar.archmagus.render.RenderSummonedWolf;*/
 
 /** The proxy that is used client-side. */
 public class ClientProxy extends CommonProxy 
@@ -36,7 +35,7 @@ public class ClientProxy extends CommonProxy
 	public void registerRenderers() 
 	{
 		/** Entity renderers. */
-		RenderingRegistry.registerEntityRenderingHandler(EntitySummonedWolf.class, new RenderSummonedWolf(new ModelSummonedWolf(), new ModelSummonedWolf(), 0.5F));
+		/*RenderingRegistry.registerEntityRenderingHandler(EntitySummonedWolf.class, new RenderSummonedWolf(new ModelSummonedWolf(), new ModelSummonedWolf(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenSkeleton.class, new RenderRisenSkeleton());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenWitherSkeleton.class, new RenderRisenWitherSkeleton());
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenZombie.class, new RenderRisenZombie());
@@ -47,7 +46,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenHorse.class, new RenderRisenHorse(new ModelHorse(), 0.75F));
 		
 		/** Gui renderers. */
-		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));
+		//MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));*/
 	}
 
 	@Override

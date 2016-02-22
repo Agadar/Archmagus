@@ -1,42 +1,44 @@
 package com.agadar.archmagus.itemblock;
 
 import java.util.Random;
-
 import com.agadar.archmagus.Archmagus;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockManaCrystalOre extends Block 
 {
+	public final String Name = "mana_crystal_ore";
+	
 	private Random rand = new Random();
 	
-	protected BlockManaCrystalOre() 
+	public BlockManaCrystalOre() 
 	{
 		super(Material.rock);
 		this.setHardness(3.0F);
 		this.setResistance(5.0F);
 		this.setStepSound(soundTypePiston);
-		this.setBlockName("mana_crystal_ore");
-		this.setBlockTextureName(Archmagus.MODID + ":" + getUnlocalizedName().substring(5));
+		this.setUnlocalizedName(Archmagus.MODID + "_" + Name);
 		this.setLightLevel(0.625F);
 		this.setCreativeTab(CreativeTabs.tabBlock);
+		GameRegistry.registerBlock(this, Name);
 	}
 	
 	@Override
-	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+	public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-		return ModItemsBlocks.mana_crystal;
+		return Archmagus.mana_crystal;
     }
 	
 	@Override
 	public int quantityDroppedWithBonus(int p_149679_1_, Random p_149679_2_)
     {
-        if (p_149679_1_ > 0 && Item.getItemFromBlock(this) != ModItemsBlocks.mana_crystal)
+        if (p_149679_1_ > 0 && Item.getItemFromBlock(this) != Archmagus.mana_crystal)
         {
             int j = p_149679_2_.nextInt(p_149679_1_ + 2) - 1;
 
@@ -50,9 +52,9 @@ public class BlockManaCrystalOre extends Block
     }
 	
     @Override
-    public int getExpDrop(IBlockAccess p_149690_1_, int p_149690_5_, int p_149690_7_)
+    public int getExpDrop(net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
     {
-        if (ModItemsBlocks.mana_crystal != Item.getItemFromBlock(this))
+        if (Archmagus.mana_crystal != Item.getItemFromBlock(this))
         	return MathHelper.getRandomIntegerInRange(rand, 2, 5);
         
         return 0;

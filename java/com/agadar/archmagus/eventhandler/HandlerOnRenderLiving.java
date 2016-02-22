@@ -3,9 +3,9 @@ package com.agadar.archmagus.eventhandler;
 import com.agadar.archmagus.potion.ModPotions;
 import com.agadar.archmagus.render.RenderPolyBat;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** For altering the player's model in case he is polymorphed. */
 public class HandlerOnRenderLiving 

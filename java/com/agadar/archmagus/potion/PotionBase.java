@@ -3,13 +3,13 @@ package com.agadar.archmagus.potion;
 import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.misc.ManaProperties;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionBase extends Potion 
 {

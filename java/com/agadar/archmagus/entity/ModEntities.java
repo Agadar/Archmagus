@@ -1,7 +1,5 @@
 package com.agadar.archmagus.entity;
 
-import cpw.mods.fml.common.registry.EntityRegistry;
-
 /** Responsible for registering this mod's entities and their renderers. */
 public class ModEntities 
 {

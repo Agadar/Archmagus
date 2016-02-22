@@ -6,7 +6,6 @@ import com.agadar.archmagus.spell.Spell;
 import com.agadar.archmagus.spell.SpellData;
 import com.agadar.archmagus.spell.Spells;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
@@ -25,6 +24,7 @@ import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** For making mobs drop spell books. */
 public class HandlerOnLivingDrops 

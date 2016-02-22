@@ -3,18 +3,6 @@ package com.agadar.archmagus.itemblock;
 import java.util.List;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.misc.ManaProperties;
-import com.agadar.archmagus.spell.Spell;
-import com.agadar.archmagus.spell.SpellData;
-import com.agadar.archmagus.spell.Spells;
-import com.agadar.archmagus.spell.aoe.SpellAoE;
-import com.agadar.archmagus.spell.shield.SpellShield;
-import com.agadar.archmagus.spell.summon.SpellSummon;
-import com.agadar.archmagus.spell.targeted.ISpellTargeted;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,32 +11,38 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** This Item allows for casting spells. */
 public class ItemSpellBook extends Item 
 {
 	/** An array containing icons for each Spell's spell book. */
-	@SideOnly(Side.CLIENT)
-	protected IIcon[] icons;
+	//@SideOnly(Side.CLIENT)
+	//protected IIcon[] icons;
+	
+	public final String Name = "spell_book";
 	
 	public ItemSpellBook()
 	{
 		this.setMaxStackSize(1);
 		this.setMaxDamage(0);
-		this.setUnlocalizedName("spell_book");
-		this.setTextureName(Archmagus.MODID + ":" + getUnlocalizedName().substring(5));
-		this.setCreativeTab(ModItemsBlocks.tabSpellBooks);
+		this.setUnlocalizedName(Archmagus.MODID + "_" + Name);
+		this.setCreativeTab(Archmagus.tabSpellBooks);
+        GameRegistry.registerItem(this, Name);
 	}
 
 	/** Returns the ItemStack's spell tag. If it doesn't have one then
 	 *  it is first assigned one before it is returned. */
     public NBTTagCompound getSpellTag(ItemStack par1ItemStack)
     {
-    	if (par1ItemStack.stackTagCompound != null && par1ItemStack.stackTagCompound.hasKey("spell"))
-    		return (NBTTagCompound) par1ItemStack.stackTagCompound.getTag("spell");
+    	NBTTagCompound nbtt = par1ItemStack.getTagCompound();
+    	
+    	if (nbtt != null && nbtt.hasKey("spell"))
+    		return (NBTTagCompound) nbtt.getTag("spell");
     	
     	return null;
     }
@@ -59,7 +53,7 @@ public class ItemSpellBook extends Item
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-        SpellData spellData = SpellData.readFromNBTTagCompound(this.getSpellTag(par1ItemStack));
+        /*SpellData spellData = SpellData.readFromNBTTagCompound(this.getSpellTag(par1ItemStack));
 
         if (spellData.spellObj != null)
         {
@@ -70,7 +64,7 @@ public class ItemSpellBook extends Item
         	else par3List.add("Miscellaneous");
         	
         	if (spellData.spellCooldown != 0) par3List.add(EnumChatFormatting.RED + "Cooldown: " + (spellData.spellCooldown / 20) + " seconds");
-        }
+        }*/
     }
     
     /** Returns the given ItemStack's display name. */
@@ -78,10 +72,10 @@ public class ItemSpellBook extends Item
     @SideOnly(Side.CLIENT)
     public String getItemStackDisplayName(ItemStack par1ItemStack)
     {
-    	SpellData spellData = SpellData.readFromNBTTagCompound(this.getSpellTag(par1ItemStack));
+    	/*SpellData spellData = SpellData.readFromNBTTagCompound(this.getSpellTag(par1ItemStack));
 
         if (spellData.spellObj != null) 
-        	return (spellData.spellObj.getTranslatedName(spellData.spellLevel));
+        	return (spellData.spellObj.getTranslatedName(spellData.spellLevel));*/
         
         return super.getItemStackDisplayName(par1ItemStack);
     }
@@ -90,26 +84,28 @@ public class ItemSpellBook extends Item
      *  Used for combining spell books in an Anvil. */
     public ItemStack tryCombine(ItemStack par1ItemStack, ItemStack par2ItemStack)
     {
-    	if (par1ItemStack.getItem() == ModItemsBlocks.spell_book && par2ItemStack.getItem() == ModItemsBlocks.spell_book &&
-    			par1ItemStack.stackTagCompound != null && par2ItemStack.stackTagCompound != null &&
-    			par1ItemStack.stackTagCompound.hasKey("spell") && par2ItemStack.stackTagCompound.hasKey("spell"))
+    	NBTTagCompound nbtt1 = par1ItemStack.getTagCompound();
+    	NBTTagCompound nbtt2 = par2ItemStack.getTagCompound();
+    	
+    	if (par1ItemStack.getItem() == Archmagus.spell_book && par2ItemStack.getItem() == Archmagus.spell_book &&
+    			nbtt1 != null && nbtt2 != null && nbtt1.hasKey("spell") && nbtt2.hasKey("spell"))
     	{
-    		NBTTagCompound spellTag1 = par1ItemStack.stackTagCompound.getCompoundTag("spell");               
-    		NBTTagCompound spellTag2 = par2ItemStack.stackTagCompound.getCompoundTag("spell"); 
+    		NBTTagCompound spellTag1 = nbtt1.getCompoundTag("spell");               
+    		NBTTagCompound spellTag2 = nbtt2.getCompoundTag("spell"); 
     		
-    		SpellData spellData1 = SpellData.readFromNBTTagCompound(spellTag1);
+    		/*SpellData spellData1 = SpellData.readFromNBTTagCompound(spellTag1);
     		SpellData spellData2 = SpellData.readFromNBTTagCompound(spellTag2);   		
     		SpellData spellData3 = SpellData.tryCombine(spellData1, spellData2);
     		
     		if (spellData3 != null)
-    			return this.getSpellItemStack(spellData3);
+    			return this.getSpellItemStack(spellData3);*/
     	}
     	
     	return null;
     }
     
     /** Returns an ItemStack of a single spell book with the given spell data. */
-    public ItemStack getSpellItemStack(SpellData par1SpellData)
+    /*public ItemStack getSpellItemStack(SpellData par1SpellData)
     {
         ItemStack itemstack = new ItemStack(this);
         itemstack.stackTagCompound = new NBTTagCompound();  	
@@ -118,20 +114,20 @@ public class ItemSpellBook extends Item
     	itemstack.setItemDamage(par1SpellData.spellObj.effectId);
     	
         return itemstack;
-    }
+    }*/
 
     /** Makes the item tooltip text a light blue color. */
     @Override
     public EnumRarity getRarity(ItemStack par1ItemStack)
     {
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
 
     /** Casts the spell book's spell on right click. */
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {		
-    	if (!par2World.isRemote)
+    	/*if (!par2World.isRemote)
     	{
     		NBTTagCompound spellTag = this.getSpellTag(par1ItemStack);
         	SpellData spellData = SpellData.readFromNBTTagCompound(spellTag);	
@@ -147,7 +143,7 @@ public class ItemSpellBook extends Item
         		spellData.castSpell(par2World, par3EntityPlayer);
         		SpellData.startCooldown(spellTag);
         	}
-    	}
+    	}*/
     	
     	return par1ItemStack;
     }
@@ -156,8 +152,8 @@ public class ItemSpellBook extends Item
     @Override
     public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) 
     {
-    	if (!par2World.isRemote) 
-    		SpellData.tickCooldown(this.getSpellTag(par1ItemStack));
+    	/*if (!par2World.isRemote) 
+    		SpellData.tickCooldown(this.getSpellTag(par1ItemStack));*/
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -165,7 +161,7 @@ public class ItemSpellBook extends Item
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item par1Item, CreativeTabs par2CreativeTab, List par3List)
     {
-    	for (int i1 = 0; i1 < Spells.spellList.length; i1++)
+    	/*for (int i1 = 0; i1 < Spells.spellList.length; i1++)
     	{
     		Spell spell = Spells.spellList[i1];
     		
@@ -176,10 +172,10 @@ public class ItemSpellBook extends Item
     				par3List.add(((ItemSpellBook) ModItemsBlocks.spell_book).getSpellItemStack(new SpellData(spell, i2)));
             	}
     		}
-    	}
+    	}*/
     }
     
-    @Override
+    /*@Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1) 
 	{
@@ -225,5 +221,5 @@ public class ItemSpellBook extends Item
         icons[Spells.raise_zombie_horse.effectId] = zombieIcon;
         icons[Spells.raise_skeleton_horse.effectId] = skeletonIcon;
         //icons[Spells.raise_wither_horse.effectId] = witherIcon;
-    }
+    }*/
 }

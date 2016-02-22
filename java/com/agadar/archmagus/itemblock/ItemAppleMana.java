@@ -3,34 +3,33 @@ package com.agadar.archmagus.itemblock;
 import java.util.List;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.misc.ManaProperties;
-import com.agadar.archmagus.misc.MaxManaMessage;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /** The Mana Apple that permanently increases a player's maximum mana by 2. */
 public class ItemAppleMana extends ItemFood 
 {
+	public final String Name = "apple_mana";
+	
 	public ItemAppleMana()
     {
         super(4, 1.2F, false);
         this.setAlwaysEdible();
-        this.setUnlocalizedName("apple_mana");
-        this.setTextureName(Archmagus.MODID + ":" + getUnlocalizedName().substring(5));
+        this.setUnlocalizedName(Archmagus.MODID + "_" + Name);
+        GameRegistry.registerItem(this, Name);
     }
 	
 	/** Makes the item tooltip text a light blue color. */
     @Override
     public EnumRarity getRarity(ItemStack par1ItemStack)
     {
-        return EnumRarity.rare;
+        return EnumRarity.RARE;
     }
     
 	@Override
@@ -44,7 +43,7 @@ public class ItemAppleMana extends ItemFood
     @Override
     protected void onFoodEaten(ItemStack itemStack, World world, EntityPlayer entityPlayer)
     {
-        if (!world.isRemote)
+        /*if (!world.isRemote)
         {
         	ManaProperties props = ManaProperties.get(entityPlayer);
     		int maxMana = props.getMaxMana();
@@ -55,6 +54,6 @@ public class ItemAppleMana extends ItemFood
 	    		props.setMaxMana(maxMana);
 	    		Archmagus.networkWrapper.sendTo(new MaxManaMessage(maxMana), (EntityPlayerMP) entityPlayer);
     		}
-        }
+        }*/
     }
 }

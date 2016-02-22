@@ -2,11 +2,10 @@ package com.agadar.archmagus;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 /** The proxy that is used server-side. */
 public class CommonProxy 

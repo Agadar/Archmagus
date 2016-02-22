@@ -1,11 +1,11 @@
 itemGroup.tabSpellBooks=Spell Books
 
-item.spell_book.name=Spell Book
-item.apple_mana.name=Crystalline Apple
-item.mana_crystal.name=Mana Crystal
+item.archmagus_spell_book.name=Spell Book
+item.archmagus_apple_mana.name=Crystalline Apple
+item.archmagus_mana_crystal.name=Mana Crystal
 
-tile.mana_crystal_ore.name=Mana Crystal Source
-tile.mana_crystal_block.name=Mana Crystal Block
+tile.archmagus_mana_crystal_ore.name=Mana Crystal Source
+tile.archmagus_mana_crystal_block.name=Mana Crystal Block
 
 spell.blazefire=Blazefire
 spell.ghastfire=Ghastfire

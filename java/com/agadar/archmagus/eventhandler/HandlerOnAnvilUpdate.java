@@ -3,8 +3,8 @@ package com.agadar.archmagus.eventhandler;
 import com.agadar.archmagus.itemblock.ItemSpellBook;
 import com.agadar.archmagus.itemblock.ModItemsBlocks;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /** For making spell books combineable in anvils. */
 public class HandlerOnAnvilUpdate 
