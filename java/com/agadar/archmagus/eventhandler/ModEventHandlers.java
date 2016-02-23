@@ -22,7 +22,7 @@ public class ModEventHandlers
 		MinecraftForge.EVENT_BUS.register(new HandlerOnLivingAttack());
 		
 		/** For naturally regenerating mana. */
-		FMLCommonHandler.instance().bus().register(new HandlerOnPlayerPostTick());
+		MinecraftForge.EVENT_BUS.register(new HandlerOnPlayerPostTick());
 		
 		/** For spawning particles around entities holding spell books. */
 		//MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());

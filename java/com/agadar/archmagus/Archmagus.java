@@ -9,11 +9,13 @@ import com.agadar.archmagus.misc.MaxManaMessage;*/
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 
+import com.agadar.archmagus.eventhandler.ModEventHandlers;
 import com.agadar.archmagus.itemblock.BlockManaCrystal;
 import com.agadar.archmagus.itemblock.BlockManaCrystalOre;
 import com.agadar.archmagus.itemblock.ItemAppleMana;
 import com.agadar.archmagus.itemblock.ItemSpellBook;
 import com.agadar.archmagus.misc.ManaCrystalGen;
+import com.agadar.archmagus.misc.MaxManaMessage;
 import com.agadar.archmagus.itemblock.ItemManaCrystal;
 
 import net.minecraft.block.Block;
@@ -88,13 +90,12 @@ public class Archmagus
 	{
 		/** Network stuff. */
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-		// networkWrapper.registerMessage(MaxManaMessage.Handler.class,
-		// MaxManaMessage.class, 0, Side.CLIENT Side.CLIENT);
+		networkWrapper.registerMessage(MaxManaMessage.Handler.class, MaxManaMessage.class, 0, Side.CLIENT);
 
 		/** Register the mod stuff. */
 		// ModItemsBlocks.registerModItemsAndBlocks();
 		// ModEntities.registerModEntities();
-		// ModEventHandlers.registerModEventHandlers();
+		ModEventHandlers.registerModEventHandlers();
 		
 
 		/** Register the client-only stuff. */

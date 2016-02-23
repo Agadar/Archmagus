@@ -1,5 +1,7 @@
 package com.agadar.archmagus;
 
+import com.agadar.archmagus.misc.GuiManaBar;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelHorse;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,7 +48,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenHorse.class, new RenderRisenHorse(new ModelHorse(), 0.75F));
 		
 		/** Gui renderers. */
-		//MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));*/
+		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));
 	}
 
 	@Override

@@ -3,7 +3,11 @@ package com.agadar.archmagus.itemblock;
 import java.util.List;
 
 import com.agadar.archmagus.Archmagus;
+import com.agadar.archmagus.misc.ManaProperties;
+import com.agadar.archmagus.misc.MaxManaMessage;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -43,8 +47,9 @@ public class ItemAppleMana extends ItemFood
     @Override
     protected void onFoodEaten(ItemStack itemStack, World world, EntityPlayer entityPlayer)
     {
-        /*if (!world.isRemote)
+        if (!world.isRemote)
         {
+        	System.out.println("test");
         	ManaProperties props = ManaProperties.get(entityPlayer);
     		int maxMana = props.getMaxMana();
     		
@@ -54,6 +59,6 @@ public class ItemAppleMana extends ItemFood
 	    		props.setMaxMana(maxMana);
 	    		Archmagus.networkWrapper.sendTo(new MaxManaMessage(maxMana), (EntityPlayerMP) entityPlayer);
     		}
-        }*/
+        }
     }
 }
