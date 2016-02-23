@@ -2,10 +2,13 @@ package com.agadar.archmagus.misc;
 
 import java.util.Random;
 
-import com.agadar.archmagus.itemblock.ModItemsBlocks;
+import com.agadar.archmagus.Archmagus;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockNetherrack;
+import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
@@ -34,7 +37,7 @@ public class ManaCrystalGen implements IWorldGenerator
 	/** Generates blocks in the Nether. Currently only used for mana crystal ores. */
 	private void generateNether(World world, Random random, int x, int z)
 	{
-		this.generateOre(ModItemsBlocks.mana_crystal_ore, world, random, x, z, 16, 16, 3 + random.nextInt(6), 3, 1, 127, Blocks.netherrack);
+		this.generateOre(Archmagus.mana_crystal_ore, world, random, x, z, 16, 16, 3 + random.nextInt(6), 4, 1, 127, Blocks.netherrack);
 	}
 
 	/** Generates blocks in the Overworld. Currently unused. */
@@ -51,7 +54,8 @@ public class ManaCrystalGen implements IWorldGenerator
 			int posX = blockXPos + random.nextInt(maxX);
 			int posY = minY + random.nextInt(maxY - minY);
 			int posZ = blockZPos + random.nextInt(maxZ);
-			(new WorldGenMinable(block, maxVeinSize, target)).generate(world, random, posX, posY, posZ);
+			WorldGenMinable wgm = new WorldGenMinable(block.getDefaultState(), maxVeinSize, BlockHelper.forBlock(Blocks.netherrack));
+			wgm.generate(world, random, new BlockPos(posX, posY, posZ));			
 		}
 	}
 }

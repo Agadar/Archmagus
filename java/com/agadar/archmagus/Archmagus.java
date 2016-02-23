@@ -13,6 +13,7 @@ import com.agadar.archmagus.itemblock.BlockManaCrystal;
 import com.agadar.archmagus.itemblock.BlockManaCrystalOre;
 import com.agadar.archmagus.itemblock.ItemAppleMana;
 import com.agadar.archmagus.itemblock.ItemSpellBook;
+import com.agadar.archmagus.misc.ManaCrystalGen;
 import com.agadar.archmagus.itemblock.ItemManaCrystal;
 
 import net.minecraft.block.Block;
@@ -33,7 +34,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @net.minecraftforge.fml.common.Mod(modid = Archmagus.MODID, version = Archmagus.VERSION, name = Archmagus.NAME)
-public class Archmagus {
+public class Archmagus
+{
 	@Instance(value = Archmagus.NAME)
 	public static Archmagus instance;
 
@@ -54,13 +56,15 @@ public class Archmagus {
 	/** The message channel for this mod. */
 	public static SimpleNetworkWrapper networkWrapper;
 	/** The mana crystal ore generator. */
-	// ManaCrystalGen manaCrystalGen = new ManaCrystalGen();
+	ManaCrystalGen manaCrystalGen = new ManaCrystalGen();
 
 	/** The creative tab for the spell books. */
-	public final static CreativeTabs tabSpellBooks = new CreativeTabs("tabSpellBooks") {
+	public final static CreativeTabs tabSpellBooks = new CreativeTabs("tabSpellBooks")
+	{
 		@Override
 		@SideOnly(Side.CLIENT)
-		public Item getTabIconItem() {
+		public Item getTabIconItem()
+		{
 			return spell_book;
 		}
 	};
@@ -80,7 +84,8 @@ public class Archmagus {
 	public final static Block mana_crystal_block = new BlockManaCrystal();
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		/** Network stuff. */
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		// networkWrapper.registerMessage(MaxManaMessage.Handler.class,
@@ -90,29 +95,39 @@ public class Archmagus {
 		// ModItemsBlocks.registerModItemsAndBlocks();
 		// ModEntities.registerModEntities();
 		// ModEventHandlers.registerModEventHandlers();
-		// GameRegistry.registerWorldGenerator(manaCrystalGen, 0);
+		
 
 		/** Register the client-only stuff. */
 		proxy.registerRenderers();
 	}
 
 	@EventHandler
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event)
+	{
 		// Recipes.
 		GameRegistry.addRecipe(new ItemStack(apple_mana), "xxx", "xyx", "xxx", 'x', mana_crystal, 'y', Items.apple);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal_block), "xxx", "xxx", "xxx", 'x', mana_crystal);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal, 9), "x", 'x', mana_crystal_block);
 
 		// Register item(block) textures.
-		if (event.getSide() == Side.CLIENT) {
-			
+		if (event.getSide() == Side.CLIENT)
+		{
+
 			RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-			renderItem.getItemModelMesher().register(spell_book, 0, new ModelResourceLocation(MODID + ":" + ((ItemSpellBook)spell_book).Name, "inventory"));
-			renderItem.getItemModelMesher().register(apple_mana, 0, new ModelResourceLocation(MODID + ":" + ((ItemAppleMana)apple_mana).Name, "inventory"));
-			renderItem.getItemModelMesher().register(mana_crystal, 0, new ModelResourceLocation(MODID + ":" + ((ItemManaCrystal)mana_crystal).Name, "inventory"));
-			renderItem.getItemModelMesher().register(Item.getItemFromBlock(mana_crystal_ore), 0, new ModelResourceLocation(MODID + ":" + ((BlockManaCrystalOre)mana_crystal_ore).Name, "inventory"));
-			renderItem.getItemModelMesher().register(Item.getItemFromBlock(mana_crystal_block), 0, new ModelResourceLocation(MODID + ":" + ((BlockManaCrystal)mana_crystal_block).Name, "inventory"));
+			renderItem.getItemModelMesher().register(spell_book, 0,
+					new ModelResourceLocation(MODID + ":" + ((ItemSpellBook) spell_book).Name, "inventory"));
+			renderItem.getItemModelMesher().register(apple_mana, 0,
+					new ModelResourceLocation(MODID + ":" + ((ItemAppleMana) apple_mana).Name, "inventory"));
+			renderItem.getItemModelMesher().register(mana_crystal, 0,
+					new ModelResourceLocation(MODID + ":" + ((ItemManaCrystal) mana_crystal).Name, "inventory"));
+			renderItem.getItemModelMesher().register(Item.getItemFromBlock(mana_crystal_ore), 0,
+					new ModelResourceLocation(MODID + ":" + ((BlockManaCrystalOre) mana_crystal_ore).Name,
+							"inventory"));
+			renderItem.getItemModelMesher().register(Item.getItemFromBlock(mana_crystal_block), 0,
+					new ModelResourceLocation(MODID + ":" + ((BlockManaCrystal) mana_crystal_block).Name, "inventory"));
 		}
+		
+		GameRegistry.registerWorldGenerator(manaCrystalGen, 1);
 
 		// Brewing recipes.
 		// /** Ingredients. */
