@@ -1,6 +1,9 @@
 package com.agadar.archmagus.misc;
 
 import org.lwjgl.opengl.GL11;
+
+import com.agadar.archmagus.potion.ModPotions;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -68,8 +71,8 @@ public class GuiManaBar extends Gui
 	        int maxMana = props.getMaxMana() / 2;        
 	        int regen = -1;
 	        
-	        //if (mc.thePlayer.isPotionActive(ModPotions.manaRegen))
-	        //	regen = mc.ingameGUI.getUpdateCounter() % 25;
+	        if (mc.thePlayer.isPotionActive(ModPotions.manaRegen))
+	        	regen = mc.ingameGUI.getUpdateCounter() % 25;
 	        
 	        for (int i = 0; i < maxMana; ++i)
 	        {

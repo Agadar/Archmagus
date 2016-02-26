@@ -3,10 +3,8 @@ package com.agadar.archmagus;
 import com.agadar.archmagus.misc.GuiManaBar;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /*import com.agadar.archmagus.entity.EntityRisenSkeleton;

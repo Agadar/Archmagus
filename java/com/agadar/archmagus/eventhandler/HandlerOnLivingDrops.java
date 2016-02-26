@@ -1,6 +1,7 @@
 package com.agadar.archmagus.eventhandler;
 
-import com.agadar.archmagus.itemblock.ItemSpellBook;
+import com.agadar.archmagus.items.ItemSpellBook;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;

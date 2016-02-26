@@ -1,4 +1,4 @@
-package com.agadar.archmagus.itemblock;
+package com.agadar.archmagus.blocks;
 
 import java.util.Random;
 import com.agadar.archmagus.Archmagus;

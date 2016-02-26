@@ -1,4 +1,4 @@
-package com.agadar.archmagus.itemblock;
+package com.agadar.archmagus.items;
 
 import java.util.List;
 

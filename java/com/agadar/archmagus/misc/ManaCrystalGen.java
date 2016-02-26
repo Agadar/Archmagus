@@ -5,7 +5,6 @@ import java.util.Random;
 import com.agadar.archmagus.Archmagus;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockNetherrack;
 import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

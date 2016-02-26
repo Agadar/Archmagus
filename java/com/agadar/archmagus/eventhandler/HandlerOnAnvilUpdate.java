@@ -1,7 +1,7 @@
 package com.agadar.archmagus.eventhandler;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.itemblock.ItemSpellBook;
+import com.agadar.archmagus.items.ItemSpellBook;
 
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

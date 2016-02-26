@@ -49,10 +49,10 @@ public class HandlerManaEvents
 				
 				// Restore mana to full
 				ManaProperties.get((EntityPlayer) event.entity).replenishMana();
+				
+				// finally, we sync the data between server and client
+				Archmagus.networkWrapper.sendTo(new MaxManaMessage(ManaProperties.get((EntityPlayer) event.entity).getMaxMana()), (EntityPlayerMP) event.entity);
 			}
-
-			// finally, we sync the data between server and client
-			Archmagus.networkWrapper.sendTo(new MaxManaMessage(ManaProperties.get((EntityPlayer) event.entity).getMaxMana()), (EntityPlayerMP) event.entity);
 		}
 	}
 	

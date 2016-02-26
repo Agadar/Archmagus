@@ -1,4 +1,4 @@
-package com.agadar.archmagus.itemblock;
+package com.agadar.archmagus.items;
 
 import java.util.List;
 
@@ -49,7 +49,6 @@ public class ItemAppleMana extends ItemFood
     {
         if (!world.isRemote)
         {
-        	System.out.println("test");
         	ManaProperties props = ManaProperties.get(entityPlayer);
     		int maxMana = props.getMaxMana();
     		

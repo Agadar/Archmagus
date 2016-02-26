@@ -4,21 +4,20 @@ import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.misc.ManaProperties;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionBase extends Potion 
 {
 	/** The location of our custom potion effect icons. */
-	private static final ResourceLocation resourceLoc = new ResourceLocation(Archmagus.MODID + ":textures/status_icons.png");
+	private static final ResourceLocation globalLoc = new ResourceLocation(Archmagus.MODID + ":textures/status_icons.png");
 
-	public PotionBase(int par1Id, boolean par2IsBadEffect, int par3LiquidColor) 
+	public PotionBase(ResourceLocation resourceLoc, boolean par2IsBadEffect, int par3LiquidColor) 
 	{
-		super(par1Id, par2IsBadEffect, par3LiquidColor);
+		super(resourceLoc, par2IsBadEffect, par3LiquidColor);
 	}
 	
 	@Override
@@ -48,7 +47,7 @@ public class PotionBase extends Potion
     }
 	
 	@Override
-    public void affectEntity(EntityLivingBase thrower, EntityLivingBase victim, int amplifier, double distanceModifier)
+    public void affectEntity(Entity unknown, Entity thrower, EntityLivingBase victim, int amplifier, double distanceModifier)
     {
 		if (victim instanceof EntityPlayer)
 		{
@@ -62,7 +61,7 @@ public class PotionBase extends Potion
 		}
 		else
 		{
-			super.affectEntity(thrower, victim, amplifier, distanceModifier);
+			super.affectEntity(unknown, thrower, victim, amplifier, distanceModifier);
 		}
     }
 	
@@ -94,12 +93,11 @@ public class PotionBase extends Potion
 		super.setIconIndex(par1, par2);
 		return this;
 	}
-
+	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean hasStatusIcon() 
+	public int getStatusIconIndex()
 	{
-	    Minecraft.getMinecraft().renderEngine.bindTexture(resourceLoc);
-	    return true;
+		 Minecraft.getMinecraft().renderEngine.bindTexture(globalLoc);
+		 return super.getStatusIconIndex();
 	}
 }

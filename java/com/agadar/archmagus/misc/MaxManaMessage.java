@@ -41,7 +41,8 @@ public class MaxManaMessage implements IMessage
 		{
 			EntityPlayer player = Archmagus.proxy.getPlayerFromMessageContext(ctx);
 			ManaProperties prop = ManaProperties.get(player);
-			prop.setMaxMana(message.maxMana);	
+			if (prop != null)
+				prop.setMaxMana(message.maxMana);	
 			return null;
 		}
 	}

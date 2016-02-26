@@ -1,4 +1,4 @@
-package com.agadar.archmagus.itemblock;
+package com.agadar.archmagus.items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +9,29 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPotionBase extends ItemPotion 
 {
-	@SideOnly(Side.CLIENT)
-	private IIcon bottleDrinkable;
-	@SideOnly(Side.CLIENT)
-	private IIcon bottleSplash;
-	@SideOnly(Side.CLIENT)
-	private IIcon overlayIcon;
-    
+	public final String Name = "potion_base";
+	
 	public ItemPotionBase()
 	{
 		super();
-		this.setUnlocalizedName("potion_base");
-		this.setTextureName("potion");
+		this.setUnlocalizedName(Archmagus.MODID + "_" + Name);
+        GameRegistry.registerItem(this, Name);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings("unchecked")
 	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item par1Item, CreativeTabs par2CreativeTab, List par3List)
+    public void getSubItems(Item par1Item, CreativeTabs par2CreativeTab, @SuppressWarnings("rawtypes") List par3List)
     {
 		/** Potion of Mana. */
 		par3List.add(getManaStack(false, 0));
@@ -61,70 +59,62 @@ public class ItemPotionBase extends ItemPotion
 	/** Returns an item stack of a Mana potion. */
 	public static ItemStack getManaStack(boolean splash, int amplification)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
+		ItemStack itemStack = new ItemStack(Archmagus.itemPotionBase, 1, splash ? 16384 : 1);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
 		effects.add(new PotionEffect(ModPotions.mana.id, 1, amplification));		
-		BrewingRecipes.brewing().setEffects(itemStack, effects);
+		setEffects(itemStack, effects);
 		return itemStack;
 	}
 	
 	/** Returns an item stack of a Mana Regeneration potion. */
 	public static ItemStack getManaRegenStack(boolean splash, int amplification, boolean extended)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
+		ItemStack itemStack = new ItemStack(Archmagus.itemPotionBase, 1, splash ? 16384 : 1);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
-		effects.add(new PotionEffect(ModPotions.manaRegen.id, (int)(900 * BrewingRecipes.brewing().getDurationModifier(splash, amplification, extended)), amplification));		
-		BrewingRecipes.brewing().setEffects(itemStack, effects);
+		effects.add(new PotionEffect(ModPotions.manaRegen.id, (int)(900 * getDurationModifier(splash, amplification, extended)), amplification));		
+		setEffects(itemStack, effects);
 		return itemStack;
 	}
 	
 	/** Returns an item stack of a Restoration potion. */
 	public static ItemStack getRestorationStack(boolean splash, int amplification)
 	{
-		ItemStack itemStack = new ItemStack(ModItemsBlocks.itemPotionBase, 1, splash ? 16384 : 1);		
+		ItemStack itemStack = new ItemStack(Archmagus.itemPotionBase, 1, splash ? 16384 : 1);		
 		List<PotionEffect> effects = new ArrayList<PotionEffect>();
 		effects.add(new PotionEffect(ModPotions.mana.id, 1, amplification));	
 		effects.add(new PotionEffect(Potion.heal.id, 1, amplification));
-		BrewingRecipes.brewing().setEffects(itemStack, effects);
+		setEffects(itemStack, effects);
 		return itemStack;
 	}
 	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int p_77617_1_)
+	/** Translates the given List of PotionEffects to an NBTTagList and adds it to the given ItemStack's NBTTagCompound. */
+    public static void setEffects(ItemStack par1ItemStack, List<PotionEffect> par2Effects)
     {
-        return isSplash(p_77617_1_) ? this.bottleSplash : this.bottleDrinkable;
+    	par1ItemStack.setTagCompound(new NBTTagCompound());
+    	par1ItemStack.getTagCompound().setTag("CustomPotionEffects", new NBTTagList());
+    	NBTTagList effectsTagList = par1ItemStack.getTagCompound().getTagList("CustomPotionEffects", 10);
+    	
+    	for (PotionEffect effect : par2Effects)
+    	{
+    		NBTTagCompound effectTag = new NBTTagCompound();
+    		effect.writeCustomPotionEffectToNBT(effectTag);
+    		effectsTagList.appendTag(effectTag);
+    	}
     }
+    
+    /** Calculates the duration modifier for a potion effect according to the given parameters. */
+	public static float getDurationModifier(boolean splash, int amplification, boolean extended)
+	{
+		float modifier = splash ? 0.75F : 1.0F;		
+		for (int i = 0; i < amplification; i++)
+			modifier /= 2;
+		return extended ? modifier * 8 / 3 : modifier;
+	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
     {
 		return 16777215;
-    }
-	
-	@Override
-	public IIcon getIcon(ItemStack par1ItemStack, int par2Pass)
-	{
-		if (par2Pass == 0)
-			return this.overlayIcon;
-
-		return super.getIcon(par1ItemStack, par2Pass);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister par1IconRegister)
-    {
-		this.bottleDrinkable = par1IconRegister.registerIcon(Archmagus.MODID + ":bottle_drinkable");
-        this.bottleSplash = par1IconRegister.registerIcon(Archmagus.MODID + ":bottle_splash");
-        this.overlayIcon = par1IconRegister.registerIcon(Archmagus.MODID + ":potion_overlay");
-    }
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack, int pass)
-    {
-		return pass == 0;
     }
 }

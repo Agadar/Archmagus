@@ -17,6 +17,9 @@ public class HandlerOnPlayerPostTick
 			return;
 
 		ManaProperties prop = ManaProperties.get(event.player);
+		
+		if (prop == null)
+			return;
 
 		if (prop.getCurrentMana() >= prop.getMaxMana())
 			return;

@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.minecraft.potion.Potion;
+import net.minecraft.util.ResourceLocation;
 
 /** Responsible for managing this mod's Potions. */
 public class ModPotions 
@@ -27,33 +28,21 @@ public class ModPotions
 	/** The potion that applies mana regeneration. */
 	public final static Potion manaRegen;
 	
-	/** The next unique Potion Id. Should only be used and altered by getUniquePotionId(). */
-	private static int nextPotionId = 32;
-	
 	static
 	{
 		openUpPotionTypes();		
 
-		polymorphed = new PotionBase(getUniquePotionId(), false, 0).setIconIndex(0, 0).setPotionName("potion.polymorphed");
-		fireShield = new PotionBase(getUniquePotionId(), false, 14981690).setIconIndex(1, 0).setPotionName("potion.shield.fire");
-		earthShield = new PotionBase(getUniquePotionId(), false, 10044730).setIconIndex(2, 0).setPotionName("potion.shield.earth");
-		waterShield = new PotionBase(getUniquePotionId(), false, 3035801).setIconIndex(3, 0).setPotionName("potion.shield.water");
-		stormShield = new PotionBase(getUniquePotionId(), false, 8171462).setIconIndex(4, 0).setPotionName("potion.shield.storm");
-		frostShield = new PotionBase(getUniquePotionId(), false, 15463164).setIconIndex(5, 0).setPotionName("potion.shield.frost");
-		feared = new PotionBase(getUniquePotionId(), true, 4393481).setIconIndex(6, 0).setPotionName("potion.feared");
-		projectileImmunity = new PotionBase(getUniquePotionId(), false, 0).setIconIndex(7, 0).setPotionName("potion.immunity.projectile");
-		knockbackImmunity = new PotionBase(getUniquePotionId(), false, 0).setIconIndex(0, 1).setPotionName("potion.immunity.knockback");
-		mana = new PotionBase(getUniquePotionId(), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.instant");
-		manaRegen = new PotionBase(getUniquePotionId(), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.regen");
-	}
-	
-	/** Returns the next unique Potion Id. */
-	private static int getUniquePotionId()
-	{
-		while (nextPotionId < Potion.potionTypes.length && Potion.potionTypes[nextPotionId] != null)
-			nextPotionId++;
-		
-		return nextPotionId;
+		polymorphed = new PotionBase(new ResourceLocation("polymorphed"), false, 0).setIconIndex(0, 0).setPotionName("potion.polymorphed");
+		fireShield = new PotionBase(new ResourceLocation("fireShield"), false, 14981690).setIconIndex(1, 0).setPotionName("potion.shield.fire");
+		earthShield = new PotionBase(new ResourceLocation("earthShield"), false, 10044730).setIconIndex(2, 0).setPotionName("potion.shield.earth");
+		waterShield = new PotionBase(new ResourceLocation("waterShield"), false, 3035801).setIconIndex(3, 0).setPotionName("potion.shield.water");
+		stormShield = new PotionBase(new ResourceLocation("stormShield"), false, 8171462).setIconIndex(4, 0).setPotionName("potion.shield.storm");
+		frostShield = new PotionBase(new ResourceLocation("frostShield"), false, 15463164).setIconIndex(5, 0).setPotionName("potion.shield.frost");
+		feared = new PotionBase(new ResourceLocation("feared"), true, 4393481).setIconIndex(6, 0).setPotionName("potion.feared");
+		projectileImmunity = new PotionBase(new ResourceLocation("projectileImmunity"), false, 0).setIconIndex(7, 0).setPotionName("potion.immunity.projectile");
+		knockbackImmunity = new PotionBase(new ResourceLocation("knockbackImmunity"), false, 0).setIconIndex(0, 1).setPotionName("potion.immunity.knockback");
+		mana = new PotionBase(new ResourceLocation("mana"), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.instant");
+		manaRegen = new PotionBase(new ResourceLocation("manaRegen"), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.regen");
 	}
 	
 	/** Calling this method allows us to register new Potions and modify existing Potions. */

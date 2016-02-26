@@ -1,4 +1,4 @@
-package com.agadar.archmagus.itemblock;
+package com.agadar.archmagus.blocks;
 
 import com.agadar.archmagus.Archmagus;
 import net.minecraft.block.Block;
