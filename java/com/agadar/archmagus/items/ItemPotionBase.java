@@ -2,10 +2,12 @@ package com.agadar.archmagus.items;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.potion.ModPotions;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
@@ -13,11 +15,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemPotionBase extends ItemPotion 
+public class ItemPotionBase extends Item 
 {
 	public final String Name = "potion_base";
 	
@@ -25,8 +28,95 @@ public class ItemPotionBase extends ItemPotion
 	{
 		super();
 		this.setUnlocalizedName(Archmagus.MODID + "_" + Name);
+		this.setMaxStackSize(1);
+        this.setHasSubtypes(true);
+        this.setMaxDamage(0);
+        this.setCreativeTab(CreativeTabs.tabBrewing);
         GameRegistry.registerItem(this, Name);
 	}
+	
+	public List<PotionEffect> getEffects(ItemStack stack)
+    {
+    	return Items.potionitem.getEffects(stack);
+    }
+
+    public List<PotionEffect> getEffects(int meta)
+    {
+    	return Items.potionitem.getEffects(meta);
+    }
+
+    /**
+     * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
+     * the Item before the action is complete.
+     */
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    {
+    	return Items.potionitem.onItemUseFinish(stack, worldIn, playerIn);
+    }
+
+    /**
+     * How long it takes to use or consume an item
+     */
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+    	return Items.potionitem.getMaxItemUseDuration(stack); 
+    }
+
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+    	return Items.potionitem.getItemUseAction(stack);
+    }
+
+    /**
+     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
+     */
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
+    {
+    	return Items.potionitem.onItemRightClick(itemStackIn, worldIn, playerIn);
+    }
+
+    /**
+     * returns wether or not a potion is a throwable splash potion based on damage value
+     */
+    public static boolean isSplash(int meta)
+    {
+    	return ItemPotion.isSplash(meta);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getColorFromDamage(int meta)
+    {
+        return Items.potionitem.getColorFromDamage(meta);
+    }
+
+    public String getItemStackDisplayName(ItemStack stack)
+    {
+    	return Items.potionitem.getItemStackDisplayName(stack);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean isEffectInstant(int meta)
+    {
+    	return Items.potionitem.isEffectInstant(meta);
+    }
+
+    /**
+     * allows items to add custom lines of information to the mouseover description
+     */
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    {
+    	Items.potionitem.addInformation(stack, playerIn, tooltip, advanced);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack)
+    {
+    	return Items.potionitem.hasEffect(stack);
+    }
 
 	@SuppressWarnings("unchecked")
 	@Override
