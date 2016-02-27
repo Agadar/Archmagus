@@ -1,6 +1,7 @@
 package com.agadar.archmagus.spell;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 /** Teleports the player to his bed, and otherwise to the world spawn. */
@@ -46,14 +47,14 @@ public class SpellRespawn extends Spell
 	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-		ChunkCoordinates coordSpawn = par3EntityPlayer.getBedLocation(0);
+		BlockPos coordSpawn = par3EntityPlayer.getBedLocation(0);
 
 		if (coordSpawn != null)
-			par3EntityPlayer.setPositionAndUpdate(coordSpawn.posX, coordSpawn.posY + 1, coordSpawn.posZ);
+			par3EntityPlayer.setPositionAndUpdate(coordSpawn.getX(), coordSpawn.getY() + 1, coordSpawn.getZ());
 		else
 		{
 			coordSpawn = par2World.getSpawnPoint();
-			par3EntityPlayer.setPositionAndUpdate(coordSpawn.posX, coordSpawn.posY, coordSpawn.posZ);
+			par3EntityPlayer.setPositionAndUpdate(coordSpawn.getX(), coordSpawn.getY(), coordSpawn.getZ());
 		}
 
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);

@@ -1,6 +1,7 @@
-package com.agadar.archmagus.spell;
+package com.agadar.archmagus.spell.unimplemented;
 
 import com.agadar.archmagus.potion.ModPotions;
+import com.agadar.archmagus.spell.Spell;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;

@@ -60,9 +60,7 @@ public class SpellData
     	short cooldown = par1NBTTagCompound.getShort("cd");
 
 		if (cooldown > 0)
-		{
 			par1NBTTagCompound.setShort("cd", (short) (cooldown - 1));
-		}
     }
     
     /** Reads an NBTTagCompound and starts the cooldown anew. */

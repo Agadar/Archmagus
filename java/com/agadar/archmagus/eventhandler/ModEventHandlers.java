@@ -18,7 +18,7 @@ public class ModEventHandlers
 		MinecraftForge.EVENT_BUS.register(new HandlerOnAnvilUpdate());
 		
 		/** For applying magical shield effects and the potions effects they apply. */
-		MinecraftForge.EVENT_BUS.register(new HandlerOnLivingAttack());
+		MinecraftForge.EVENT_BUS.register(new HandlerShieldEvents());
 		
 		/** For spawning particles around entities holding spell books. */
 		//MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());

@@ -2,6 +2,7 @@ package com.agadar.archmagus.eventhandler;
 
 import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.items.ItemSpellBook;
+import com.agadar.archmagus.spell.SpellData;
 
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -14,8 +15,15 @@ public class HandlerOnAnvilUpdate
 	{
 		if (event.left.getItem().equals(Archmagus.spell_book) && event.right.getItem().equals(Archmagus.spell_book))
 		{
-			event.output = ((ItemSpellBook) Archmagus.spell_book).tryCombine(event.left, event.right);
-			event.cost = 10;
+			ItemSpellBook spell_book = ((ItemSpellBook) Archmagus.spell_book);
+			event.output = spell_book.tryCombine(event.left, event.right);
+			
+			if (event.output != null)
+			{
+				int levelLeft = SpellData.readFromNBTTagCompound(spell_book.getSpellTag(event.left)).spellLevel;
+				int levelRight = SpellData.readFromNBTTagCompound(spell_book.getSpellTag(event.right)).spellLevel;
+				event.cost = (levelLeft + levelRight) * 5;		
+			}
 		}
 	}
 }
