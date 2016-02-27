@@ -16,13 +16,13 @@ public class SpellRespawn extends Spell
 	@Override
     public int getManaCost()
     {
-    	return 12;
+    	return 10;
     }
     
     @Override
     public short getCooldown()
     {
-    	return 6000;
+    	return 12000;
     }
     
 	@Override
@@ -46,6 +46,9 @@ public class SpellRespawn extends Spell
 	@Override
 	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
+		if (par3EntityPlayer.dimension != 0)
+			return;
+		
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
 		BlockPos coordSpawn = par3EntityPlayer.getBedLocation(0);
 

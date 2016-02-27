@@ -61,8 +61,13 @@ public class ItemSpellBook extends Item
         	if (spellData.spellObj instanceof SpellShield) par3List.add("Enhancement");
         	else par3List.add("Miscellaneous");
         	
-        	if (spellData.spellCooldown != 0) 
-        		par3List.add(EnumChatFormatting.RED + "Cooldown: " + (spellData.spellCooldown / 20) + " seconds");
+        	if (spellData.spellCooldown != 0)
+        	{
+        		int seconds = spellData.spellCooldown / 20;		
+        		int minutes = seconds / 60;
+        		seconds = seconds % 60;
+        		par3List.add(EnumChatFormatting.RED + "Cooldown: " + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+        	}
         }
     }
     
@@ -135,7 +140,11 @@ public class ItemSpellBook extends Item
         	
         	ManaProperties props = ManaProperties.get(par3EntityPlayer);
         	
-        	if (inCreative || props.consumeMana(spellData.spellObj.getManaCost()))
+        	if (inCreative)
+        	{
+        		spellData.castSpell(par2World, par3EntityPlayer);
+        	}
+        	else if (props.consumeMana(spellData.spellObj.getManaCost()))
         	{
         		spellData.castSpell(par2World, par3EntityPlayer);
         		SpellData.startCooldown(spellTag);
