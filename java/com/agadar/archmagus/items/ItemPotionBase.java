@@ -20,6 +20,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+/**
+ * The ItemPotion base for our mod. Inherits from Item as opposed to ItemPotion due to problems
+ * with brewing recipes when we inherit from ItemPotion. Hence, most methods delegate functionality
+ * to the ItemPotion instance in vanilla's Items.
+ * @author marti
+ *
+ */
 public class ItemPotionBase extends Item 
 {
 	public final String Name = "potion_base";

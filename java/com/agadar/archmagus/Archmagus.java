@@ -2,7 +2,7 @@ package com.agadar.archmagus;
 
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 
 import com.agadar.archmagus.blocks.BlockManaCrystal;
@@ -35,7 +35,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@net.minecraftforge.fml.common.Mod(modid = Archmagus.MODID, version = Archmagus.VERSION, name = Archmagus.NAME)
+@Mod(modid = Archmagus.MODID, version = Archmagus.VERSION, name = Archmagus.NAME)
 public class Archmagus
 {
 	@Instance(value = Archmagus.NAME)
@@ -44,11 +44,8 @@ public class Archmagus
 	@SidedProxy(clientSide = Archmagus.CLIENTSIDE, serverSide = Archmagus.SERVERSIDE)
 	public static CommonProxy proxy;
 
-	/*
-	 * These are the references we use. These values are the same for our entire
-	 * mod, so we only have to make them once here, and we can always access
-	 * them.
-	 */
+	/* These are the references we use. These values are the same for our entire
+	 * mod, so we only have to make them once here, and we can always access them. */
 	public static final String MODID = "archmagus";
 	public static final String VERSION = "0.8.0";
 	public static final String NAME = "Archmagus";
@@ -85,17 +82,14 @@ public class Archmagus
 	/** The mana crystal block. */
 	public final static Block mana_crystal_block = new BlockManaCrystal();
 
-	@EventHandler
+	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		/** Network stuff. */
+		// Register network stuff.
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		networkWrapper.registerMessage(MaxManaMessage.Handler.class, MaxManaMessage.class, 0, Side.CLIENT);
 
-		/** Event handlers. */
-		ModEventHandlers.registerModEventHandlers();
-
-		// Register item textures for potions.
+		// Register item textures for potions, which have BaseMeshDefinitions.
 		if (event.getSide() == Side.CLIENT)
 		{
 			PotionBaseMeshDefinition pbmd = new PotionBaseMeshDefinition();
@@ -103,19 +97,19 @@ public class Archmagus
 			ModelBakery.registerItemVariants(itemPotionBase, pbmd.drinkable, pbmd.splash);
 		}
 
-		/** Register the client-only stuff. */
+		// Register stuff placed in the proxies.
 		proxy.registerRenderers();
 	}
 
-	@EventHandler
+	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		// Recipes.
+		// Register crafting recipes.
 		GameRegistry.addRecipe(new ItemStack(apple_mana), "xxx", "xyx", "xxx", 'x', mana_crystal, 'y', Items.apple);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal_block), "xxx", "xxx", "xxx", 'x', mana_crystal);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal, 9), "x", 'x', mana_crystal_block);
 
-		// Register item(block) textures.
+		// Register item and block textures.
 		if (event.getSide() == Side.CLIENT)
 		{
 			RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
@@ -132,10 +126,10 @@ public class Archmagus
 					new ModelResourceLocation(MODID + ":" + ((BlockManaCrystal) mana_crystal_block).Name, "inventory"));
 		}
 
-		// Mana crystal ore world generator.
+		// Register the mana crystal ore world generator.
 		GameRegistry.registerWorldGenerator(manaCrystalGen, 1);
 
-		// Brewing recipes.
+		// Register brewing recipes.
 		/** Ingredients. */
 		ItemStack awkward = new ItemStack(Items.potionitem, 1, 16);
 		ItemStack gunpowder = new ItemStack(Items.gunpowder);
@@ -199,5 +193,12 @@ public class Archmagus
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplash, redstone, regenSplashExt));
 		/** Splash Potion of Mana Regen (Amplified) + Redstone -> Splash Potion of Mana Regen (Extended). */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplashAmpl, redstone, regenSplashExt));
+	}
+	
+	@Mod.EventHandler
+	public void load(FMLInitializationEvent event) 
+	{
+		// Register the event handlers.
+		ModEventHandlers.registerModEventHandlers();	
 	}
 }

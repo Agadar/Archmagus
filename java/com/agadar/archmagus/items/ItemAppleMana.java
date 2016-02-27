@@ -41,7 +41,7 @@ public class ItemAppleMana extends ItemFood
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	par3List.add("Increases Maximum Mana +2.");
+    	par3List.add("Increases Maximum Mana +2");
     }
     
     @Override

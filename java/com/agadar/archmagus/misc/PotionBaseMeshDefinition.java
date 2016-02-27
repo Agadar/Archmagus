@@ -5,6 +5,9 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Required for allowing ItemPotionBase to have multiple possible textures.
+ */
 public class PotionBaseMeshDefinition implements ItemMeshDefinition
 {
 	public final ModelResourceLocation drinkable = new ModelResourceLocation(Archmagus.MODID + ":bottle_drinkable",

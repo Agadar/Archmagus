@@ -15,6 +15,11 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * The GUI element that shows the player's mana bar. It draws the mana bar as well as the air bar
+ * after the hunger bar is drawn, and cancels vanilla's own drawing of the air bar.
+ *
+ */
 public class GuiManaBar extends Gui 
 {
 	/** The path to the gui's icons. */

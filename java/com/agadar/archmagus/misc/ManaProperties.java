@@ -7,6 +7,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
+/**
+ * Holds the maximum mana, current mana, and the mana regeneration timer for a player.
+ */
 public class ManaProperties implements IExtendedEntityProperties 
 {
 	/** The unique name of this property. */
@@ -104,6 +107,13 @@ public class ManaProperties implements IExtendedEntityProperties
 		this.player.getDataWatcher().updateObject(MANA_WATCHER, properties.getInteger("CurrentMana"));
 		this.maxMana = properties.getInteger("MaxMana");
 		this.manaTimer = properties.getInteger("ManaTimer");
+	}
+	
+	public void copy (ManaProperties mp)
+	{
+		this.player.getDataWatcher().updateObject(MANA_WATCHER, mp.getCurrentMana());
+        this.maxMana = mp.maxMana;
+        this.manaTimer = mp.manaTimer;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.agadar.archmagus.items.ItemSpellBook;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/** For making spell books combineable in anvils. */
+/** Event handler for making spell books combineable in anvils. */
 public class HandlerOnAnvilUpdate 
 {
 	@SubscribeEvent

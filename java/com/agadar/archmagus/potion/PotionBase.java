@@ -97,6 +97,7 @@ public class PotionBase extends Potion
 	@Override
 	public int getStatusIconIndex()
 	{
+		// Binds the renderEngine to our own textures instead of vanilla's.
 		 Minecraft.getMinecraft().renderEngine.bindTexture(globalLoc);
 		 return super.getStatusIconIndex();
 	}
