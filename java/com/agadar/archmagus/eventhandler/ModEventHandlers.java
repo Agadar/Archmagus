@@ -12,7 +12,7 @@ public class ModEventHandlers
 		MinecraftForge.EVENT_BUS.register(new HandlerManaEvents());
 		
 		/** For making mobs drop spell books. */
-		MinecraftForge.EVENT_BUS.register(new HandlerOnLivingDrops());
+		MinecraftForge.EVENT_BUS.register(new HandlerBookDropEvents());
 		 
 		/** For making spell books combineable in anvils. */
 		MinecraftForge.EVENT_BUS.register(new HandlerOnAnvilUpdate());

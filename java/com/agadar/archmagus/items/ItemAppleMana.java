@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -57,6 +58,7 @@ public class ItemAppleMana extends ItemFood
     			maxMana += 2;
 	    		props.setMaxMana(maxMana);
 	    		Archmagus.networkWrapper.sendTo(new MaxManaMessage(maxMana), (EntityPlayerMP) entityPlayer);
+	    		entityPlayer.addChatMessage(new ChatComponentText("Your maximum Mana has increased by 2!"));
     		}
         }
     }

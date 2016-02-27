@@ -7,7 +7,10 @@ import com.agadar.archmagus.misc.ManaProperties;
 import com.agadar.archmagus.spell.Spell;
 import com.agadar.archmagus.spell.SpellData;
 import com.agadar.archmagus.spell.Spells;
+import com.agadar.archmagus.spell.aoe.SpellAoE;
 import com.agadar.archmagus.spell.shield.SpellShield;
+import com.agadar.archmagus.spell.targeted.ISpellTargeted;
+import com.agadar.archmagus.spell.targeted.SpellTeleport;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -16,6 +19,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -58,8 +62,16 @@ public class ItemSpellBook extends Item
 
         if (spellData.spellObj != null)
         {
-        	if (spellData.spellObj instanceof SpellShield) par3List.add("Enhancement");
-        	else par3List.add("Miscellaneous");
+        	if (spellData.spellObj instanceof SpellShield) 
+        		par3List.add("Magic Ward");
+        	else if (spellData.spellObj instanceof SpellAoE)
+        		par3List.add("Area of Effect");
+        	else if (spellData.spellObj instanceof ISpellTargeted && !(spellData.spellObj instanceof SpellTeleport))
+        		par3List.add("Projectile");
+        	//else if (spellData.spellObj instanceof SpellSummon)
+        	//	par3List.add("Summon");
+        	else 
+        		par3List.add("Miscellaneous");
         	
         	if (spellData.spellCooldown != 0)
         	{
@@ -135,8 +147,13 @@ public class ItemSpellBook extends Item
         	SpellData spellData = SpellData.readFromNBTTagCompound(spellTag);	
         	boolean inCreative = par3EntityPlayer.capabilities.isCreativeMode;
         	
-        	if (!inCreative && spellData.spellCooldown > 0) 
+        	if (!inCreative && spellData.spellCooldown > 0)
+        	{
+        		if (spellData.spellCooldown > 40)
+        			par3EntityPlayer.addChatMessage(new ChatComponentText("Spell is on cooldown!"));
+        		
         		return par1ItemStack;  
+        	}
         	
         	ManaProperties props = ManaProperties.get(par3EntityPlayer);
         	
@@ -149,6 +166,8 @@ public class ItemSpellBook extends Item
         		spellData.castSpell(par2World, par3EntityPlayer);
         		SpellData.startCooldown(spellTag);
         	}
+        	else
+        		par3EntityPlayer.addChatMessage(new ChatComponentText("Not enough mana!"));
     	}
     	
     	return par1ItemStack;

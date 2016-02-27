@@ -17,7 +17,7 @@ public class SpellLightningStorm extends SpellAoE {
 	@Override
 	public int getManaCost()
     {
-    	return 8;
+    	return 7;
     }
 	
 	@Override

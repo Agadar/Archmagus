@@ -24,7 +24,7 @@ public class SpellBlazeStorm extends SpellAoE
 	@Override
 	protected void affectEntity(World par1World, EntityLivingBase par2EntityLivingBase) 
 	{
-		par2EntityLivingBase.setFire(5);				
+		par2EntityLivingBase.setFire(4);				
 		par2EntityLivingBase.attackEntityFrom(DamageSource.onFire, 4F);	
 		par2EntityLivingBase.knockBack(par2EntityLivingBase, 0F, 1F, 0F);
 	}

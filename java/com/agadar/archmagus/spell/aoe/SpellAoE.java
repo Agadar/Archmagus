@@ -27,21 +27,20 @@ public abstract class SpellAoE extends Spell
 	@Override
     public short getCooldown()
     {
-    	return 200;
+    	return 300;
     }
 	
 	@Override
 	public int getManaCost()
     {
-    	return 6;
+    	return 5;
     }
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		double areaSize = par1Level * 4;
-		List<EntityLivingBase> entities = par2World.getEntitiesWithinAABB(EntityLivingBase.class, par3EntityPlayer.boundingBox.expand(areaSize, areaSize, areaSize));
+		List<EntityLivingBase> entities = par2World.getEntitiesWithinAABB(EntityLivingBase.class, par3EntityPlayer.getEntityBoundingBox().expand(areaSize, areaSize, areaSize));
 
 		if (entities.size() <= 1)
 			par3EntityPlayer.addChatMessage(new ChatComponentText("No targets nearby!"));
