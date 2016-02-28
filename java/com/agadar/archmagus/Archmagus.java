@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 
 import com.agadar.archmagus.blocks.BlockManaCrystal;
 import com.agadar.archmagus.blocks.BlockManaCrystalOre;
+import com.agadar.archmagus.entity.ModEntities;
 import com.agadar.archmagus.eventhandler.ModEventHandlers;
 import com.agadar.archmagus.items.ItemAppleMana;
 import com.agadar.archmagus.items.ItemManaCrystal;
@@ -38,7 +39,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod(modid = Archmagus.MODID, version = Archmagus.VERSION, name = Archmagus.NAME)
 public class Archmagus
 {
-	@Instance(value = Archmagus.NAME)
+	@Instance(value = Archmagus.MODID)
 	public static Archmagus instance;
 
 	@SidedProxy(clientSide = Archmagus.CLIENTSIDE, serverSide = Archmagus.SERVERSIDE)
@@ -96,7 +97,7 @@ public class Archmagus
 			ModelLoader.setCustomMeshDefinition(itemPotionBase, pbmd);
 			ModelBakery.registerItemVariants(itemPotionBase, pbmd.drinkable, pbmd.splash);
 		}
-
+		
 		// Register stuff placed in the proxies.
 		proxy.registerRenderers();
 	}
@@ -104,6 +105,12 @@ public class Archmagus
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		// Register entities
+		ModEntities.registerModEntities();
+		
+		// Register stuff placed in the proxies.
+		//proxy.registerRenderers();
+		
 		// Register crafting recipes.
 		GameRegistry.addRecipe(new ItemStack(apple_mana), "xxx", "xyx", "xxx", 'x', mana_crystal, 'y', Items.apple);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal_block), "xxx", "xxx", "xxx", 'x', mana_crystal);
@@ -193,12 +200,8 @@ public class Archmagus
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplash, redstone, regenSplashExt));
 		/** Splash Potion of Mana Regen (Amplified) + Redstone -> Splash Potion of Mana Regen (Extended). */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplashAmpl, redstone, regenSplashExt));
-	}
 	
-	@Mod.EventHandler
-	public void load(FMLInitializationEvent event) 
-	{
 		// Register the event handlers.
-		ModEventHandlers.registerModEventHandlers();	
+		ModEventHandlers.registerModEventHandlers();
 	}
 }

@@ -1,13 +1,16 @@
 package com.agadar.archmagus.eventhandler;
 
 import com.agadar.archmagus.Archmagus;
+import com.agadar.archmagus.entity.ISummoned;
 import com.agadar.archmagus.misc.ManaProperties;
 import com.agadar.archmagus.misc.MaxManaMessage;
+import com.agadar.archmagus.spell.summon.SpellSummon;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -72,5 +75,17 @@ public class HandlerManaEvents
 			prop.replenishMana(1);
 			prop.manaTimer = 0;
 		}
+	}
+	
+	@SubscribeEvent
+	public void onEntityTravelToDimension(EntityTravelToDimensionEvent event)
+	{
+		// If the entity is a summoned entity, then cancel the travel.
+		if (event.entity instanceof ISummoned)
+			event.setCanceled(true);
+		
+		// Else if the entity is the player, then kill his summoned minions before travel.
+		else if (event.entity instanceof EntityPlayer)
+			SpellSummon.killExistingMinions(event.entity.worldObj, (EntityPlayer) event.entity);
 	}
 }

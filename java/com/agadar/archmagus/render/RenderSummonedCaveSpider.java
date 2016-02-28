@@ -1,31 +1,37 @@
 package com.agadar.archmagus.render;
 
-import org.lwjgl.opengl.GL11;
+import com.agadar.archmagus.entity.EntitySummonedCaveSpider;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSummonedCaveSpider extends RenderSummonedSpider 
+public class RenderSummonedCaveSpider extends RenderSummonedSpider<EntitySummonedCaveSpider>
 {
-	private static final ResourceLocation caveSpiderTextures = new ResourceLocation("textures/entity/spider/cave_spider.png");
+    private static final ResourceLocation caveSpiderTextures = new ResourceLocation("textures/entity/spider/cave_spider.png");
 
-    public RenderSummonedCaveSpider()
+    public RenderSummonedCaveSpider(RenderManager renderManagerIn)
     {
+        super(renderManagerIn);
         this.shadowSize *= 0.7F;
     }
-    
-    @Override
-    protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
+
+    /**
+     * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
+     * entityLiving, partialTickTime
+     */
+    protected void preRenderCallback(EntitySummonedCaveSpider entitylivingbaseIn, float partialTickTime)
     {
-    	GL11.glScalef(0.7F, 0.7F, 0.7F);
+        GlStateManager.scale(0.7F, 0.7F, 0.7F);
     }
-    
-    @Override
-    protected ResourceLocation getEntityTexture(Entity par1Entity)
+
+    /**
+     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
+     */
+    protected ResourceLocation getEntityTexture(EntitySummonedCaveSpider entity)
     {
         return caveSpiderTextures;
     }

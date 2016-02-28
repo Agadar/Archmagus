@@ -5,11 +5,12 @@ import java.util.List;
 
 import com.agadar.archmagus.entity.EntitySummoned;
 import com.agadar.archmagus.entity.EntityRisenHorse;
-import com.agadar.archmagus.entity.ISummoned;
 import com.agadar.archmagus.spell.Spell;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.entity.passive.EntityTameable;
@@ -77,20 +78,34 @@ public class SpellSummon extends Spell
 	@Override
 	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
+		// Play sound and kill existing summoned minions.
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-		this.killExistingMinions(par2World, par3EntityPlayer);
+		SpellSummon.killExistingMinions(par2World, par3EntityPlayer);
 		
 		try 
 		{
+			// The positions around the player where the minions will spawn.
 			int[] xSpawnOffset = { -2, 0, 2, 0 };
 			int[] zSpawnOffset = { 0, 2, 0, -2 };
 
+			// Summon one minion per spell level.
 			for (int i = 0; i < getNormalizedLevel(par1Level); i++)
 			{
-				EntityCreature entity = (EntityCreature) entityConstr.newInstance(par2World);
-				entity.setLocationAndAngles(par3EntityPlayer.posX + xSpawnOffset[i], par3EntityPlayer.posY, par3EntityPlayer.posZ + zSpawnOffset[i], entity.rotationYaw, 0.0F);					
-				String comSendName = par3EntityPlayer.getCommandSenderName();
-				((EntityTameable) entity).func_152115_b(par3EntityPlayer.getUniqueID().toString());
+				EntityCreature entity = (EntityCreature) entityConstr.newInstance(par2World);	
+				BlockPos blockPos1 = new BlockPos(par3EntityPlayer.posX + xSpawnOffset[i], par3EntityPlayer.posY, par3EntityPlayer.posZ + zSpawnOffset[i]);
+				Block block1 = par2World.getBlockState(blockPos1).getBlock();
+				
+				// If the block the minion should spawn in or the block above it is solid (makes the minion suffocate)
+				// then instead spawn the minion on the player. Likewise if the block below the spawn place is not solid.
+                if (block1.getMaterial().isSolid() || (par2World.getBlockState(blockPos1.up()).getBlock().getMaterial().isSolid()) ||
+                		!(par2World.getBlockState(blockPos1.down(2)).getBlock().getMaterial().isSolid()))
+                	entity.setLocationAndAngles(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, entity.rotationYaw, 0.0F);
+                else
+					entity.moveToBlockPosAndAngles(blockPos1, entity.rotationYaw, 0.0F);
+								
+                // Set minion name, owner, et cetera, then spawn it in the world.
+				String comSendName = par3EntityPlayer.getCommandSenderEntity().getName();
+				((EntityTameable) entity).setOwnerId(par3EntityPlayer.getUniqueID().toString());
 				entity.setCustomNameTag(comSendName + "'s Minion");
 				entity.setAlwaysRenderNameTag(true);
 				par2World.spawnEntityInWorld(entity);
@@ -105,31 +120,21 @@ public class SpellSummon extends Spell
 	/** Kills all of the player's existing summoned minions. 
 	 *  Should be called every time before new minions are summoned. 
 	 *  Kills off EntitySummoned and EntitySummonedHorse, both which implement ISummoned. */
-	protected void killExistingMinions(World par1World, EntityPlayer par2EntityPlayer) 
+	public static void killExistingMinions(World par1World, EntityPlayer par2EntityPlayer) 
 	{
-		@SuppressWarnings("unchecked")
-		List<ISummoned> minions = par1World.getEntitiesWithinAABB(ISummoned.class, par2EntityPlayer.boundingBox.expand(20.0D, 20.0D, 20.0D));
-
-		for (ISummoned minion : minions)
+		List<EntitySummoned> minions = par1World.getEntitiesWithinAABB(EntitySummoned.class, par2EntityPlayer.getEntityBoundingBox().expand(20.0D, 20.0D, 20.0D));
+		List<EntityRisenHorse> mounts = par1World.getEntitiesWithinAABB(EntityRisenHorse.class, par2EntityPlayer.getEntityBoundingBox().expand(20.0D, 20.0D, 20.0D));
+		
+		for (EntitySummoned minion : minions)
 		{
-			if (minion instanceof EntitySummoned)
-			{
-				EntitySummoned entitySummoned = (EntitySummoned) minion;
-				
-				if (entitySummoned.getOwner() == par2EntityPlayer)
-				{
-					entitySummoned.attackEntityFrom(DamageSource.generic, entitySummoned.getMaxHealth());	
-				}
-			}
-			else if (minion instanceof EntityRisenHorse)
-			{
-				EntityRisenHorse entitySummonedHorse = (EntityRisenHorse) minion;
-				
-				if (entitySummonedHorse.getTamedBy() == par2EntityPlayer)
-				{
-					entitySummonedHorse.attackEntityFrom(DamageSource.generic, entitySummonedHorse.getMaxHealth());	
-				}
-			}
+			if (minion.getOwner() == par2EntityPlayer)
+				minion.attackEntityFrom(DamageSource.generic, minion.getMaxHealth());	
+		}
+		
+		for (EntityRisenHorse mount : mounts)
+		{
+			if (mount.getTamedBy() == par2EntityPlayer)
+				mount.attackEntityFrom(DamageSource.generic, mount.getMaxHealth());	
 		}
 	}
 }

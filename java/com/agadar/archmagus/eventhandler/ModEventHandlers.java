@@ -19,13 +19,7 @@ public class ModEventHandlers
 		
 		/** For applying magical shield effects and the potions effects they apply. */
 		MinecraftForge.EVENT_BUS.register(new HandlerShieldEvents());
-		
-		/** For spawning particles around entities holding spell books. */
-		//MinecraftForge.EVENT_BUS.register(new HandlerOnLivingUpdate());
-		
-		/** For altering the player's model in case he is polymorphed. */
-		//MinecraftForge.EVENT_BUS.register(new HandlerOnRenderLiving());
-		
+
 		/** For hiding the player's hand in case he is polymorphed. */
 		//MinecraftForge.EVENT_BUS.register(new HandlerOnRenderHand());
 	}

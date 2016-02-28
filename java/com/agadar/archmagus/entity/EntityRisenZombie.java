@@ -10,17 +10,13 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeModContainer;
 
 public class EntityRisenZombie extends EntitySummoned
 {
-	protected static final IAttribute field_110186_bp = (new RangedAttribute("zombie.spawnReinforcements", 0.0D, 0.0D, 1.0D)).setDescription("Spawn Reinforcements Chance");
-	
     public EntityRisenZombie(World par1World)
     {
         super(par1World);
@@ -40,7 +36,6 @@ public class EntityRisenZombie extends EntitySummoned
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getAttributeMap().registerAttribute(field_110186_bp).setBaseValue(this.rand.nextDouble() * ForgeModContainer.zombieSummonBaseChance);
     }
     
     @Override
@@ -81,7 +76,7 @@ public class EntityRisenZombie extends EntitySummoned
     }
 
     @Override
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(BlockPos pos, Block blockIn)
     {
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }

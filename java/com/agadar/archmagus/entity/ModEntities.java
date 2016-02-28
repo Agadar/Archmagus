@@ -1,5 +1,9 @@
 package com.agadar.archmagus.entity;
 
+import com.agadar.archmagus.Archmagus;
+
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+
 /** Responsible for registering this mod's entities and their renderers. */
 public class ModEntities 
 {
@@ -7,14 +11,15 @@ public class ModEntities
 	public static void registerModEntities()
 	{
 		/** Register the entities */
-		EntityRegistry.registerGlobalEntityID(EntitySummonedWolf.class, "summoned_wolf", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntityRisenSkeleton.class, "risen_skeleton", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntityRisenWitherSkeleton.class, "risen_wither_skeleton", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntityRisenZombie.class, "risen_zombie", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntityRisenZombiePigman.class, "risen_zombie_pigman", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntitySummonedWitch.class, "summoned_witch", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntitySummonedSpider.class, "summoned_spider", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntitySummonedCaveSpider.class, "summoned_cave_spider", EntityRegistry.findGlobalUniqueEntityId());
-		EntityRegistry.registerGlobalEntityID(EntityRisenHorse.class, "risen_horse", EntityRegistry.findGlobalUniqueEntityId());
+		int id = 0;
+		EntityRegistry.registerModEntity(EntitySummonedWolf.class, "summoned_wolf", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntityRisenSkeleton.class, "risen_skeleton", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntityRisenWitherSkeleton.class, "risen_wither_skeleton", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntityRisenZombie.class, "risen_zombie", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntityRisenZombiePigman.class, "risen_zombie_pigman", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntitySummonedWitch.class, "summoned_witch", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntitySummonedSpider.class, "summoned_spider", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntitySummonedCaveSpider.class, "summoned_cave_spider", id++, Archmagus.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(EntityRisenHorse.class, "risen_horse", id++, Archmagus.instance, 80, 3, false);
 	}
 }

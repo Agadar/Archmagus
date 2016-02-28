@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 /** The archetype of all Area-Of-Effect Spells. */
@@ -41,15 +42,19 @@ public abstract class SpellAoE extends Spell
 	{
 		double areaSize = par1Level * 4;
 		List<EntityLivingBase> entities = par2World.getEntitiesWithinAABB(EntityLivingBase.class, par3EntityPlayer.getEntityBoundingBox().expand(areaSize, areaSize, areaSize));
-
-		if (entities.size() <= 1)
-			par3EntityPlayer.addChatMessage(new ChatComponentText("No targets nearby!"));
-
+		boolean atleastOneTarget = false;
+		
 		for (EntityLivingBase entity : entities)
 		{
 			if (!(entity instanceof EntityTameable && ((EntityTameable)entity).getOwner() == par3EntityPlayer) && !(entity == par3EntityPlayer))
+			{
 				affectEntity(par2World, entity);
+				atleastOneTarget = true;
+			}
 		}
+		
+		if (!atleastOneTarget)
+			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "No targets nearby!"));
 	}
 	
 	/** Called by castSpell(...) for each EntityLiving in the area of effect. */

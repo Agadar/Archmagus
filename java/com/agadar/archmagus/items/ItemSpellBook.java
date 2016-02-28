@@ -9,6 +9,8 @@ import com.agadar.archmagus.spell.SpellData;
 import com.agadar.archmagus.spell.Spells;
 import com.agadar.archmagus.spell.aoe.SpellAoE;
 import com.agadar.archmagus.spell.shield.SpellShield;
+import com.agadar.archmagus.spell.summon.SpellSummon;
+import com.agadar.archmagus.spell.summon.SpellSummonMount;
 import com.agadar.archmagus.spell.targeted.ISpellTargeted;
 import com.agadar.archmagus.spell.targeted.SpellTeleport;
 
@@ -68,8 +70,10 @@ public class ItemSpellBook extends Item
         		par3List.add("Area of Effect");
         	else if (spellData.spellObj instanceof ISpellTargeted && !(spellData.spellObj instanceof SpellTeleport))
         		par3List.add("Projectile");
-        	//else if (spellData.spellObj instanceof SpellSummon)
-        	//	par3List.add("Summon");
+        	else if (spellData.spellObj instanceof SpellSummon && !(spellData.spellObj instanceof SpellSummonMount))
+        		par3List.add("Summon Minion");
+        	else if (spellData.spellObj instanceof SpellSummonMount)
+        		par3List.add("Summon Mount");
         	else 
         		par3List.add("Miscellaneous");
         	
@@ -150,7 +154,7 @@ public class ItemSpellBook extends Item
         	if (!inCreative && spellData.spellCooldown > 0)
         	{
         		if (spellData.spellCooldown > 40)
-        			par3EntityPlayer.addChatMessage(new ChatComponentText("Spell is on cooldown!"));
+        			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Spell is on cooldown!"));
         		
         		return par1ItemStack;  
         	}
@@ -167,7 +171,7 @@ public class ItemSpellBook extends Item
         		SpellData.startCooldown(spellTag);
         	}
         	else
-        		par3EntityPlayer.addChatMessage(new ChatComponentText("Not enough mana!"));
+        		par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Not enough mana!"));
     	}
     	
     	return par1ItemStack;

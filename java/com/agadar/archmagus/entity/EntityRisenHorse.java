@@ -3,7 +3,6 @@ package com.agadar.archmagus.entity;
 import java.util.UUID;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -30,13 +29,14 @@ public class EntityRisenHorse extends EntityHorse implements ISummoned
         try
         {
             UUID uuid = UUID.fromString(this.dataWatcher.getWatchableObjectString(21));
-            return uuid == null ? null : this.worldObj.func_152378_a(uuid);
+            return uuid == null ? null : this.worldObj.getPlayerEntityByUUID(uuid);
         }
         catch (IllegalArgumentException e)
         {
             return null;
         }
     }
+	
 	
 	@Override
 	public boolean interact(EntityPlayer player)
@@ -49,13 +49,10 @@ public class EntityRisenHorse extends EntityHorse implements ISummoned
 			this.setRearing(false);
 
 			if (!this.worldObj.isRemote)
-			{
 				player.mountEntity(this);
-			}
 			
 			return true;
-		}
-		
+		}		
 		return false;
     }
 	
@@ -68,19 +65,10 @@ public class EntityRisenHorse extends EntityHorse implements ISummoned
         {
         	EntityLivingBase owner = this.getTamedBy();
             
-            if (owner == null || owner.isDead || this.riddenByEntity == null) 
+            if (owner == null || owner.isDead || this.riddenByEntity == null || this.dimension != owner.dimension) 
             	this.attackEntityFrom(DamageSource.generic, this.getMaxHealth());
         }
     }
-	
-	public IEntityLivingData onSpawnWithEgg(IEntityLivingData par1EntityData, EntityPlayer par2Player, int par3HorseType)
-	{
-		Object entityData = this.onSpawnWithEgg(par1EntityData);
-        this.setGrowingAge(0);
-		this.setHorseType(par3HorseType);
-		this.interact(par2Player);
-        return (IEntityLivingData) entityData;
-	}
 	
 	@Override
 	protected Item getDropItem()

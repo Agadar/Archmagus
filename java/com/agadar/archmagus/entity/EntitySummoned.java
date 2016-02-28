@@ -10,7 +10,6 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -25,7 +24,6 @@ public abstract class EntitySummoned extends EntityTameable implements ISummoned
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false));
         
         this.setTamed(true);
-        this.setPathToEntity((PathEntity)null);
         this.setAttackTarget((EntityLivingBase)null);
 	}
 	
@@ -35,7 +33,7 @@ public abstract class EntitySummoned extends EntityTameable implements ISummoned
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.30000001192092896D);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
     }
 
 	@Override
@@ -43,12 +41,6 @@ public abstract class EntitySummoned extends EntityTameable implements ISummoned
 	{
 		return null;
 	}
-	
-    @Override
-    public boolean isAIEnabled()
-    {
-        return true;
-    }
     
     @Override
     protected Item getDropItem()
@@ -85,13 +77,28 @@ public abstract class EntitySummoned extends EntityTameable implements ISummoned
     {
         super.onUpdate();
 
-        if (this.worldObj.isRemote) return;
+        if (this.worldObj.isRemote) 
+        	return;
         
         EntityLivingBase owner = this.getOwner();
-        if (owner != null) 
-        {
-        	if (owner.isDead) this.attackEntityFrom(DamageSource.generic, this.getMaxHealth());
-        }
-        else this.attackEntityFrom(DamageSource.generic, this.getMaxHealth());
+        if (owner == null || owner.isDead || owner.dimension != this.dimension) 
+        	this.attackEntityFrom(DamageSource.generic, this.getMaxHealth());
+    }
+    
+    @Override
+    protected String getFallSoundString(int damageValue)
+    {
+        return damageValue > 4 ? "game.hostile.hurt.fall.big" : "game.hostile.hurt.fall.small";
+    }
+    
+    @Override
+    public void setAttackTarget(EntityLivingBase e)
+    {
+    	EntityLivingBase owner = this.getOwner();
+    	
+    	if (e == owner || (e instanceof EntitySummoned && ((EntitySummoned)e).getOwner() == owner))
+    		return;
+    	
+    	super.setAttackTarget(e);
     }
 }

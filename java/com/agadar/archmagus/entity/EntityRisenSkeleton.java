@@ -1,6 +1,8 @@
 package com.agadar.archmagus.entity;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -55,7 +58,7 @@ public class EntityRisenSkeleton extends EntitySummoned implements IRangedAttack
     }
 
     @Override
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(BlockPos pos, Block blockIn)
     {
         this.playSound("mob.skeleton.step", 0.15F, 1.0F);
     }
@@ -98,8 +101,26 @@ public class EntityRisenSkeleton extends EntitySummoned implements IRangedAttack
     @Override
     public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
     {
-        EntityArrow entityarrow = new EntityArrow(this.worldObj, this, par1EntityLivingBase, 1.6F, (float)(14 - this.worldObj.difficultySetting.getDifficultyId() * 4));
-        entityarrow.setDamage((double)(par2 * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.worldObj.difficultySetting.getDifficultyId() * 0.11F));
+    	EntityArrow entityarrow = new EntityArrow(this.worldObj, this, par1EntityLivingBase, 1.6F, (float)(14 - this.worldObj.getDifficulty().getDifficultyId() * 4));
+        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItem());
+        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItem());
+        entityarrow.setDamage((double)(par2 * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.worldObj.getDifficulty().getDifficultyId() * 0.11F));
+
+        if (i > 0)
+        {
+            entityarrow.setDamage(entityarrow.getDamage() + (double)i * 0.5D + 0.5D);
+        }
+
+        if (j > 0)
+        {
+            entityarrow.setKnockbackStrength(j);
+        }
+
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, this.getHeldItem()) > 0)
+        {
+            entityarrow.setFire(100);
+        }
+
         this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
         this.worldObj.spawnEntityInWorld(entityarrow);
     }
@@ -125,7 +146,7 @@ public class EntityRisenSkeleton extends EntitySummoned implements IRangedAttack
 	@Override
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
     {
-        if (this.isEntityInvulnerable())
+        if (this.isEntityInvulnerable(par1DamageSource))
         {
             return false;
         }
@@ -137,7 +158,7 @@ public class EntityRisenSkeleton extends EntitySummoned implements IRangedAttack
             {
                 if (entity != this)
                 {
-                    this.entityToAttack = entity;
+                    this.setAttackTarget((EntityLivingBase) entity);
                 }
 
                 return true;
@@ -151,11 +172,5 @@ public class EntityRisenSkeleton extends EntitySummoned implements IRangedAttack
         {
             return false;
         }
-    }
-
-	@Override
-	protected String func_146067_o(int p_146067_1_)
-    {
-        return p_146067_1_ > 4 ? "game.hostile.hurt.fall.big" : "game.hostile.hurt.fall.small";
     }
 }

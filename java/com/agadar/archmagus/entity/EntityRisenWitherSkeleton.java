@@ -18,6 +18,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -57,7 +58,7 @@ public class EntityRisenWitherSkeleton extends EntitySummoned implements IRanged
     }
 
     @Override
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    protected void playStepSound(BlockPos pos, Block blockIn)
     {
         this.playSound("mob.skeleton.step", 0.15F, 1.0F);
     }
@@ -120,7 +121,7 @@ public class EntityRisenWitherSkeleton extends EntitySummoned implements IRanged
 	@Override
     public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
     {
-        if (this.isEntityInvulnerable())
+		if (this.isEntityInvulnerable(par1DamageSource))
         {
             return false;
         }
@@ -132,7 +133,7 @@ public class EntityRisenWitherSkeleton extends EntitySummoned implements IRanged
             {
                 if (entity != this)
                 {
-                    this.entityToAttack = entity;
+                    this.setAttackTarget((EntityLivingBase) entity);
                 }
 
                 return true;
@@ -146,12 +147,6 @@ public class EntityRisenWitherSkeleton extends EntitySummoned implements IRanged
         {
             return false;
         }
-    }
-
-	@Override
-	protected String func_146067_o(int p_146067_1_)
-    {
-        return p_146067_1_ > 4 ? "game.hostile.hurt.fall.big" : "game.hostile.hurt.fall.small";
     }
 
 	@Override
