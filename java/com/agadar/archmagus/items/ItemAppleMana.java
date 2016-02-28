@@ -3,8 +3,8 @@ package com.agadar.archmagus.items;
 import java.util.List;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.misc.ManaProperties;
-import com.agadar.archmagus.misc.MaxManaMessage;
+import com.agadar.archmagus.network.ManaProperties;
+import com.agadar.archmagus.network.MaxManaMessage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

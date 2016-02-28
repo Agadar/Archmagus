@@ -28,29 +28,31 @@ public class Spells
 {
 	/** The list of all spells. */
 	public final static Spell[] spellList = new Spell[256];
+	/** Integer used for generating unique indexes for spells. */
+	private static int nextIndex = 0;
 	/** All individual spells. */
-	public final static Spell blazefire = new SpellBlazeFire(1);
-	public final static Spell ghastfire = new SpellGhastFire(2);
-	public final static Spell witherblast = new SpellWitherBlast(3);
-	public final static Spell summon_wolf = new SpellSummon(4, "wolf", EntitySummonedWolf.class);
-	public final static Spell raise_skeleton = new SpellSummon(5, "skeleton", EntityRisenSkeleton.class);
-	public final static Spell raise_wither_skeleton = new SpellSummon(6, "wither_skeleton", EntityRisenWitherSkeleton.class);
-	public final static Spell raise_zombie = new SpellSummon(7, "zombie", EntityRisenZombie.class);
-	public final static Spell raise_zombie_pigman = new SpellSummon(8, "zombie_pigman", EntityRisenZombiePigman.class);
-	public final static Spell summon_witch = new SpellSummon(9, "witch", EntitySummonedWitch.class);
-	public final static Spell summon_spider = new SpellSummon(10, "spider", EntitySummonedSpider.class);
-	public final static Spell summon_cave_spider = new SpellSummon(11, "cave_spider", EntitySummonedCaveSpider.class);
-	public final static Spell teleport = new SpellTeleport(12);
-	public final static Spell respawn = new SpellRespawn(13);
-	public final static Spell fireShield = new SpellFireShield(14);
-	public final static Spell earthShield = new SpellEarthShield(15);
-	public final static Spell waterShield = new SpellWaterShield(16);
-	public final static Spell stormShield = new SpellStormShield(17);
-	public final static Spell frostShield = new SpellFrostShield(18);
-	public final static Spell blazestorm = new SpellBlazeStorm(19);
-	public final static Spell lightningstorm = new SpellLightningStorm(20);
-	public final static Spell raise_zombie_horse = new SpellSummonMount(21, "zombie_horse", EntityRisenHorse.class, 3);
-	public final static Spell raise_skeleton_horse = new SpellSummonMount(22, "skeleton_horse", EntityRisenHorse.class, 4);
+	public final static Spell blazefire = new SpellBlazeFire(nextIndex++);
+	public final static Spell ghastfire = new SpellGhastFire(nextIndex++);
+	public final static Spell witherblast = new SpellWitherBlast(nextIndex++);
+	public final static Spell summon_wolf = new SpellSummon(nextIndex++, "wolf", EntitySummonedWolf.class);
+	public final static Spell raise_skeleton = new SpellSummon(nextIndex++, "skeleton", EntityRisenSkeleton.class);
+	public final static Spell raise_wither_skeleton = new SpellSummon(nextIndex++, "wither_skeleton", EntityRisenWitherSkeleton.class);
+	public final static Spell raise_zombie = new SpellSummon(nextIndex++, "zombie", EntityRisenZombie.class);
+	public final static Spell raise_zombie_pigman = new SpellSummon(nextIndex++, "zombie_pigman", EntityRisenZombiePigman.class);
+	public final static Spell summon_witch = new SpellSummon(nextIndex++, "witch", EntitySummonedWitch.class);
+	public final static Spell summon_spider = new SpellSummon(nextIndex++, "spider", EntitySummonedSpider.class);
+	public final static Spell summon_cave_spider = new SpellSummon(nextIndex++, "cave_spider", EntitySummonedCaveSpider.class);
+	public final static Spell teleport = new SpellTeleport(nextIndex++);
+	public final static Spell respawn = new SpellRespawn(nextIndex++);
+	public final static Spell fireShield = new SpellFireShield(nextIndex++);
+	public final static Spell earthShield = new SpellEarthShield(nextIndex++);
+	public final static Spell waterShield = new SpellWaterShield(nextIndex++);
+	public final static Spell stormShield = new SpellStormShield(nextIndex++);
+	public final static Spell frostShield = new SpellFrostShield(nextIndex++);
+	public final static Spell blazestorm = new SpellBlazeStorm(nextIndex++);
+	public final static Spell lightningstorm = new SpellLightningStorm(nextIndex++);
+	public final static Spell raise_zombie_horse = new SpellSummonMount(nextIndex++, "zombie_horse", EntityRisenHorse.class, 3);
+	public final static Spell raise_skeleton_horse = new SpellSummonMount(nextIndex++, "skeleton_horse", EntityRisenHorse.class, 4);
 	
 	/** Registers a new spell at the given id. */
 	public static void registerSpell(Spell par1Spell, int par2effectId)

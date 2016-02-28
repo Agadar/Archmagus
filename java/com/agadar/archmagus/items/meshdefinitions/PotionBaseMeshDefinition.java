@@ -1,4 +1,4 @@
-package com.agadar.archmagus.misc;
+package com.agadar.archmagus.items.meshdefinitions;
 
 import com.agadar.archmagus.Archmagus;
 import net.minecraft.client.renderer.ItemMeshDefinition;

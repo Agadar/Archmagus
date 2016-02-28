@@ -14,9 +14,9 @@ import com.agadar.archmagus.items.ItemManaCrystal;
 import com.agadar.archmagus.items.ItemPotionBase;
 import com.agadar.archmagus.items.ItemSpellBook;
 import com.agadar.archmagus.items.StrictBrewingRecipe;
-import com.agadar.archmagus.misc.ManaCrystalGen;
-import com.agadar.archmagus.misc.MaxManaMessage;
-import com.agadar.archmagus.misc.PotionBaseMeshDefinition;
+import com.agadar.archmagus.items.meshdefinitions.PotionBaseMeshDefinition;
+import com.agadar.archmagus.items.meshdefinitions.SpellBookMeshDefinition;
+import com.agadar.archmagus.network.MaxManaMessage;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -45,8 +45,11 @@ public class Archmagus
 	@SidedProxy(clientSide = Archmagus.CLIENTSIDE, serverSide = Archmagus.SERVERSIDE)
 	public static CommonProxy proxy;
 
-	/* These are the references we use. These values are the same for our entire
-	 * mod, so we only have to make them once here, and we can always access them. */
+	/*
+	 * These are the references we use. These values are the same for our entire
+	 * mod, so we only have to make them once here, and we can always access
+	 * them.
+	 */
 	public static final String MODID = "archmagus";
 	public static final String VERSION = "0.8.0";
 	public static final String NAME = "Archmagus";
@@ -90,14 +93,20 @@ public class Archmagus
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		networkWrapper.registerMessage(MaxManaMessage.Handler.class, MaxManaMessage.class, 0, Side.CLIENT);
 
-		// Register item textures for potions, which have BaseMeshDefinitions.
+		// Register item textures for potions and spell books, which have BaseMeshDefinitions.
 		if (event.getSide() == Side.CLIENT)
 		{
 			PotionBaseMeshDefinition pbmd = new PotionBaseMeshDefinition();
 			ModelLoader.setCustomMeshDefinition(itemPotionBase, pbmd);
 			ModelBakery.registerItemVariants(itemPotionBase, pbmd.drinkable, pbmd.splash);
+
+			SpellBookMeshDefinition sbmd = new SpellBookMeshDefinition();
+			ModelLoader.setCustomMeshDefinition(spell_book, sbmd);
+			ModelBakery.registerItemVariants(spell_book, sbmd.spell_book);
+			for (ModelResourceLocation mrl : sbmd.spellsToResources.values())
+				ModelBakery.registerItemVariants(spell_book, mrl);
 		}
-		
+
 		// Register stuff placed in the proxies.
 		proxy.registerRenderers();
 	}
@@ -107,10 +116,7 @@ public class Archmagus
 	{
 		// Register entities
 		ModEntities.registerModEntities();
-		
-		// Register stuff placed in the proxies.
-		//proxy.registerRenderers();
-		
+
 		// Register crafting recipes.
 		GameRegistry.addRecipe(new ItemStack(apple_mana), "xxx", "xyx", "xxx", 'x', mana_crystal, 'y', Items.apple);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal_block), "xxx", "xxx", "xxx", 'x', mana_crystal);
@@ -120,8 +126,6 @@ public class Archmagus
 		if (event.getSide() == Side.CLIENT)
 		{
 			RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-			renderItem.getItemModelMesher().register(spell_book, 0,
-					new ModelResourceLocation(MODID + ":" + ((ItemSpellBook) spell_book).Name, "inventory"));
 			renderItem.getItemModelMesher().register(apple_mana, 0,
 					new ModelResourceLocation(MODID + ":" + ((ItemAppleMana) apple_mana).Name, "inventory"));
 			renderItem.getItemModelMesher().register(mana_crystal, 0,
@@ -171,36 +175,70 @@ public class Archmagus
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(mana, glowstone, manaAmpl));
 		/** Potion of Mana + Gunpowder -> Splash Potion of Mana. */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(mana, gunpowder, manaSplash));
-		/** Potion of Mana (Amplified) + Gunpowder -> Splash Potion of Mana (Amplified). */
+		/**
+		 * Potion of Mana (Amplified) + Gunpowder -> Splash Potion of Mana
+		 * (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(manaAmpl, gunpowder, manaSplashAmpl));
-		/** Splash Potion of Mana + Glowstone -> Splash Potion of Mana (Amplified). */
+		/**
+		 * Splash Potion of Mana + Glowstone -> Splash Potion of Mana
+		 * (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(manaSplash, glowstone, manaSplashAmpl));
 
 		/** Awkward Potion + Crystalline Apple -> Potion of Mana Regen. */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(awkward, new ItemStack(apple_mana), regen));
-		/** Potion of Mana Regen + Glowstone -> Potion of Mana Regen (Amplified). */
+		/**
+		 * Potion of Mana Regen + Glowstone -> Potion of Mana Regen (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regen, glowstone, regenAmpl));
-		/** Potion of Mana Regen (Extended) + Glowstone -> Potion of Mana Regen (Amplified). */
+		/**
+		 * Potion of Mana Regen (Extended) + Glowstone -> Potion of Mana Regen
+		 * (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenExt, glowstone, regenAmpl));
-		/** Potion of Mana Regen + Redstone -> Potion of Mana Regen (Extended). */
+		/**
+		 * Potion of Mana Regen + Redstone -> Potion of Mana Regen (Extended).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regen, redstone, regenExt));
-		/** Potion of Mana Regen (Amplified) + Redstone -> Potion of Mana Regen (Extended). */
+		/**
+		 * Potion of Mana Regen (Amplified) + Redstone -> Potion of Mana Regen
+		 * (Extended).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenAmpl, redstone, regenExt));
 		/** Potion of Mana Regen + Gunpowder -> Splash Potion of Mana Regen. */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regen, gunpowder, regenSplash));
-		/** Potion of Mana Regen (Amplified) + Gunpowder -> Splash Potion of Mana Regen (Amplified). */
+		/**
+		 * Potion of Mana Regen (Amplified) + Gunpowder -> Splash Potion of Mana
+		 * Regen (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenAmpl, gunpowder, regenSplashAmpl));
-		/** Splash Potion of Mana Regen + Glowstone -> Splash Potion of Mana Regen (Amplified). */
+		/**
+		 * Splash Potion of Mana Regen + Glowstone -> Splash Potion of Mana
+		 * Regen (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplash, glowstone, regenSplashAmpl));
-		/** Splash Potion of Mana Regen (Extended) + Glowstone -> Splash Potion of Mana Regen (Amplified). */
+		/**
+		 * Splash Potion of Mana Regen (Extended) + Glowstone -> Splash Potion
+		 * of Mana Regen (Amplified).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplashExt, glowstone, regenSplashAmpl));
-		/** Potion of Mana Regen (Extended) + Gunpowder -> Splash Potion of Mana Regen (Extended). */
+		/**
+		 * Potion of Mana Regen (Extended) + Gunpowder -> Splash Potion of Mana
+		 * Regen (Extended).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenExt, gunpowder, regenSplashExt));
-		/** Splash Potion of Mana Regen + Redstone -> Splash Potion of Mana Regen (Extended). */
+		/**
+		 * Splash Potion of Mana Regen + Redstone -> Splash Potion of Mana Regen
+		 * (Extended).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplash, redstone, regenSplashExt));
-		/** Splash Potion of Mana Regen (Amplified) + Redstone -> Splash Potion of Mana Regen (Extended). */
+		/**
+		 * Splash Potion of Mana Regen (Amplified) + Redstone -> Splash Potion
+		 * of Mana Regen (Extended).
+		 */
 		BrewingRecipeRegistry.addRecipe(new StrictBrewingRecipe(regenSplashAmpl, redstone, regenSplashExt));
-	
+
 		// Register the event handlers.
 		ModEventHandlers.registerModEventHandlers();
 	}

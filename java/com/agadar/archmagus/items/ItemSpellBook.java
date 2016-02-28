@@ -3,7 +3,7 @@ package com.agadar.archmagus.items;
 import java.util.List;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.misc.ManaProperties;
+import com.agadar.archmagus.network.ManaProperties;
 import com.agadar.archmagus.spell.Spell;
 import com.agadar.archmagus.spell.SpellData;
 import com.agadar.archmagus.spell.Spells;
@@ -42,8 +42,7 @@ public class ItemSpellBook extends Item
         GameRegistry.registerItem(this, Name);
 	}
 
-	/** Returns the ItemStack's spell tag. If it doesn't have one then
-	 *  it is first assigned one before it is returned. */
+	/** Returns the ItemStack's spell tag. */
     public NBTTagCompound getSpellTag(ItemStack par1ItemStack)
     {
     	NBTTagCompound nbtt = par1ItemStack.getTagCompound();

@@ -1,7 +1,7 @@
 package com.agadar.archmagus.potion;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.misc.ManaProperties;
+import com.agadar.archmagus.network.ManaProperties;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

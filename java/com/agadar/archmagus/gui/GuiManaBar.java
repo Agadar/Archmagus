@@ -1,7 +1,8 @@
-package com.agadar.archmagus.misc;
+package com.agadar.archmagus.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import com.agadar.archmagus.network.ManaProperties;
 import com.agadar.archmagus.potion.ModPotions;
 
 import net.minecraft.block.material.Material;

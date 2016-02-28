@@ -2,8 +2,8 @@ package com.agadar.archmagus.eventhandler;
 
 import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.entity.ISummoned;
-import com.agadar.archmagus.misc.ManaProperties;
-import com.agadar.archmagus.misc.MaxManaMessage;
+import com.agadar.archmagus.network.ManaProperties;
+import com.agadar.archmagus.network.MaxManaMessage;
 import com.agadar.archmagus.spell.summon.SpellSummon;
 
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,8 +1,6 @@
-package com.agadar.archmagus.misc;
+package com.agadar.archmagus;
 
 import java.util.Random;
-
-import com.agadar.archmagus.Archmagus;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.pattern.BlockHelper;

@@ -1,4 +1,4 @@
-package com.agadar.archmagus.misc;
+package com.agadar.archmagus.network;
 
 import com.agadar.archmagus.Archmagus;
 
