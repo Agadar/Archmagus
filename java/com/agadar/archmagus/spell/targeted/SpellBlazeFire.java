@@ -43,7 +43,7 @@ public class SpellBlazeFire extends Spell implements ISpellTargeted
 
 		for (int i = 0; i < getNormalizedLevel(par1Level); i++)
 		{
-			EntitySmallFireball smallfireball = new EntitySmallFireball(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY + par3EntityPlayer.eyeHeight, par3EntityPlayer.posZ, v3.xCoord + random.nextGaussian() / accuracies[par1Level - 1], v3.yCoord, v3.zCoord + random.nextGaussian() / accuracies[par1Level - 1]);
+			EntitySmallFireball smallfireball = new EntitySmallFireball(par2World, par3EntityPlayer, v3.xCoord + random.nextGaussian() / accuracies[par1Level - 1], v3.yCoord, v3.zCoord + random.nextGaussian() / accuracies[par1Level - 1]);
 			smallfireball.shootingEntity = par3EntityPlayer;
 			par2World.spawnEntityInWorld(smallfireball);
 		}

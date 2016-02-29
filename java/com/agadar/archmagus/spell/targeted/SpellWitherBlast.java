@@ -52,7 +52,7 @@ public class SpellWitherBlast extends Spell implements ISpellTargeted
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);			
 		Vec3 v3 = par3EntityPlayer.getLook(1);
 		int accuracy = 10;
-		EntityWitherSkull entitywitherskull = new EntityWitherSkull(par2World, par3EntityPlayer.posX, par3EntityPlayer.posY + par3EntityPlayer.eyeHeight, par3EntityPlayer.posZ, v3.xCoord + random.nextGaussian() / accuracy, v3.yCoord, v3.zCoord + random.nextGaussian() / accuracy);
+		EntityWitherSkull entitywitherskull = new EntityWitherSkull(par2World, par3EntityPlayer, v3.xCoord + random.nextGaussian() / accuracy, v3.yCoord, v3.zCoord + random.nextGaussian() / accuracy);
 		entitywitherskull.shootingEntity = par3EntityPlayer;
 		par2World.spawnEntityInWorld(entitywitherskull);
 	}
