@@ -1,5 +1,7 @@
 package com.agadar.archmagus;
 
+import com.agadar.archmagus.blocks.BlockManaCrystal;
+import com.agadar.archmagus.blocks.BlockManaCrystalOre;
 import com.agadar.archmagus.entity.EntityRisenHorse;
 import com.agadar.archmagus.entity.EntityRisenSkeleton;
 import com.agadar.archmagus.entity.EntityRisenWitherSkeleton;
@@ -10,7 +12,12 @@ import com.agadar.archmagus.entity.EntitySummonedSpider;
 import com.agadar.archmagus.entity.EntitySummonedWitch;
 import com.agadar.archmagus.entity.EntitySummonedWolf;
 import com.agadar.archmagus.gui.GuiManaBar;
+import com.agadar.archmagus.items.ItemAppleMana;
+import com.agadar.archmagus.items.ItemManaCrystal;
+import com.agadar.archmagus.items.meshdefinitions.PotionBaseMeshDefinition;
+import com.agadar.archmagus.items.meshdefinitions.SpellBookMeshDefinition;
 import com.agadar.archmagus.model.ModelSummonedWolf;
+import com.agadar.archmagus.render.RenderRisenHorse;
 import com.agadar.archmagus.render.RenderRisenSkeleton;
 import com.agadar.archmagus.render.RenderRisenWitherSkeleton;
 import com.agadar.archmagus.render.RenderRisenZombie;
@@ -23,10 +30,14 @@ import com.agadar.archmagus.render.RenderSummonedWolf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelHorse;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderHorse;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -38,7 +49,7 @@ public class ClientProxy extends CommonProxy
 	private final Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
-	public void registerRenderers() 
+	public void registerEntityRenderers()
 	{
 		/** Entity renderers. */	
 		RenderingRegistry.registerEntityRenderingHandler(EntitySummonedWolf.class, new IRenderFactory<EntitySummonedWolf>() {
@@ -50,7 +61,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenHorse.class, new IRenderFactory<EntityRisenHorse>() {
 			@Override
 			public Render<? super EntityRisenHorse> createRenderFor(RenderManager manager) {
-				return new RenderHorse(manager, new ModelHorse(), 0.75F);
+				return new RenderRisenHorse(manager, new ModelHorse(), 0.75F);
 			}
 		});
 		RenderingRegistry.registerEntityRenderingHandler(EntityRisenSkeleton.class, new IRenderFactory<EntityRisenSkeleton>() {
@@ -96,9 +107,41 @@ public class ClientProxy extends CommonProxy
 				return new RenderSummonedCaveSpider(manager);
 			}
 		});
-		
+	}
+	
+	@Override
+	public void registerRenderers() 
+	{		
 		/** Gui renderers. */
-		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));
+		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));		
+		
+		// Item and block renderers.
+		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+		renderItem.getItemModelMesher().register(Archmagus.apple_mana, 0,
+				new ModelResourceLocation(Archmagus.MODID + ":" + ((ItemAppleMana) Archmagus.apple_mana).Name, "inventory"));
+		renderItem.getItemModelMesher().register(Archmagus.mana_crystal, 0,
+				new ModelResourceLocation(Archmagus.MODID + ":" + ((ItemManaCrystal) Archmagus.mana_crystal).Name, "inventory"));
+		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Archmagus.mana_crystal_ore), 0,
+				new ModelResourceLocation(Archmagus.MODID + ":" + ((BlockManaCrystalOre) Archmagus.mana_crystal_ore).Name,
+						"inventory"));
+		renderItem.getItemModelMesher().register(Item.getItemFromBlock(Archmagus.mana_crystal_block), 0,
+				new ModelResourceLocation(Archmagus.MODID + ":" + ((BlockManaCrystal) Archmagus.mana_crystal_block).Name, "inventory"));
+		
+	}
+	
+	@Override
+	public void registerMeshDefinitions()
+	{
+		// ItemMeshDefinitions for items that have multiple possible textures.
+		PotionBaseMeshDefinition pbmd = new PotionBaseMeshDefinition();
+		ModelLoader.setCustomMeshDefinition(Archmagus.itemPotionBase, pbmd);
+		ModelBakery.registerItemVariants(Archmagus.itemPotionBase, pbmd.drinkable, pbmd.splash);
+
+		SpellBookMeshDefinition sbmd = new SpellBookMeshDefinition();
+		ModelLoader.setCustomMeshDefinition(Archmagus.spell_book, sbmd);
+		ModelBakery.registerItemVariants(Archmagus.spell_book, sbmd.spell_book);
+		for (ModelResourceLocation mrl : sbmd.spellsToResources.values())
+			ModelBakery.registerItemVariants(Archmagus.spell_book, mrl);
 	}
 
 	@Override

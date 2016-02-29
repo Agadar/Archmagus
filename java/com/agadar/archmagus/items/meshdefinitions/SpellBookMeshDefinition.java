@@ -10,10 +10,13 @@ import com.agadar.archmagus.spell.SpellData;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Required for allowing ItemSpellBook to have multiple possible textures.
  */
+@SideOnly(Side.CLIENT)
 public class SpellBookMeshDefinition implements ItemMeshDefinition
 {
 	// The 'empty' spell book.

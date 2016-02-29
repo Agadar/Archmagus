@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** The proxy that is used server-side. */
 public class CommonProxy 
 {
-	/** Register this mod's renderers. */
+	/** Register this mod's renderers. Call this in Init. */
 	public void registerRenderers() { }
 	
 	/**
@@ -24,4 +24,10 @@ public class CommonProxy
 	public IThreadListener getThreadFromContext(MessageContext ctx) {
 		return ctx.getServerHandler().playerEntity.getServerForPlayer();
 	}
+
+	/** Register this mod's item mesh definitions. Call this in PreInit. */
+	public void registerMeshDefinitions() { }
+
+	/** Registers this mod's entity renderers. */
+	public void registerEntityRenderers() { }
 }

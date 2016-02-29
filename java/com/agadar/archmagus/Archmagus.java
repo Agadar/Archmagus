@@ -1,6 +1,5 @@
 package com.agadar.archmagus;
 
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -14,15 +13,9 @@ import com.agadar.archmagus.items.ItemManaCrystal;
 import com.agadar.archmagus.items.ItemPotionBase;
 import com.agadar.archmagus.items.ItemSpellBook;
 import com.agadar.archmagus.items.StrictBrewingRecipe;
-import com.agadar.archmagus.items.meshdefinitions.PotionBaseMeshDefinition;
-import com.agadar.archmagus.items.meshdefinitions.SpellBookMeshDefinition;
 import com.agadar.archmagus.network.MaxManaMessage;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -92,28 +85,18 @@ public class Archmagus
 		// Register network stuff.
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		networkWrapper.registerMessage(MaxManaMessage.Handler.class, MaxManaMessage.class, 0, Side.CLIENT);
-
-		// Register item textures for potions and spell books, which have BaseMeshDefinitions.
-		if (event.getSide() == Side.CLIENT)
-		{
-			PotionBaseMeshDefinition pbmd = new PotionBaseMeshDefinition();
-			ModelLoader.setCustomMeshDefinition(itemPotionBase, pbmd);
-			ModelBakery.registerItemVariants(itemPotionBase, pbmd.drinkable, pbmd.splash);
-
-			SpellBookMeshDefinition sbmd = new SpellBookMeshDefinition();
-			ModelLoader.setCustomMeshDefinition(spell_book, sbmd);
-			ModelBakery.registerItemVariants(spell_book, sbmd.spell_book);
-			for (ModelResourceLocation mrl : sbmd.spellsToResources.values())
-				ModelBakery.registerItemVariants(spell_book, mrl);
-		}
-
+		
 		// Register stuff placed in the proxies.
-		proxy.registerRenderers();
+		proxy.registerMeshDefinitions();
+		proxy.registerEntityRenderers();
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		// Register stuff placed in the proxies.
+		proxy.registerRenderers();
+				
 		// Register entities
 		ModEntities.registerModEntities();
 
@@ -121,21 +104,6 @@ public class Archmagus
 		GameRegistry.addRecipe(new ItemStack(apple_mana), "xxx", "xyx", "xxx", 'x', mana_crystal, 'y', Items.apple);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal_block), "xxx", "xxx", "xxx", 'x', mana_crystal);
 		GameRegistry.addRecipe(new ItemStack(mana_crystal, 9), "x", 'x', mana_crystal_block);
-
-		// Register item and block textures.
-		if (event.getSide() == Side.CLIENT)
-		{
-			RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-			renderItem.getItemModelMesher().register(apple_mana, 0,
-					new ModelResourceLocation(MODID + ":" + ((ItemAppleMana) apple_mana).Name, "inventory"));
-			renderItem.getItemModelMesher().register(mana_crystal, 0,
-					new ModelResourceLocation(MODID + ":" + ((ItemManaCrystal) mana_crystal).Name, "inventory"));
-			renderItem.getItemModelMesher().register(Item.getItemFromBlock(mana_crystal_ore), 0,
-					new ModelResourceLocation(MODID + ":" + ((BlockManaCrystalOre) mana_crystal_ore).Name,
-							"inventory"));
-			renderItem.getItemModelMesher().register(Item.getItemFromBlock(mana_crystal_block), 0,
-					new ModelResourceLocation(MODID + ":" + ((BlockManaCrystal) mana_crystal_block).Name, "inventory"));
-		}
 
 		// Register the mana crystal ore world generator.
 		GameRegistry.registerWorldGenerator(manaCrystalGen, 1);

@@ -2,6 +2,7 @@ package com.agadar.archmagus.render;
 
 import java.util.Map;
 
+import com.agadar.archmagus.entity.EntityRisenHorse;
 import com.google.common.collect.Maps;
 
 import net.minecraft.client.Minecraft;
@@ -10,13 +11,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.LayeredTexture;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderRisenHorse extends RenderLiving<EntityHorse>
+public class RenderRisenHorse extends RenderLiving<EntityRisenHorse>
 {
     private static final Map<String, ResourceLocation> field_110852_a = Maps.<String, ResourceLocation>newHashMap();
     private static final ResourceLocation whiteHorseTextures = new ResourceLocation("textures/entity/horse/horse_white.png");
@@ -34,7 +34,7 @@ public class RenderRisenHorse extends RenderLiving<EntityHorse>
      * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
      * entityLiving, partialTickTime
      */
-    protected void preRenderCallback(EntityHorse entitylivingbaseIn, float partialTickTime)
+    protected void preRenderCallback(EntityRisenHorse entitylivingbaseIn, float partialTickTime)
     {
         float f = 1.0F;
         int i = entitylivingbaseIn.getHorseType();
@@ -55,7 +55,7 @@ public class RenderRisenHorse extends RenderLiving<EntityHorse>
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(EntityHorse entity)
+    protected ResourceLocation getEntityTexture(EntityRisenHorse entity)
     {
         if (!entity.func_110239_cn())
         {
@@ -80,7 +80,7 @@ public class RenderRisenHorse extends RenderLiving<EntityHorse>
         }
     }
 
-    private ResourceLocation func_110848_b(EntityHorse horse)
+    private ResourceLocation func_110848_b(EntityRisenHorse horse)
     {
         String s = horse.getHorseTexture();
 
