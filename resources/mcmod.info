@@ -1,10 +1,18 @@
 [
 {
-  "modid": "archmagus",
-  "name": "Archmagus",
-  "description": "Archmagus is a Minecraft mod that adds a variety of obtainable spell books to the game.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "authorList": ["Agadar"]
+  
+"modid": "archmagus",
+  
+"name": "Archmagus",
+  
+"description": "This mod adds numerous spell books to the game, turning you into a powerful archmagus! Obliterate your foes with mighty fireballs, overwhelm your enemies with the armies of the undead, or teleport around the battlefield like a mad wizard: everything is possible with Archmagus!",
+  
+"version": "${version}",
+  
+"mcversion": "${mcversion}",
+  
+"authorList": ["Agadar"]
+, 
+"url":"http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2124655"
 }
 ]
