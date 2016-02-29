@@ -45,9 +45,8 @@ public class SpellGhastFire extends Spell implements ISpellTargeted
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);			
 		Vec3 v3 = par3EntityPlayer.getLook(1);
-		int accuracy = 10;
-		EntityLargeFireball largefireball = new EntityLargeFireball(par2World, par3EntityPlayer, v3.xCoord + random.nextGaussian() / accuracy, v3.yCoord, v3.zCoord + random.nextGaussian() / accuracy);
-		largefireball.shootingEntity = par3EntityPlayer;
+		EntityLargeFireball largefireball = new EntityLargeFireball(par2World, par3EntityPlayer, v3.xCoord * 50D, v3.yCoord * 50D, v3.zCoord * 50D);
+		largefireball.posY = par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight();
 		par2World.spawnEntityInWorld(largefireball);
 	}
 }
