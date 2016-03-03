@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
+import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.entity.EntityRisenHorse;
 
 /** Summons a mount for the player. */
@@ -19,10 +20,10 @@ public class SpellSummonMount extends SpellSummon
 	protected final int horseType;
 	
 	@SuppressWarnings("rawtypes")
-	public SpellSummonMount(int par1, String par2Name, Class par3EntityClass, int horseType) 
+	public SpellSummonMount(String par1Name, Class par2EntityClass, int par3HorseType) 
 	{
-		super(par1, par2Name, par3EntityClass);
-		this.horseType = horseType;
+		super(par1Name, par2EntityClass);
+		this.horseType = par3HorseType;
 	}
 	
 	@Override
@@ -32,10 +33,17 @@ public class SpellSummonMount extends SpellSummon
     }
 	
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public String getModelResourceLocationString()
+    {
+		return Archmagus.MODID + ":" + (horseType == 3 ? "zombie" : "skeleton") + "_book";
+    }
+	
+	@Override
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
 		SpellSummon.killExistingMinions(par2World, par3EntityPlayer);
+		boolean horseDidSpawn = false;
 
 		try 
 		{
@@ -48,12 +56,14 @@ public class SpellSummonMount extends SpellSummon
 			entity.rotationPitch = par3EntityPlayer.rotationPitch;
 			entity.setGrowingAge(0);
 			entity.setHorseType(horseType);
-			par2World.spawnEntityInWorld(entity);
-			entity.interact(par3EntityPlayer);	
+			horseDidSpawn = par2World.spawnEntityInWorld(entity);
+			entity.interact(par3EntityPlayer);
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			return false;
 		}
+		return horseDidSpawn;
 	}
 }

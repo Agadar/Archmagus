@@ -14,11 +14,6 @@ import net.minecraft.world.World;
 /** The archetype of all Area-Of-Effect Spells. */
 public abstract class SpellAoE extends Spell 
 {
-	protected SpellAoE(int par1) 
-	{
-		super(par1);
-	}
-	
 	@Override
     public short getMaxLevel()
     {
@@ -38,7 +33,7 @@ public abstract class SpellAoE extends Spell
     }
 
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		double areaSize = par1Level * 4;
 		List<EntityLivingBase> entities = par2World.getEntitiesWithinAABB(EntityLivingBase.class, par3EntityPlayer.getEntityBoundingBox().expand(areaSize, areaSize, areaSize));
@@ -54,7 +49,11 @@ public abstract class SpellAoE extends Spell
 		}
 		
 		if (!atleastOneTarget)
+		{
 			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "No targets nearby!"));
+			return false;
+		}
+		return true;
 	}
 	
 	/** Called by castSpell(...) for each EntityLiving in the area of effect. */

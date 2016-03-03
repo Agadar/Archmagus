@@ -30,4 +30,7 @@ public class CommonProxy
 
 	/** Registers this mod's entity renderers. */
 	public void registerEntityRenderers() { }
+
+	/** Registers this mod's key bindings and corresponding events. */
+	public void registerKeyBindings() { }
 }

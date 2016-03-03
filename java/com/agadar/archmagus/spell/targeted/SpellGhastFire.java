@@ -10,12 +10,6 @@ import net.minecraft.world.World;
 /** Fires a large fireball. */
 public class SpellGhastFire extends Spell implements ISpellTargeted
 {
-	public SpellGhastFire(int par1) 
-	{
-		super(par1);
-		this.setName("ghastfire");
-	}
-	
 	@Override
     public int getManaCost()
     {
@@ -29,24 +23,24 @@ public class SpellGhastFire extends Spell implements ISpellTargeted
 	}
 	
 	@Override
-	public String getParticleName()
-	{
-		return "flame";
-	}
+	public String getName()
+    {
+        return "spell.ghastfire";
+    }
 	
 	@Override
-	public double getParticleAmount()
-	{
-		return 0.3;
-	}
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + "blazefire_book";
+    }
 
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);			
 		Vec3 v3 = par3EntityPlayer.getLook(1);
 		EntityLargeFireball largefireball = new EntityLargeFireball(par2World, par3EntityPlayer, v3.xCoord * 50D, v3.yCoord * 50D, v3.zCoord * 50D);
 		largefireball.posY = par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight();
-		par2World.spawnEntityInWorld(largefireball);
+		return par2World.spawnEntityInWorld(largefireball);
 	}
 }

@@ -29,7 +29,7 @@ public class ManaProperties implements IExtendedEntityProperties
 		player.registerExtendedProperties(NAME, new ManaProperties(player));
 	}
 	
-	/** Returns the ManaProprties for the given player. */
+	/** Returns the ManaProperties for the given player. */
 	public static final ManaProperties get(EntityPlayer player)
 	{
 		return (ManaProperties) player.getExtendedProperties(NAME);

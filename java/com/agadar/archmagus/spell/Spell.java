@@ -2,6 +2,8 @@ package com.agadar.archmagus.spell;
 
 import java.util.Random;
 
+import com.agadar.archmagus.Archmagus;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -13,13 +15,10 @@ public abstract class Spell
 	protected final static Random random = new Random();
 	/** The index of this spell in the spellList. */
 	public final int effectId;
-	/** Used in localisation and stats. */
-    private String name;
 	
-    protected Spell(int par1)
+    protected Spell()
     {
-        this.effectId = par1;
-        Spells.registerSpell(this, par1);
+        this.effectId = Spells.registerSpell(this);
     }
     
 	/** Returns the minimum level that the spell can be. */
@@ -52,50 +51,47 @@ public abstract class Spell
     	return "mob.ghast.fireball";
     }
     
-    /** Returns the name of the particles spawned when a spell book
-     * that contains this spell is being held by an entity. */
-    public String getParticleName()
+    /** Returns the name of the key in the translation table of this spell. */
+    public String getName()
     {
-    	return "happyVillager";
-    }
-    
-	/** Returns the amount of particles spawned per gametick when a spell book 
-	 *  that contains this spell is being held by an entity. (20 ticks = 1 second) */
-	public double getParticleAmount()
-	{
-		return 1;
-	}
-    
-    /** Sets the spell name. */
-    protected Spell setName(String par1Str)
-    {
-        this.name = par1Str;
-        return this;
-    }
-    
-    /** Returns the name of key in translation table of this spell. */
-    private String getName()
-    {
-        return "spell." + this.name;
+        return "spell.spell_book";
     }
     
     /** Returns the correct translated name of the spell and the level in roman numbers. */
-    public String getTranslatedName(int par1)
+    public final String getTranslatedName(int par1Level)
     {
         String s = StatCollector.translateToLocal(this.getName());
         
         if (this.getMinLevel() != this.getMaxLevel())
-        	return s + " " + StatCollector.translateToLocal("spell.level." + par1);
+        	return s + " " + StatCollector.translateToLocal("spell.level." + par1Level);
         
         return s;
     }
     
+    /** Returns the name of the key in the translation table of the description of the spell. */
+    public String getDescription(int par1Level)
+    {
+    	return "spell.spell_book.description";
+    }
+    
+    /** Returns the correct translated description of the spell. */
+    public final String getTranslatedDescription(int par1Level)
+    {
+        return StatCollector.translateToLocal(this.getDescription(par1Level));
+    }
+    
+    /** Returns the name of the spell's ModelResourceLocation. */
+    public String getModelResourceLocationString()
+    {
+    	return Archmagus.MODID + ":";
+    }
+    
     /** Ensures that a given level lies between this spell's minimum and maximum levels. */
-    protected int getNormalizedLevel(short par1Level)
+    protected final int getNormalizedLevel(short par1Level)
     {
     	return Math.max(getMinLevel(), Math.min(par1Level, getMaxLevel()));
     }
     
-    /** Casts this spell based on the given level. NOTE: it is ALWAYS assumed !par2World.isRemote. */
-	public abstract void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer);
+    /** Casts this spell based on the given level. */
+	public abstract boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer);
 }

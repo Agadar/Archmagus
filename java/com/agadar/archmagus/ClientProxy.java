@@ -1,5 +1,7 @@
 package com.agadar.archmagus;
 
+import org.lwjgl.input.Keyboard;
+
 import com.agadar.archmagus.blocks.BlockManaCrystal;
 import com.agadar.archmagus.blocks.BlockManaCrystalOre;
 import com.agadar.archmagus.entity.EntityRisenHorse;
@@ -11,6 +13,7 @@ import com.agadar.archmagus.entity.EntitySummonedCaveSpider;
 import com.agadar.archmagus.entity.EntitySummonedSpider;
 import com.agadar.archmagus.entity.EntitySummonedWitch;
 import com.agadar.archmagus.entity.EntitySummonedWolf;
+import com.agadar.archmagus.eventhandler.KeyInputHandler;
 import com.agadar.archmagus.gui.GuiManaBar;
 import com.agadar.archmagus.items.ItemAppleMana;
 import com.agadar.archmagus.items.ItemManaCrystal;
@@ -34,11 +37,13 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -46,6 +51,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** The proxy that is used client-side. */
 public class ClientProxy extends CommonProxy 
 {
+	public static KeyBinding openSpellBook;	
 	private final Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
@@ -113,7 +119,7 @@ public class ClientProxy extends CommonProxy
 	public void registerRenderers() 
 	{		
 		/** Gui renderers. */
-		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));		
+		MinecraftForge.EVENT_BUS.register(new GuiManaBar(Minecraft.getMinecraft()));	
 		
 		// Item and block renderers.
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
@@ -137,13 +143,23 @@ public class ClientProxy extends CommonProxy
 		ModelLoader.setCustomMeshDefinition(Archmagus.itemPotionBase, pbmd);
 		ModelBakery.registerItemVariants(Archmagus.itemPotionBase, pbmd.drinkable, pbmd.splash);
 
+		// ItemMeshDefinitions for spellbooks.
 		SpellBookMeshDefinition sbmd = new SpellBookMeshDefinition();
 		ModelLoader.setCustomMeshDefinition(Archmagus.spell_book, sbmd);
-		ModelBakery.registerItemVariants(Archmagus.spell_book, sbmd.spell_book);
-		for (ModelResourceLocation mrl : sbmd.spellsToResources.values())
+		ModelBakery.registerItemVariants(Archmagus.spell_book, sbmd.defaultLoc);
+		for (ModelResourceLocation mrl : sbmd.modelLocations.values())
 			ModelBakery.registerItemVariants(Archmagus.spell_book, mrl);
 	}
 
+	@Override
+	public void registerKeyBindings()
+	{
+		/* The key for openings the spellbook. */
+		openSpellBook = new KeyBinding("key.spellbook", Keyboard.KEY_O, "key.categories.inventory");
+		ClientRegistry.registerKeyBinding(openSpellBook);
+		MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
+	}
+	
 	@Override
 	public EntityPlayer getPlayerEntity(MessageContext ctx) {
 		// Note that if you simply return 'Minecraft.getMinecraft().thePlayer',

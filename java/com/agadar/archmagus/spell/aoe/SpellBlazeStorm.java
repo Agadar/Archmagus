@@ -8,17 +8,23 @@ import net.minecraft.world.World;
 /** Damages and sets fire to all non-allied creatures in the area. */
 public class SpellBlazeStorm extends SpellAoE 
 {
-	public SpellBlazeStorm(int par1) 
-	{
-		super(par1);
-		this.setName("blazestorm");
-	}
+	@Override
+	public String getName()
+    {
+        return "spell.blazestorm";
+    }
 	
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + "blazefire_book";
+    }
+	
+	@Override
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-		super.castSpell(par1Level, par2World, par3EntityPlayer);
+		return super.castSpell(par1Level, par2World, par3EntityPlayer);
 	}
 
 	@Override

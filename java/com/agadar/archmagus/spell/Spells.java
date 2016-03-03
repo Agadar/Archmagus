@@ -9,13 +9,9 @@ import com.agadar.archmagus.entity.EntitySummonedCaveSpider;
 import com.agadar.archmagus.entity.EntitySummonedSpider;
 import com.agadar.archmagus.entity.EntitySummonedWitch;
 import com.agadar.archmagus.entity.EntitySummonedWolf;
+import com.agadar.archmagus.potion.ModPotions;
 import com.agadar.archmagus.spell.aoe.SpellBlazeStorm;
 import com.agadar.archmagus.spell.aoe.SpellLightningStorm;
-import com.agadar.archmagus.spell.shield.SpellEarthShield;
-import com.agadar.archmagus.spell.shield.SpellFireShield;
-import com.agadar.archmagus.spell.shield.SpellFrostShield;
-import com.agadar.archmagus.spell.shield.SpellStormShield;
-import com.agadar.archmagus.spell.shield.SpellWaterShield;
 import com.agadar.archmagus.spell.summon.SpellSummon;
 import com.agadar.archmagus.spell.summon.SpellSummonMount;
 import com.agadar.archmagus.spell.targeted.SpellBlazeFire;
@@ -30,36 +26,38 @@ public class Spells
 	public final static Spell[] spellList = new Spell[256];
 	/** Integer used for generating unique indexes for spells. */
 	private static int nextIndex = 0;
-	/** All individual spells. */
-	public final static Spell blazefire = new SpellBlazeFire(nextIndex++);
-	public final static Spell ghastfire = new SpellGhastFire(nextIndex++);
-	public final static Spell witherblast = new SpellWitherBlast(nextIndex++);
-	public final static Spell summon_wolf = new SpellSummon(nextIndex++, "wolf", EntitySummonedWolf.class);
-	public final static Spell raise_skeleton = new SpellSummon(nextIndex++, "skeleton", EntityRisenSkeleton.class);
-	public final static Spell raise_wither_skeleton = new SpellSummon(nextIndex++, "wither_skeleton", EntityRisenWitherSkeleton.class);
-	public final static Spell raise_zombie = new SpellSummon(nextIndex++, "zombie", EntityRisenZombie.class);
-	public final static Spell raise_zombie_pigman = new SpellSummon(nextIndex++, "zombie_pigman", EntityRisenZombiePigman.class);
-	public final static Spell summon_witch = new SpellSummon(nextIndex++, "witch", EntitySummonedWitch.class);
-	public final static Spell summon_spider = new SpellSummon(nextIndex++, "spider", EntitySummonedSpider.class);
-	public final static Spell summon_cave_spider = new SpellSummon(nextIndex++, "cave_spider", EntitySummonedCaveSpider.class);
-	public final static Spell teleport = new SpellTeleport(nextIndex++);
-	public final static Spell respawn = new SpellRespawn(nextIndex++);
-	public final static Spell fireShield = new SpellFireShield(nextIndex++);
-	public final static Spell earthShield = new SpellEarthShield(nextIndex++);
-	public final static Spell waterShield = new SpellWaterShield(nextIndex++);
-	public final static Spell stormShield = new SpellStormShield(nextIndex++);
-	public final static Spell frostShield = new SpellFrostShield(nextIndex++);
-	public final static Spell blazestorm = new SpellBlazeStorm(nextIndex++);
-	public final static Spell lightningstorm = new SpellLightningStorm(nextIndex++);
-	public final static Spell raise_zombie_horse = new SpellSummonMount(nextIndex++, "zombie_horse", EntityRisenHorse.class, 3);
-	public final static Spell raise_skeleton_horse = new SpellSummonMount(nextIndex++, "skeleton_horse", EntityRisenHorse.class, 4);
+	/** All individual spells of Archmagus. */
+	public final static Spell blazefire = new SpellBlazeFire();
+	public final static Spell ghastfire = new SpellGhastFire();
+	public final static Spell witherblast = new SpellWitherBlast();
+	public final static Spell summon_wolf = new SpellSummon("wolf", EntitySummonedWolf.class);
+	public final static Spell raise_skeleton = new SpellSummon("skeleton", EntityRisenSkeleton.class);
+	public final static Spell raise_wither_skeleton = new SpellSummon("wither_skeleton", EntityRisenWitherSkeleton.class);
+	public final static Spell raise_zombie = new SpellSummon("zombie", EntityRisenZombie.class);
+	public final static Spell raise_zombie_pigman = new SpellSummon("zombie_pigman", EntityRisenZombiePigman.class);
+	public final static Spell summon_witch = new SpellSummon("witch", EntitySummonedWitch.class);
+	public final static Spell summon_spider = new SpellSummon("spider", EntitySummonedSpider.class);
+	public final static Spell summon_cave_spider = new SpellSummon("cave_spider", EntitySummonedCaveSpider.class);
+	public final static Spell teleport = new SpellTeleport();
+	public final static Spell respawn = new SpellRespawn();
+	public final static Spell fireShield = new SpellShield("fire", ModPotions.fireShield);
+	public final static Spell earthShield = new SpellShield("earth", ModPotions.earthShield);
+	public final static Spell waterShield = new SpellShield("water", ModPotions.waterShield);
+	public final static Spell stormShield = new SpellShield("storm", ModPotions.stormShield);
+	public final static Spell frostShield = new SpellShield("frost", ModPotions.frostShield);
+	public final static Spell blazestorm = new SpellBlazeStorm();
+	public final static Spell lightningstorm = new SpellLightningStorm();
+	public final static Spell raise_zombie_horse = new SpellSummonMount("zombie_horse", EntityRisenHorse.class, 3);
+	public final static Spell raise_skeleton_horse = new SpellSummonMount("skeleton_horse", EntityRisenHorse.class, 4);
 	
-	/** Registers a new spell at the given id. */
-	public static void registerSpell(Spell par1Spell, int par2effectId)
+	/** Registers a new spell. */
+	public static int registerSpell(Spell par1Spell)
 	{
-		if (spellList[par2effectId] != null) 
-			throw new IllegalArgumentException("Duplicate spell id!");
+		if (spellList[nextIndex] != null) 
+			throw new IllegalArgumentException("Tried to register a spell Id that is already in use!");
         else 
-        	spellList[par2effectId] = par1Spell;
+        	spellList[nextIndex] = par1Spell;
+		
+		return nextIndex++;
 	}
 }

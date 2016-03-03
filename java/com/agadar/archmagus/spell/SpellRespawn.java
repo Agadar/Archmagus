@@ -7,12 +7,6 @@ import net.minecraft.world.World;
 /** Teleports the player to his bed, and otherwise to the world spawn. */
 public class SpellRespawn extends Spell 
 {
-	protected SpellRespawn(int par1) 
-	{
-		super(par1);
-		this.setName("respawn");
-	}
-	
 	@Override
     public int getManaCost()
     {
@@ -26,32 +20,34 @@ public class SpellRespawn extends Spell
     }
     
 	@Override
-	public String getParticleName()
-	{
-		return "portal";
-	}
-	
-	@Override
-	public double getParticleAmount()
-	{
-		return 1;
-	}
+	public String getName()
+    {
+        return "spell.respawn";
+    }
 	
 	@Override
 	public String getSoundName()
 	{
 		return "mob.ghast.fireball";
 	}
+	
+	@Override
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + "wither_skeleton_book";
+    }
 
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
+		// Only teleport player if he's in the overworld.
 		if (par3EntityPlayer.dimension != 0)
-			return;
+			return false;
 		
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
 		BlockPos coordSpawn = par3EntityPlayer.getBedLocation(0);
 
+		// If the player is set to a bed, teleport him there. Otherwise, teleport him to world spawn.
 		if (coordSpawn != null)
 			par3EntityPlayer.setPositionAndUpdate(coordSpawn.getX(), coordSpawn.getY() + 1, coordSpawn.getZ());
 		else
@@ -61,5 +57,6 @@ public class SpellRespawn extends Spell
 		}
 
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
+		return true;
 	}
 }

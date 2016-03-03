@@ -9,13 +9,7 @@ import net.minecraft.world.World;
 
 /** Fires a number of small fireballs. */
 public class SpellBlazeFire extends Spell implements ISpellTargeted
-{
-	public SpellBlazeFire(int par1)
-    {
-        super(par1);
-        this.setName("blazefire");
-    }
-	
+{	
 	@Override
     public short getMaxLevel()
     {
@@ -23,27 +17,27 @@ public class SpellBlazeFire extends Spell implements ISpellTargeted
     }
 	
 	@Override
-	public String getParticleName()
-	{
-		return "flame";
-	}
+	public String getName()
+    {
+        return "spell.blazefire";
+    }
 	
 	@Override
-	public double getParticleAmount()
-	{
-		return 0.3;
-	}
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + "blazefire_book";
+    }
 
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
-		// Play sound
+		// Play sound.
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-		
+		// Summon fireball.
 		Vec3 v3 = par3EntityPlayer.getLook(1);
 		EntitySmallFireball fireball = new EntitySmallFireball(par2World, par3EntityPlayer, v3.xCoord * 50D, v3.yCoord * 50D, v3.zCoord * 50D);
 		fireball.posY = par3EntityPlayer.posY + par3EntityPlayer.getEyeHeight();
-		par2World.spawnEntityInWorld(fireball);
+		return par2World.spawnEntityInWorld(fireball);
 	}
 }
 

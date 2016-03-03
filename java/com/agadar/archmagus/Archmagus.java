@@ -14,6 +14,7 @@ import com.agadar.archmagus.items.ItemPotionBase;
 import com.agadar.archmagus.items.ItemSpellBook;
 import com.agadar.archmagus.items.StrictBrewingRecipe;
 import com.agadar.archmagus.network.MaxManaMessage;
+import com.agadar.archmagus.network.ModGuiHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -87,8 +88,8 @@ public class Archmagus
 		networkWrapper.registerMessage(MaxManaMessage.Handler.class, MaxManaMessage.class, 0, Side.CLIENT);
 		
 		// Register stuff placed in the proxies.
-		proxy.registerMeshDefinitions();
 		proxy.registerEntityRenderers();
+		proxy.registerMeshDefinitions();
 	}
 
 	@Mod.EventHandler
@@ -96,6 +97,7 @@ public class Archmagus
 	{
 		// Register stuff placed in the proxies.
 		proxy.registerRenderers();
+		proxy.registerKeyBindings();
 				
 		// Register entities
 		ModEntities.registerModEntities();
@@ -209,5 +211,8 @@ public class Archmagus
 
 		// Register the event handlers.
 		ModEventHandlers.registerModEventHandlers();
+		
+		// Register the GUI handler.
+		NetworkRegistry.INSTANCE.registerGuiHandler(Archmagus.instance, new ModGuiHandler());
 	}
 }

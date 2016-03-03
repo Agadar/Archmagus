@@ -6,14 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 /** Lightning strikes all non-allied creatures in the area. */
-public class SpellLightningStorm extends SpellAoE {
-
-	public SpellLightningStorm(int par1) 
-	{
-		super(par1);
-		this.setName("lightningstorm");
-	}
-	
+public class SpellLightningStorm extends SpellAoE 
+{
 	@Override
 	public int getManaCost()
     {
@@ -21,10 +15,22 @@ public class SpellLightningStorm extends SpellAoE {
     }
 	
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public String getName()
+    {
+        return "spell.lightningstorm";
+    }
+	
+	@Override
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + "lightning_book";
+    }
+	
+	@Override
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
-		super.castSpell(par1Level, par2World, par3EntityPlayer);
+		return super.castSpell(par1Level, par2World, par3EntityPlayer);
 	}
 
 	@Override

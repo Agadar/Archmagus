@@ -22,17 +22,18 @@ public class SpellSummon extends Spell
 	 *  It is assumed the only parameter is a World reference. */
 	@SuppressWarnings("rawtypes")
 	protected final Constructor entityConstr;
+	private final String creatureName;
 	
 	@SuppressWarnings({ "rawtypes" })
-	public SpellSummon(int par1, String par2Name, Class par3EntityClass)
+	public SpellSummon(String par1Name, Class par2EntityClass)
 	{
-		super(par1);
-		this.setName("summon." + par2Name);	
-		entityConstr = getConstructor(par3EntityClass);
+		super();
+		this.creatureName = par1Name;	
+		entityConstr = getConstructor(par2EntityClass);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static Constructor getConstructor(Class par1EntityClass)
+	protected static Constructor getConstructor(Class par1EntityClass)
 	{
 		try 
 		{
@@ -64,19 +65,19 @@ public class SpellSummon extends Spell
 	}
 	
 	@Override
-	public double getParticleAmount()
-	{
-		return 0.25;
-	}
+	public String getName()
+    {
+        return "spell.summon." + creatureName;
+    }
 	
 	@Override
-	public String getParticleName()
-	{
-		return "witchMagic";
-	}
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + creatureName + "_book";
+    }
 
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		// Play sound and kill existing summoned minions.
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
@@ -114,7 +115,9 @@ public class SpellSummon extends Spell
 		catch (Exception e) 
 		{
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 	
 	/** Kills all of the player's existing summoned minions. 

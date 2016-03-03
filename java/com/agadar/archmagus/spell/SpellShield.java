@@ -1,7 +1,6 @@
-package com.agadar.archmagus.spell.shield;
+package com.agadar.archmagus.spell;
 
 import com.agadar.archmagus.potion.ModPotions;
-import com.agadar.archmagus.spell.Spell;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -14,13 +13,25 @@ import net.minecraft.world.World;
  *  Water Shield, which gives the caster the regeneration and fire resistance effects when he is hit;
  *  Storm Shield, which gives the caster the speed and projectile immunity effects when he is hit;
  *  Frost Shield, which causes the slowness and weakness effects to attackers when he is hit; */
-public abstract class SpellShield extends Spell
+public class SpellShield extends Spell
 {
-	protected SpellShield(int par1, String par2Name) 
+	/** The name of this shield spell. */
+	private final String shieldName;
+	/** The potion applied by this spell. */
+	private final Potion shieldPotion;
+	
+	public SpellShield(String par1Name, Potion par2Potion) 
 	{
-		super(par1);
-		this.setName("shield." + par2Name);
+		super();
+		this.shieldName = par1Name;
+		this.shieldPotion = par2Potion;
 	}
+	
+	@Override
+	public String getName()
+    {
+        return "spell.shield." + shieldName;
+    }
 	
 	@Override
 	public int getManaCost()
@@ -40,15 +51,19 @@ public abstract class SpellShield extends Spell
         return 3;
     }
 	
-	/** Returns the shield (potion) effect applied to the caster when this shield spell is cast. */
-	public abstract Potion getShieldEffect();
+	@Override
+	public String getModelResourceLocationString()
+    {
+    	return super.getModelResourceLocationString() + shieldName + "_shield_book";
+    }
 
 	@Override
-	public void castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
+	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 
 	{
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
 		clearShields(par3EntityPlayer);
-		par3EntityPlayer.addPotionEffect(new PotionEffect(this.getShieldEffect().getId(), 12000, par1Level - 1));			
+		par3EntityPlayer.addPotionEffect(new PotionEffect(this.shieldPotion.getId(), 12000, par1Level - 1));
+		return true;
 	}
 	
 	/** Removes all shield effects from the given EntityPlayer.
