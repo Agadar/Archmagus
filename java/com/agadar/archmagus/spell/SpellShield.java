@@ -1,6 +1,7 @@
 package com.agadar.archmagus.spell;
 
-import com.agadar.archmagus.potion.ModPotions;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -19,12 +20,15 @@ public class SpellShield extends Spell
 	private final String shieldName;
 	/** The potion applied by this spell. */
 	private final Potion shieldPotion;
+	/** All the potions applied by all shield spells. */
+	private final static List<Potion> shieldPotions = new ArrayList<Potion>();
 	
 	public SpellShield(String par1Name, Potion par2Potion) 
 	{
 		super();
 		this.shieldName = par1Name;
 		this.shieldPotion = par2Potion;
+		shieldPotions.add(par2Potion);
 	}
 	
 	@Override
@@ -71,10 +75,7 @@ public class SpellShield extends Spell
 	 *  a player cannot have more than one type of shield on him at a time. */
 	private static void clearShields(EntityPlayer par1EntityPlayer)
 	{
-		par1EntityPlayer.removePotionEffect(ModPotions.fireShield.getId());
-		par1EntityPlayer.removePotionEffect(ModPotions.earthShield.getId());
-		par1EntityPlayer.removePotionEffect(ModPotions.waterShield.getId());
-		par1EntityPlayer.removePotionEffect(ModPotions.stormShield.getId());
-		par1EntityPlayer.removePotionEffect(ModPotions.frostShield.getId());
+		for (Potion p : shieldPotions)
+			par1EntityPlayer.removePotionEffect(p.getId());
 	}
 }
