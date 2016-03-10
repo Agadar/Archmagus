@@ -1,8 +1,10 @@
 package com.agadar.archmagus.network;
 
-import com.agadar.archmagus.gui.GuiSpellBook;
+import com.agadar.archmagus.gui.InventoryTest;
 
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
@@ -12,14 +14,16 @@ public class ModGuiHandler implements IGuiHandler
 	public static final int SPELLBOOK_GUI = 0;
 	
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        return null;
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) 
+    {
+    	if (ID == SPELLBOOK_GUI) return new ContainerChest(player.inventory, new InventoryTest(player), player);   	
+    	return null;
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    	if (ID == SPELLBOOK_GUI)
-            return new GuiSpellBook();
-        return null;
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) 
+    {
+    	if (ID == SPELLBOOK_GUI) return new GuiChest(player.inventory, new InventoryTest(player));   		
+    	return null;
     }
 }

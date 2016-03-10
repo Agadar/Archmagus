@@ -1,5 +1,7 @@
 itemGroup.tabSpellBooks=Spell Books
+itemGroup.tabSpells=Spells
 
+item.archmagus_spell.name=Spell
 item.archmagus_spell_book.name=Spell Book
 item.archmagus_apple_mana.name=Crystalline Apple
 item.archmagus_mana_crystal.name=Mana Crystal
@@ -67,3 +69,5 @@ potion.mana.instant=Instant Mana
 potion.mana.instant.postfix=Potion of Mana
 potion.mana.regen=Mana Surge
 potion.mana.regen.postfix=Potion of Mana Surge
+
+key.categories.inventory=Spell Book

@@ -3,11 +3,14 @@ package com.agadar.archmagus.eventhandler;
 import com.agadar.archmagus.Archmagus;
 import com.agadar.archmagus.entity.ISummoned;
 import com.agadar.archmagus.network.ManaProperties;
-import com.agadar.archmagus.network.MaxManaMessage;
+import com.agadar.archmagus.network.SpellProperties;
+import com.agadar.archmagus.network.message.MaxManaMessage;
+import com.agadar.archmagus.network.message.SpellsMessage;
 import com.agadar.archmagus.spell.summon.SpellSummon;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
@@ -17,7 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-/** Handles mana-related events. */
+/** Handles mana and spell properties related events. */
 public class HandlerManaEvents 
 {	
 	/**
@@ -27,30 +30,44 @@ public class HandlerManaEvents
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		
-		if (event.entity instanceof EntityPlayerMP) {			
+		if (event.entity instanceof EntityPlayerMP) 
+		{		
+			// Mana
 			Archmagus.networkWrapper.sendTo(new MaxManaMessage((ManaProperties.get((EntityPlayer) event.entity).getMaxMana())), (EntityPlayerMP) event.entity);
+			// Spells
+			SpellProperties spellProp = SpellProperties.get((EntityPlayer) event.entity);
+			NBTTagCompound comp = new NBTTagCompound();
+			spellProp.saveNBTData(comp);
+			Archmagus.networkWrapper.sendTo(new SpellsMessage(comp), (EntityPlayerMP) event.entity);
 		}
 	}
 	
 	/**
-	 * When a player is cloned after spawning/dying/dimensional traveling, also clone the mana properties.
+	 * When a player is cloned after spawning/dying/dimensional traveling, also clone the mana and spell properties.
 	 * @param event
 	 */
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone event) 
 	{ 
 		ManaProperties.get(event.entityPlayer).copy(ManaProperties.get(event.original));
+		SpellProperties.get(event.entityPlayer).copy(SpellProperties.get(event.original));
 	}
 	
 	/**
-	 * When a player is first constructed, register his mana properties.
+	 * When a player is first constructed, register his mana and spell properties.
 	 * @param event
 	 */
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 
-		if (event.entity instanceof EntityPlayer && ManaProperties.get((EntityPlayer) event.entity) == null)			
-			ManaProperties.register((EntityPlayer) event.entity);
+		if (event.entity instanceof EntityPlayer)
+		{
+			if (ManaProperties.get((EntityPlayer) event.entity) == null)			
+				ManaProperties.register((EntityPlayer) event.entity);
+		
+			if (SpellProperties.get((EntityPlayer) event.entity) == null)
+				SpellProperties.register((EntityPlayer) event.entity);
+		}
 	}
 	
 	/**

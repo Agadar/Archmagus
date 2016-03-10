@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /** This class is used for applying and identifying Spells onto items. */
-public class SpellData 
+public class SpellData implements Comparable<SpellData>
 {
 	/** Spell object associated with this SpellData. */
     public final Spell spellObj;
@@ -35,12 +35,10 @@ public class SpellData
     /** Reads a SpellData and returns an NBTTagCompound with corresponding values. */
     public static NBTTagCompound writeToNBTTagCompound(SpellData par1SpellData)
     {
-    	NBTTagCompound tag = new NBTTagCompound();
-    	
+    	NBTTagCompound tag = new NBTTagCompound();  	
     	tag.setShort("id", (short) par1SpellData.spellObj.effectId);
     	tag.setShort("lvl", (short) par1SpellData.spellLevel);
-    	tag.setShort("cd", (short) par1SpellData.spellCooldown);
-    	
+    	tag.setShort("cd", (short) par1SpellData.spellCooldown);   	
     	return tag;
     }
     
@@ -49,8 +47,7 @@ public class SpellData
     {
     	Spell spell = Spells.spellList[par1NBTTagCompound.getShort("id")];
         short tagLevel = par1NBTTagCompound.getShort("lvl");
-        short tagCooldown = par1NBTTagCompound.getShort("cd");      
-		
+        short tagCooldown = par1NBTTagCompound.getShort("cd");      		
 		return new SpellData(spell, tagLevel, tagCooldown);
     }
     
@@ -69,6 +66,45 @@ public class SpellData
     	Spell spell = Spells.spellList[par1NBTTagCompound.getShort("id")];
     	par1NBTTagCompound.setShort("cd", spell.getCooldown());
     }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+    	if (!(obj instanceof SpellData))
+            return false;
+        if (obj == this)
+            return true;
+
+        SpellData objcast = (SpellData) obj;
+        
+        return this.spellObj.effectId == objcast.spellObj.effectId &&
+        		this.spellLevel == objcast.spellLevel;
+    }
+    
+    @Override
+    public int hashCode() 
+    {
+    	int result = 17;
+    	result = 31 * result + spellObj.effectId;
+    	result = 31 * result + spellLevel;
+    	return result;
+    }
+    
+	@Override
+	public int compareTo(SpellData arg0)
+	{
+		if (this.spellObj.effectId > arg0.spellObj.effectId)
+			return 1;		
+		else if (this.spellObj.effectId < arg0.spellObj.effectId)
+			return -1;
+		
+		if (this.spellLevel > arg0.spellLevel)
+			return 1;		
+		else if (this.spellLevel < arg0.spellLevel)
+			return -1;
+		
+		return 0;
+	}
     
     /** Attempts to combine two SpellData's. Returns null if the combining failed.
      *  Used for combining spell books in an anvil. */

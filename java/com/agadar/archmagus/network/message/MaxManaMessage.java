@@ -1,6 +1,7 @@
-package com.agadar.archmagus.network;
+package com.agadar.archmagus.network.message;
 
 import com.agadar.archmagus.Archmagus;
+import com.agadar.archmagus.network.ManaProperties;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
@@ -45,7 +46,8 @@ public class MaxManaMessage implements IMessage
 	 * Whether this message requires the main thread to be processed (i.e. it
 	 * requires that the world, player, and other objects are in a valid state).
 	 */
-	protected boolean requiresMainThread() {
+	protected boolean requiresMainThread() 
+	{
 		return true;
 	}
 	

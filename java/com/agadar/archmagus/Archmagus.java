@@ -11,10 +11,13 @@ import com.agadar.archmagus.eventhandler.ModEventHandlers;
 import com.agadar.archmagus.items.ItemAppleMana;
 import com.agadar.archmagus.items.ItemManaCrystal;
 import com.agadar.archmagus.items.ItemPotionBase;
+import com.agadar.archmagus.items.ItemSpell;
 import com.agadar.archmagus.items.ItemSpellBook;
 import com.agadar.archmagus.items.StrictBrewingRecipe;
-import com.agadar.archmagus.network.MaxManaMessage;
 import com.agadar.archmagus.network.ModGuiHandler;
+import com.agadar.archmagus.network.message.MaxManaMessage;
+import com.agadar.archmagus.network.message.OpenSpellBookMessage;
+import com.agadar.archmagus.network.message.SpellsMessage;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -55,6 +58,16 @@ public class Archmagus
 	/** The mana crystal ore generator. */
 	ManaCrystalGen manaCrystalGen = new ManaCrystalGen();
 
+	/** The creative tab for the spells. */
+	public final static CreativeTabs tabSpells = new CreativeTabs("tabSpells")
+	{
+		@Override
+		@SideOnly(Side.CLIENT)
+		public Item getTabIconItem()
+		{
+			return spell;
+		}
+	};
 	/** The creative tab for the spell books. */
 	public final static CreativeTabs tabSpellBooks = new CreativeTabs("tabSpellBooks")
 	{
@@ -66,6 +79,8 @@ public class Archmagus
 		}
 	};
 
+	/** The spell. */
+	public final static Item spell = new ItemSpell();
 	/** The spell book. */
 	public final static Item spell_book = new ItemSpellBook();
 	/** The mana apple. */
@@ -86,6 +101,8 @@ public class Archmagus
 		// Register network stuff.
 		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		networkWrapper.registerMessage(MaxManaMessage.Handler.class, MaxManaMessage.class, 0, Side.CLIENT);
+		networkWrapper.registerMessage(OpenSpellBookMessage.Handler.class, OpenSpellBookMessage.class, 1, Side.SERVER);
+		networkWrapper.registerMessage(SpellsMessage.Handler.class, SpellsMessage.class, 2, Side.CLIENT);
 		
 		// Register stuff placed in the proxies.
 		proxy.registerEntityRenderers();

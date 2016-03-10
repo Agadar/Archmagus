@@ -1,7 +1,7 @@
 package com.agadar.archmagus.eventhandler;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.items.ItemSpellBook;
+import com.agadar.archmagus.items.ItemSpell;
 import com.agadar.archmagus.spell.Spell;
 import com.agadar.archmagus.spell.SpellData;
 import com.agadar.archmagus.spell.Spells;
@@ -125,7 +125,7 @@ public class HandlerBookDropEvents
 		if (randResult < percentage)
 		{
 			SpellData spellData = new SpellData(spell, level);
-			ItemStack spellBookDrop = ((ItemSpellBook) Archmagus.spell_book).getSpellItemStack(spellData);
+			ItemStack spellBookDrop = ((ItemSpell) Archmagus.spell).getSpellItemStack(spellData);
 			event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, spellBookDrop));
 		}
 	}

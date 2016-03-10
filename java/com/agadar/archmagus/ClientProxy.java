@@ -17,6 +17,7 @@ import com.agadar.archmagus.eventhandler.KeyInputHandler;
 import com.agadar.archmagus.gui.GuiManaBar;
 import com.agadar.archmagus.items.ItemAppleMana;
 import com.agadar.archmagus.items.ItemManaCrystal;
+import com.agadar.archmagus.items.ItemSpellBook;
 import com.agadar.archmagus.items.meshdefinitions.PotionBaseMeshDefinition;
 import com.agadar.archmagus.items.meshdefinitions.SpellBookMeshDefinition;
 import com.agadar.archmagus.model.ModelSummonedWolf;
@@ -123,6 +124,8 @@ public class ClientProxy extends CommonProxy
 		
 		// Item and block renderers.
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+		renderItem.getItemModelMesher().register(Archmagus.spell_book, 0,
+				new ModelResourceLocation(Archmagus.MODID + ":" + ((ItemSpellBook) Archmagus.spell_book).Name, "inventory"));
 		renderItem.getItemModelMesher().register(Archmagus.apple_mana, 0,
 				new ModelResourceLocation(Archmagus.MODID + ":" + ((ItemAppleMana) Archmagus.apple_mana).Name, "inventory"));
 		renderItem.getItemModelMesher().register(Archmagus.mana_crystal, 0,
@@ -145,10 +148,10 @@ public class ClientProxy extends CommonProxy
 
 		// ItemMeshDefinitions for spellbooks.
 		SpellBookMeshDefinition sbmd = new SpellBookMeshDefinition();
-		ModelLoader.setCustomMeshDefinition(Archmagus.spell_book, sbmd);
-		ModelBakery.registerItemVariants(Archmagus.spell_book, sbmd.defaultLoc);
+		ModelLoader.setCustomMeshDefinition(Archmagus.spell, sbmd);
+		ModelBakery.registerItemVariants(Archmagus.spell, sbmd.defaultLoc);
 		for (ModelResourceLocation mrl : sbmd.modelLocations.values())
-			ModelBakery.registerItemVariants(Archmagus.spell_book, mrl);
+			ModelBakery.registerItemVariants(Archmagus.spell, mrl);
 	}
 
 	@Override

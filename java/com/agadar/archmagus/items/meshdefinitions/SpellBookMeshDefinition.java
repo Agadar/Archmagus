@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.items.ItemSpellBook;
+import com.agadar.archmagus.items.ItemSpell;
 import com.agadar.archmagus.spell.Spell;
 import com.agadar.archmagus.spell.SpellData;
 import com.agadar.archmagus.spell.Spells;
@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class SpellBookMeshDefinition implements ItemMeshDefinition
 {
 	/** The default icon for spellbooks. */
-	public final ModelResourceLocation defaultLoc = new ModelResourceLocation(Archmagus.MODID + ":spell_book", "inventory");
+	public final ModelResourceLocation defaultLoc = new ModelResourceLocation(Archmagus.MODID + ":blazefire_book", "inventory");
 	/** ModelResourceLocations mapped to spell id's. */
 	public final Map<Integer, ModelResourceLocation> modelLocations = new HashMap<Integer, ModelResourceLocation>();
 	
@@ -45,7 +45,7 @@ public class SpellBookMeshDefinition implements ItemMeshDefinition
 		
 		if (stack.hasTagCompound())
 		{
-			SpellData sd = SpellData.readFromNBTTagCompound(((ItemSpellBook)Archmagus.spell_book).getSpellTag(stack));
+			SpellData sd = SpellData.readFromNBTTagCompound(((ItemSpell)Archmagus.spell).getSpellTag(stack));
 			loc = modelLocations.get(sd.spellObj.effectId);
 		}
 		
