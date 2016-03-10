@@ -20,7 +20,7 @@ import com.agadar.archmagus.spell.targeted.SpellTeleport;
 import com.agadar.archmagus.spell.targeted.SpellWitherBlast;
 
 /** Manages all Spells. */
-public class Spells 
+public final class Spells 
 {
 	/** The list of all spells. */
 	public final static Spell[] spellList = new Spell[256];
@@ -51,7 +51,7 @@ public class Spells
 	public final static Spell raise_skeleton_horse = new SpellSummonMount("skeleton_horse", EntityRisenHorse.class, 4);
 	
 	/** Registers a new spell. */
-	public static int registerSpell(Spell par1Spell)
+	public final static int registerSpell(Spell par1Spell)
 	{
 		if (spellList[nextIndex] != null) 
 			throw new IllegalArgumentException("Tried to register a spell Id that is already in use!");
@@ -59,5 +59,15 @@ public class Spells
         	spellList[nextIndex] = par1Spell;
 		
 		return nextIndex++;
+	}
+	
+	/**
+	 * Simple getter that returns the next unique index for spellList.
+	 *
+	 * @return
+	 */
+	public final static int getNextIndex()
+	{
+		return nextIndex;
 	}
 }
