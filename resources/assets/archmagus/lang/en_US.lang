@@ -70,6 +70,6 @@ potion.mana.instant.postfix=Potion of Mana
 potion.mana.regen=Mana Surge
 potion.mana.regen.postfix=Potion of Mana Surge
 
-key.categories.inventory=Spells
+key.spellbook=Spells
 
 container.spell=Spells
