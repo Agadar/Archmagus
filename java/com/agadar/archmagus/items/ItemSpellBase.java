@@ -52,12 +52,9 @@ public abstract class ItemSpellBase extends Item
         return itemstack;
     }
     
-    /** Makes the item tooltip text a light blue color. */
+    /** Makes the item tooltip a pretty color. */
     @Override
-    public final EnumRarity getRarity(ItemStack par1ItemStack)
-    {
-        return EnumRarity.RARE;
-    }
+    public abstract EnumRarity getRarity(ItemStack par1ItemStack);
     
     /** Adds additional information to the item's tooltip. */
     @SuppressWarnings("rawtypes")

@@ -12,12 +12,12 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 
-public class InventoryTest implements IInventory
+public class InventorySpells implements IInventory
 {
-	private ItemStack[] chestContents = new ItemStack[27];
+	private ItemStack[] chestContents = new ItemStack[54];
 	private String customName;
 
-	public InventoryTest(EntityPlayer player)
+	public InventorySpells(EntityPlayer player)
 	{
 		List<ItemStack> knownSpells = ((ItemSpell)Archmagus.spell).getPlayerKnownSpells(player);
 		
@@ -32,7 +32,7 @@ public class InventoryTest implements IInventory
      */
     public String getName()
     {
-        return this.hasCustomName() ? this.customName : "container.chest";
+        return this.hasCustomName() ? this.customName : "container.spell";
     }
 
     /**
@@ -46,7 +46,7 @@ public class InventoryTest implements IInventory
 	@Override
 	public int getSizeInventory()
 	{
-		return 27;
+		return chestContents.length;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class InventoryTest implements IInventory
 	@Override
 	public int getInventoryStackLimit()
 	{
-		return 64;
+		return 1;
 	}
 
 	@Override

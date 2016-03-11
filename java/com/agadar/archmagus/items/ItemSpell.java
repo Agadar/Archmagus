@@ -19,6 +19,7 @@ import com.agadar.archmagus.spell.targeted.SpellTeleport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -125,7 +126,11 @@ public final class ItemSpell extends ItemSpellBase
     public final void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) 
     {
     	if (!par2World.isRemote) 
+    	{
     		SpellData.tickCooldown(this.getSpellTag(par1ItemStack));
+    		
+    		
+    	}
     }
 
     @Override
@@ -145,6 +150,12 @@ public final class ItemSpell extends ItemSpellBase
         	return (spellData.spellObj.getTranslatedName(spellData.spellLevel));
         
         return super.getItemStackDisplayName(par1ItemStack);
+    }
+    
+    @Override
+    public final EnumRarity getRarity(ItemStack par1ItemStack)
+    {
+        return EnumRarity.RARE;
     }
     
     /**

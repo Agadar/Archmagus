@@ -10,7 +10,7 @@ public class SpellData implements Comparable<SpellData>
 	/** Spell object associated with this SpellData. */
     public final Spell spellObj;
     /** Spell level associated with this SpellData. */
-    public final short spellLevel;
+    public short spellLevel;
     /** The remaining cooldown associated with this SpellData. */
     public final short spellCooldown;
     

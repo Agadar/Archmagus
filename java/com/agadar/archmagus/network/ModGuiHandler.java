@@ -1,6 +1,6 @@
 package com.agadar.archmagus.network;
 
-import com.agadar.archmagus.gui.InventoryTest;
+import com.agadar.archmagus.gui.InventorySpells;
 
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,14 +16,14 @@ public class ModGuiHandler implements IGuiHandler
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) 
     {
-    	if (ID == SPELLBOOK_GUI) return new ContainerChest(player.inventory, new InventoryTest(player), player);   	
+    	if (ID == SPELLBOOK_GUI) return new ContainerChest(player.inventory, new InventorySpells(player), player);   	
     	return null;
     }
 
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) 
     {
-    	if (ID == SPELLBOOK_GUI) return new GuiChest(player.inventory, new InventoryTest(player));   		
+    	if (ID == SPELLBOOK_GUI) return new GuiChest(player.inventory, new InventorySpells(player));   		
     	return null;
     }
 }
