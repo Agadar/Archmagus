@@ -76,10 +76,12 @@ public final class ItemSpell extends ItemSpellBase
     {		
     	if (!par2World.isRemote)
     	{
+    		// Retrieve relevant variables.
     		NBTTagCompound spellTag = this.getSpellTag(par1ItemStack);
         	SpellData spellData = SpellData.readFromNBTTagCompound(spellTag);	
         	boolean inCreative = par3EntityPlayer.capabilities.isCreativeMode;
         	
+        	// If the spell is on cooldown and the player is not in creative, abort.
         	if (!inCreative && spellData.spellCooldown > 0)
         	{
         		if (spellData.spellCooldown > 40)
@@ -88,22 +90,44 @@ public final class ItemSpell extends ItemSpellBase
         		return par1ItemStack;  
         	}
         	
+        	// Retrieve mana properties
         	ManaProperties props = ManaProperties.get(par3EntityPlayer);
         	
-        	if (inCreative)
-        	{
+        	// If the player is in creative or has enough mana, cast the spell.
+        	if (inCreative) 
         		spellData.castSpell(par2World, par3EntityPlayer);
-        	}
         	else if (props.consumeMana(spellData.spellObj.getManaCost()))
         	{
-        		spellData.castSpell(par2World, par3EntityPlayer);
-        		SpellData.startCooldown(spellTag);
+        		// Only cast the spell if the player actually knows the spell.
+        		if (playerKnowsSpell(spellData, par3EntityPlayer))
+        		{
+        			spellData.castSpell(par2World, par3EntityPlayer);
+        			SpellData.startCooldown(spellTag);
+        		}
+        		else
+        		{
+        			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not know this spell!"));
+        			par1ItemStack.stackSize--;
+        		}
         	}
         	else
         		par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Not enough mana!"));
     	}
     	
     	return par1ItemStack;
+    }
+    
+    /**
+     * Returns whether or not the given player knows the given spell.
+     *
+     * @param par1SpellData
+     * @param par2EntityPlayer
+     * @return
+     */
+    protected final boolean playerKnowsSpell(SpellData par1SpellData, EntityPlayer par2EntityPlayer)
+    {
+    	List<SpellData> knownSpells = SpellProperties.get(par2EntityPlayer).getKnownSpells();
+    	return knownSpells.contains(par1SpellData);
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -128,8 +152,6 @@ public final class ItemSpell extends ItemSpellBase
     	if (!par2World.isRemote) 
     	{
     		SpellData.tickCooldown(this.getSpellTag(par1ItemStack));
-    		
-    		
     	}
     }
 

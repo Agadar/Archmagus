@@ -1,7 +1,7 @@
 package com.agadar.archmagus.network.message;
 
 import com.agadar.archmagus.Archmagus;
-import com.agadar.archmagus.network.ModGuiHandler;
+import com.agadar.archmagus.gui.ModGuiHandler;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;

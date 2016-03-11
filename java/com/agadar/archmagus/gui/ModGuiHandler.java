@@ -1,6 +1,4 @@
-package com.agadar.archmagus.network;
-
-import com.agadar.archmagus.gui.InventorySpells;
+package com.agadar.archmagus.gui;
 
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
