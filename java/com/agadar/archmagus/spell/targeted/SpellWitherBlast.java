@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /** Fires a Wither Skull. */
-public class SpellWitherBlast extends Spell implements ISpellTargeted
+public class SpellWitherBlast extends Spell
 {
 	@Override
     public int getManaCost()
@@ -32,6 +32,12 @@ public class SpellWitherBlast extends Spell implements ISpellTargeted
 	public String getName()
     {
         return "spell.witherblast";
+    }
+	
+	@Override
+	public String getDescription()
+    {
+    	return "spell.description.projectile";
     }
 	
 	@Override

@@ -69,15 +69,15 @@ public abstract class Spell
     }
     
     /** Returns the name of the key in the translation table of the description of the spell. */
-    public String getDescription(int par1Level)
+    public String getDescription()
     {
-    	return "spell.spell_book.description";
+    	return "spell.description.default";
     }
     
     /** Returns the correct translated description of the spell. */
-    public final String getTranslatedDescription(int par1Level)
+    public final String getTranslatedDescription()
     {
-        return StatCollector.translateToLocal(this.getDescription(par1Level));
+        return StatCollector.translateToLocal(this.getDescription());
     }
     
     /** Returns the name of the spell's ModelResourceLocation. */

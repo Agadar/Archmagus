@@ -71,6 +71,12 @@ public class SpellSummon extends Spell
     }
 	
 	@Override
+	public String getDescription()
+    {
+    	return "spell.description.summon.minion";
+    }
+	
+	@Override
 	public String getModelResourceLocationString()
     {
     	return super.getModelResourceLocationString() + creatureName + "_book";

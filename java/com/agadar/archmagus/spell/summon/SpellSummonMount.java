@@ -33,6 +33,12 @@ public class SpellSummonMount extends SpellSummon
     }
 	
 	@Override
+	public String getDescription()
+    {
+    	return "spell.description.summon.mount";
+    }
+	
+	@Override
 	public String getModelResourceLocationString()
     {
 		return Archmagus.MODID + ":" + (horseType == 3 ? "zombie" : "skeleton") + "_book";

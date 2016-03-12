@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /** Fires a number of small fireballs. */
-public class SpellBlazeFire extends Spell implements ISpellTargeted
+public class SpellBlazeFire extends Spell
 {	
 	@Override
     public short getMaxLevel()
@@ -20,6 +20,12 @@ public class SpellBlazeFire extends Spell implements ISpellTargeted
 	public String getName()
     {
         return "spell.blazefire";
+    }
+	
+	@Override
+	public String getDescription()
+    {
+    	return "spell.description.projectile";
     }
 	
 	@Override

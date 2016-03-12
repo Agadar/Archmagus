@@ -31,6 +31,12 @@ public abstract class SpellAoE extends Spell
     {
     	return 5;
     }
+	
+	@Override
+	public String getDescription()
+    {
+    	return "spell.description.aoe";
+    }
 
 	@Override
 	public boolean castSpell(short par1Level, World par2World, EntityPlayer par3EntityPlayer) 

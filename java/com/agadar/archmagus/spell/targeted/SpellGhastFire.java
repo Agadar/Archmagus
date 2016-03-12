@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /** Fires a large fireball. */
-public class SpellGhastFire extends Spell implements ISpellTargeted
+public class SpellGhastFire extends Spell
 {
 	@Override
     public int getManaCost()
@@ -26,6 +26,12 @@ public class SpellGhastFire extends Spell implements ISpellTargeted
 	public String getName()
     {
         return "spell.ghastfire";
+    }
+	
+	@Override
+	public String getDescription()
+    {
+    	return "spell.description.projectile";
     }
 	
 	@Override

@@ -8,14 +8,7 @@ import com.agadar.archmagus.network.ManaProperties;
 import com.agadar.archmagus.network.SpellProperties;
 import com.agadar.archmagus.spell.Spell;
 import com.agadar.archmagus.spell.SpellData;
-import com.agadar.archmagus.spell.SpellShield;
 import com.agadar.archmagus.spell.Spells;
-import com.agadar.archmagus.spell.aoe.SpellAoE;
-import com.agadar.archmagus.spell.summon.SpellSummon;
-import com.agadar.archmagus.spell.summon.SpellSummonMount;
-import com.agadar.archmagus.spell.targeted.ISpellTargeted;
-import com.agadar.archmagus.spell.targeted.SpellTeleport;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,19 +40,8 @@ public final class ItemSpell extends ItemSpellBase
 
         if (spellData.spellObj != null)
         {
-        	if (spellData.spellObj instanceof SpellShield) 
-        		par3List.add("Magic Ward");
-        	else if (spellData.spellObj instanceof SpellAoE)
-        		par3List.add("Area of Effect");
-        	else if (spellData.spellObj instanceof ISpellTargeted && !(spellData.spellObj instanceof SpellTeleport))
-        		par3List.add("Projectile");
-        	else if (spellData.spellObj instanceof SpellSummon && !(spellData.spellObj instanceof SpellSummonMount))
-        		par3List.add("Summon Minion");
-        	else if (spellData.spellObj instanceof SpellSummonMount)
-        		par3List.add("Summon Mount");
-        	else 
-        		par3List.add("Miscellaneous");
-        	
+        	par3List.add(spellData.spellObj.getTranslatedDescription());
+
         	if (spellData.spellCooldown != 0)
         	{
         		int seconds = spellData.spellCooldown / 20;		

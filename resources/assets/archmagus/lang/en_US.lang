@@ -46,6 +46,13 @@ spell.level.8=VIII
 spell.level.9=IX
 spell.level.10=X
 
+spell.description.default=Miscellaneous
+spell.description.summon.minion=Summon Minion
+spell.description.summon.mount=Summon Mount
+spell.description.projectile=Projectile
+spell.description.aoe=Area of Effect
+spell.description.shield=Magic Ward
+
 entity.summoned_wolf.name=Wolf
 entity.risen_skeleton.name=Skeleton
 entity.risen_wither_skeleton.name=Wither Skeleton

@@ -58,6 +58,12 @@ public class SpellShield extends Spell
     }
 	
 	@Override
+	public String getDescription()
+    {
+    	return "spell.description.shield";
+    }
+	
+	@Override
 	public String getModelResourceLocationString()
     {
     	return super.getModelResourceLocationString() + shieldName + "_shield_book";

@@ -8,7 +8,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /** Teleports the player to where he is aiming, up to a certain distance. */
-public class SpellTeleport extends Spell implements ISpellTargeted
+public class SpellTeleport extends Spell
 {
     @Override
     public int getManaCost()
