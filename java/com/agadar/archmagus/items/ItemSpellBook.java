@@ -51,7 +51,7 @@ public class ItemSpellBook extends ItemSpellBase
         	final SpellData newSpell = SpellData.readFromNBTTagCompound(spellTag);	
         	final SpellProperties props = SpellProperties.get(par3EntityPlayer);
         	final List<SpellData> knownSpells = props.getKnownSpells();
-        	boolean learnSpell = true;	// Whether the new spell may be learned.
+        	boolean learnSpell = newSpell.spellLevel == 1;	// Whether the new spell may be learned.
         	SpellData upgradeMe = null;	// The known spell to be upgraded in rank by the new spell.
         	
         	// Iterate over known spells in order to do checks.
@@ -63,7 +63,7 @@ public class ItemSpellBook extends ItemSpellBase
     				if (knownSpell.spellLevel == newSpell.spellLevel)
     				{
     					par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You already know this spell!"));
-    					learnSpell = false;
+    					return par1ItemStack;
     				}
     				// Else if the player only knows a lower rank of the spell...
     				else if (knownSpell.spellLevel < newSpell.spellLevel)
@@ -72,19 +72,20 @@ public class ItemSpellBook extends ItemSpellBase
     					if (knownSpell.spellLevel + 1 == newSpell.spellLevel)
     					{
     						upgradeMe = knownSpell;
+    						learnSpell = true;
     					}
     					// Else, abort.
     					else
     					{
     						par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "This spell is too high level for you!"));
-    						learnSpell = false;
+    						return par1ItemStack;
     					}
     				}
     				// Else if the player already knows a higher rank of the spell, abort.
     				else if (knownSpell.spellLevel > newSpell.spellLevel)
     				{
     					par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You already know a higher rank of this spell!"));
-    					learnSpell = false;
+    					return par1ItemStack;
     				}
     			}
     		}
@@ -103,7 +104,9 @@ public class ItemSpellBook extends ItemSpellBase
             	NBTTagCompound comp = new NBTTagCompound();
             	props.saveNBTData(comp);
             	Archmagus.networkWrapper.sendTo(new SpellsMessage(comp), (EntityPlayerMP) par3EntityPlayer);
-        	}      	
+        	}
+        	else
+        		par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "This spell is too high level for you!"));
     	}
     	
     	return par1ItemStack;

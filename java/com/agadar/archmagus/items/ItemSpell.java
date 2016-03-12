@@ -102,7 +102,21 @@ public final class ItemSpell extends ItemSpellBase
         		if (playerKnowsSpell(spellData, par3EntityPlayer))
         		{
         			spellData.castSpell(par2World, par3EntityPlayer);
-        			SpellData.startCooldown(spellTag);
+
+        			// Start the cooldown of ALL ItemSpells in the player's inventory that are equal to this.
+        			for (int i = 0; i < par3EntityPlayer.inventory.getSizeInventory(); i++)
+        			{
+        				ItemStack curStack = par3EntityPlayer.inventory.getStackInSlot(i);
+        				NBTTagCompound curSpellTag = this.getSpellTag(curStack);
+        				
+        				if (curSpellTag == null) 
+        					continue;
+        					
+        	        	SpellData curSpellData = SpellData.readFromNBTTagCompound(curSpellTag);
+        	        	
+        	        	if (curSpellData.equals(spellData))
+        	        		SpellData.startCooldown(curSpellTag);
+        			}
         		}
         		else
         		{

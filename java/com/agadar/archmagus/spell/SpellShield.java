@@ -6,6 +6,8 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 /** Summons a defensive magical shield. We currently have the following shields:
@@ -67,6 +69,7 @@ public class SpellShield extends Spell
 		par2World.playSoundAtEntity(par3EntityPlayer, this.getSoundName(), 1.0F, 1.0F);
 		clearShields(par3EntityPlayer);
 		par3EntityPlayer.addPotionEffect(new PotionEffect(this.shieldPotion.getId(), 12000, par1Level - 1));
+		par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.BLUE + "You cast " + this.getTranslatedName(par1Level) + "."));
 		return true;
 	}
 	

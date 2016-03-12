@@ -34,6 +34,9 @@ public abstract class ItemSpellBase extends Item
 	/** Returns the ItemStack's spell tag. */
     public final NBTTagCompound getSpellTag(ItemStack par1ItemStack)
     {
+    	if (par1ItemStack == null)
+    		return null;
+    	
     	NBTTagCompound nbtt = par1ItemStack.getTagCompound();
     	
     	if (nbtt != null && nbtt.hasKey("spell"))
