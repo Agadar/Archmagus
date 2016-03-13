@@ -6,6 +6,7 @@ import archmagus.network.ManaProperties;
 import archmagus.network.SpellProperties;
 import archmagus.network.message.MaxManaMessage;
 import archmagus.network.message.SpellsMessage;
+import archmagus.potion.ModPotions;
 import archmagus.spell.summon.SpellSummon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -98,6 +100,21 @@ public class HandlerManaEvents
 		
 		// Spell cooldowns
 		SpellProperties.get(event.player).tickCooldowns();
+	}
+	
+	/**
+	 * For adjusting the player's falling speed when under the influence of Slow Fall.
+	 *
+	 * @param event
+	 */
+	@SubscribeEvent
+	public void OnPlayerUpdate(LivingUpdateEvent event)
+	{
+		if (event.entityLiving instanceof EntityPlayer && event.entityLiving.fallDistance > 0 && event.entityLiving.isPotionActive(ModPotions.slowFall)) 
+		{		
+			event.entityLiving.motionY *= 0.6d;
+			event.entityLiving.fallDistance = event.entityLiving.worldObj.isRemote ? 0.0F : -0.2F;
+		}
 	}
 	
 	@SubscribeEvent

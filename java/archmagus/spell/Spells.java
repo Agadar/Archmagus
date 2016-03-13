@@ -51,6 +51,7 @@ public final class Spells
 	public final static Spell lightningstorm = new SpellLightningStorm();
 	public final static Spell raise_zombie_horse = new SpellSummonMount("zombie_horse", EntityRisenHorse.class, 3);
 	public final static Spell raise_skeleton_horse = new SpellSummonMount("skeleton_horse", EntityRisenHorse.class, 4);
+	public final static Spell slowFall = new SpellBuff("slowfall", ModPotions.slowFall);
 	
 	/** Registers a new spell. */
 	public final static int registerSpell(Spell par1Spell)

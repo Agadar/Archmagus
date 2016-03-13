@@ -27,13 +27,14 @@ spell.summon.wither_horse=Raise Wither Horse
 spell.teleport=Teleport
 spell.respawn=Respawn
 spell.polymorph=Polymorph
-spell.shield.fire=Fire Shield
-spell.shield.earth=Earth Shield
-spell.shield.water=Water Shield
-spell.shield.storm=Storm Shield
-spell.shield.frost=Frost Shield
+spell.buff.fire=Fire Shield
+spell.buff.earth=Earth Shield
+spell.buff.water=Water Shield
+spell.buff.storm=Storm Shield
+spell.buff.frost=Frost Shield
 spell.blazestorm=Blazestorm
 spell.lightningstorm=Lightning Storm
+spell.buff.slowfall=Slow Fall
 
 spell.level.1=I
 spell.level.2=II
@@ -52,6 +53,7 @@ spell.description.summon.mount=Summon Mount
 spell.description.projectile=Projectile
 spell.description.aoe=Area of Effect
 spell.description.shield=Magic Ward
+spell.description.buff=Magic Buff
 
 entity.summoned_wolf.name=Wolf
 entity.risen_skeleton.name=Skeleton
@@ -64,11 +66,11 @@ entity.summoned_cave_spider.name=Cave Spider
 entity.risen_horse.name=Risen Horse
 
 potion.polymorphed=Polymorphed
-potion.shield.fire=Fire Shield
-potion.shield.earth=Earth Shield
-potion.shield.water=Water Shield
-potion.shield.storm=Storm Shield
-potion.shield.frost=Frost Shield
+potion.buff.fire=Fire Shield
+potion.buff.earth=Earth Shield
+potion.buff.water=Water Shield
+potion.buff.storm=Storm Shield
+potion.buff.frost=Frost Shield
 potion.feared=Feared
 potion.immunity.projectile=Reflection
 potion.immunity.knockback=Steadfast
@@ -76,6 +78,7 @@ potion.mana.instant=Instant Mana
 potion.mana.instant.postfix=Potion of Mana
 potion.mana.regen=Mana Surge
 potion.mana.regen.postfix=Potion of Mana Surge
+potion.buff.slowfall=Slow Fall
 
 key.spellbook=Spells
 
