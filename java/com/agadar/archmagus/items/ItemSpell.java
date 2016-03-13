@@ -164,8 +164,12 @@ public final class ItemSpell extends ItemSpellBase
     	{
     		// Sets this NBTTag's cooldown variable to that of the player.
     		SpellData spellData = SpellProperties.get(((EntityPlayer)entityIn)).returnFromItemStack(stack);
-    		NBTTagCompound spellTag = stack.getTagCompound().getCompoundTag("spell");
-    		spellTag.setShort("cd", spellData.spellCooldown);
+    		
+    		if (spellData != null)
+    		{
+    			NBTTagCompound spellTag = stack.getTagCompound().getCompoundTag("spell");
+    			spellTag.setShort("cd", spellData.spellCooldown);
+    		}
     	}
     }
 }
