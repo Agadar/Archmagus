@@ -71,27 +71,34 @@ public class HandlerManaEvents
 	}
 	
 	/**
-	 * Handles natural mana regeneration after every tick.
+	 * Handles natural mana regeneration and spell cooldowns after every tick.
 	 * @param event
 	 */
 	@SubscribeEvent
 	public void onPlayerPostTick(PlayerTickEvent event)
 	{
-		if (event.phase != TickEvent.Phase.END || event.side != Side.SERVER || event.player.getFoodStats().getFoodLevel() < 18)
+		if (event.phase != TickEvent.Phase.END || event.side != Side.SERVER)
 			return;
 
-		ManaProperties prop = ManaProperties.get(event.player);
-		
-		if (prop.getCurrentMana() >= prop.getMaxMana())
-			return;
-
-		prop.manaTimer++;
-
-		if (prop.manaTimer >= 60)
+		// Mana
+		if (event.player.getFoodStats().getFoodLevel() >= 18)
 		{
-			prop.replenishMana(1);
-			prop.manaTimer = 0;
+			ManaProperties prop = ManaProperties.get(event.player);
+			
+			if (prop.getCurrentMana() < prop.getMaxMana())
+			{
+				prop.manaTimer++;
+		
+				if (prop.manaTimer >= 60)
+				{
+					prop.replenishMana(1);
+					prop.manaTimer = 0;
+				}
+			}
 		}
+		
+		// Spell cooldowns
+		SpellProperties.get(event.player).tickCooldowns();
 	}
 	
 	@SubscribeEvent

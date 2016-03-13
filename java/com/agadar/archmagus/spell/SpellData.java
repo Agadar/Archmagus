@@ -12,7 +12,7 @@ public class SpellData implements Comparable<SpellData>
     /** Spell level associated with this SpellData. */
     public short spellLevel;
     /** The remaining cooldown associated with this SpellData. */
-    public final short spellCooldown;
+    public short spellCooldown;
     
     public SpellData(Spell par1Spell, short par2Level, short par3Cooldown)
     {
@@ -51,20 +51,23 @@ public class SpellData implements Comparable<SpellData>
 		return new SpellData(spell, tagLevel, tagCooldown);
     }
     
-    /** Reads an NBTTagCompound and reduces the remaining cooldown by one tick. */
-    public static void tickCooldown(NBTTagCompound par1NBTTagCompound)
+    /**
+     * Starts this spellData's cooldown.
+     */
+    public void startCooldown()
     {
-    	short cooldown = par1NBTTagCompound.getShort("cd");
-
-		if (cooldown > 0)
-			par1NBTTagCompound.setShort("cd", (short) (cooldown - 1));
+    	this.spellCooldown = this.spellObj.getCooldown();
     }
     
-    /** Reads an NBTTagCompound and starts the cooldown anew. */
-    public static void startCooldown(NBTTagCompound par1NBTTagCompound)
+    /**
+     * Ticks this spellData's cooldown.
+     */
+    public void tickCooldown()
     {
-    	Spell spell = Spells.spellList[par1NBTTagCompound.getShort("id")];
-    	par1NBTTagCompound.setShort("cd", spell.getCooldown());
+    	if (this.spellCooldown > 0)
+    	{
+    		this.spellCooldown--;
+    	}
     }
     
     @Override

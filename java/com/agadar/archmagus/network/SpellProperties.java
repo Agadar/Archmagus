@@ -8,6 +8,7 @@ import com.agadar.archmagus.spell.SpellData;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
@@ -69,7 +70,44 @@ public class SpellProperties implements IExtendedEntityProperties
 			knownSpells.add(SpellData.readFromNBTTagCompound(tagList.getCompoundTagAt(i)));
 	}
 	
-	public void copy (SpellProperties mp)
+	/**
+	 * Ticks the cooldown of all spellData's.
+	 */
+	public void tickCooldowns()
+	{
+		for (SpellData spellData : knownSpells)
+			spellData.tickCooldown();
+	}
+	
+	/**
+	 * Takes an ItemStack, reads its spell tag, and returns the corresponding SpellData from the knownSpells list.
+	 * Returns null if the corresponding SpellData was not found for any reason.
+	 *
+	 * @param par1ItemStack
+	 * @return
+	 */
+	public SpellData returnFromItemStack(ItemStack par1ItemStack)
+	{
+		if (par1ItemStack == null || par1ItemStack.getTagCompound() == null || !par1ItemStack.getTagCompound().hasKey("spell"))
+			return null;
+
+		NBTTagCompound spellTag = par1ItemStack.getTagCompound().getCompoundTag("spell");
+		short effectId = spellTag.getShort("id");
+		short tagLevel = spellTag.getShort("lvl");
+		
+		for (SpellData spellData : knownSpells)
+			if (spellData.spellObj.effectId == effectId && spellData.spellLevel == tagLevel)
+				return spellData;
+		
+		return null;
+	}
+	
+	/**
+	 * Copies the given SpellProperties to this one.
+	 *
+	 * @param mp
+	 */
+	public void copy(SpellProperties mp)
 	{
 		knownSpells.clear();
 		knownSpells.addAll(mp.getKnownSpells());

@@ -58,10 +58,18 @@ public final class ItemSpell extends ItemSpellBase
     {		
     	if (!par2World.isRemote)
     	{
-    		// Retrieve relevant variables.
-    		NBTTagCompound spellTag = this.getSpellTag(par1ItemStack);
-        	SpellData spellData = SpellData.readFromNBTTagCompound(spellTag);	
-        	boolean inCreative = par3EntityPlayer.capabilities.isCreativeMode;
+        	// Retrieve relevant data.
+    		boolean inCreative = par3EntityPlayer.capabilities.isCreativeMode;
+        	SpellProperties spellProps = SpellProperties.get(par3EntityPlayer);
+        	SpellData spellData = spellProps.returnFromItemStack(par1ItemStack);
+        	
+        	// If the player does not know the spell associated with the ItemSpell, abort.
+        	if (spellData == null)
+        	{
+        		par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not know this spell!"));
+    			par1ItemStack.stackSize--;
+    			return par1ItemStack;
+        	}
         	
         	// If the spell is on cooldown and the player is not in creative, abort.
         	if (!inCreative && spellData.spellCooldown > 0)
@@ -75,55 +83,21 @@ public final class ItemSpell extends ItemSpellBase
         	// Retrieve mana properties
         	ManaProperties props = ManaProperties.get(par3EntityPlayer);
         	
-        	// If the player is in creative or has enough mana, cast the spell.
+        	// If the player is in creative, cast the spell.
         	if (inCreative) 
         		spellData.castSpell(par2World, par3EntityPlayer);
+        	// Else if the player is not in creative but has enough mana, cast the spell and start the spell cooldown.
         	else if (props.consumeMana(spellData.spellObj.getManaCost()))
         	{
-        		// Only cast the spell if the player actually knows the spell.
-        		if (playerKnowsSpell(spellData, par3EntityPlayer))
-        		{
-        			spellData.castSpell(par2World, par3EntityPlayer);
-
-        			// Start the cooldown of ALL ItemSpells in the player's inventory that are equal to this.
-        			for (int i = 0; i < par3EntityPlayer.inventory.getSizeInventory(); i++)
-        			{
-        				ItemStack curStack = par3EntityPlayer.inventory.getStackInSlot(i);
-        				NBTTagCompound curSpellTag = this.getSpellTag(curStack);
-        				
-        				if (curSpellTag == null) 
-        					continue;
-        					
-        	        	SpellData curSpellData = SpellData.readFromNBTTagCompound(curSpellTag);
-        	        	
-        	        	if (curSpellData.equals(spellData))
-        	        		SpellData.startCooldown(curSpellTag);
-        			}
-        		}
-        		else
-        		{
-        			par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You do not know this spell!"));
-        			par1ItemStack.stackSize--;
-        		}
+    			spellData.castSpell(par2World, par3EntityPlayer);
+    			spellData.startCooldown();
         	}
+        	// Else, warn the player he doesn't have enough mana.
         	else
         		par3EntityPlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "Not enough mana!"));
     	}
     	
     	return par1ItemStack;
-    }
-    
-    /**
-     * Returns whether or not the given player knows the given spell.
-     *
-     * @param par1SpellData
-     * @param par2EntityPlayer
-     * @return
-     */
-    protected final boolean playerKnowsSpell(SpellData par1SpellData, EntityPlayer par2EntityPlayer)
-    {
-    	List<SpellData> knownSpells = SpellProperties.get(par2EntityPlayer).getKnownSpells();
-    	return knownSpells.contains(par1SpellData);
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -138,16 +112,6 @@ public final class ItemSpell extends ItemSpellBase
     		if (spell != null)
     			for (short i2 = spell.getMinLevel(); i2 <= spell.getMaxLevel(); i2++)
     				par3List.add(((ItemSpell) Archmagus.spell).getSpellItemStack(new SpellData(spell, i2)));
-    	}
-    }
-    
-    /** Updates the remaining cooldown every game tick. */
-    @Override
-    public final void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) 
-    {
-    	if (!par2World.isRemote) 
-    	{
-    		SpellData.tickCooldown(this.getSpellTag(par1ItemStack));
     	}
     }
 
@@ -191,5 +155,17 @@ public final class ItemSpell extends ItemSpellBase
     		itemSpells.add(((ItemSpell)Archmagus.spell).getSpellItemStack(spellData));
     	
     	return itemSpells;
+    }
+    
+    @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+    {
+    	if (!worldIn.isRemote)
+    	{
+    		// Sets this NBTTag's cooldown variable to that of the player.
+    		SpellData spellData = SpellProperties.get(((EntityPlayer)entityIn)).returnFromItemStack(stack);
+    		NBTTagCompound spellTag = stack.getTagCompound().getCompoundTag("spell");
+    		spellTag.setShort("cd", spellData.spellCooldown);
+    	}
     }
 }

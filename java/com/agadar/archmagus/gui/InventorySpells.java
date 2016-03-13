@@ -19,11 +19,15 @@ public class InventorySpells implements IInventory
 
 	public InventorySpells(EntityPlayer player)
 	{
+		// Create ItemSpells for all player's known spells.
 		List<ItemStack> knownSpells = ((ItemSpell)Archmagus.spell).getPlayerKnownSpells(player);
 		
+		// Add ItemSpells to this inventory and set their cooldowns to 0 for aesthetic reasons.
 		for (int i = 0; i < chestContents.length && i < knownSpells.size(); i++)
 		{
-			chestContents[i] = knownSpells.get(i);
+			ItemStack curItemStack = knownSpells.get(i);
+			curItemStack.getTagCompound().getCompoundTag("spell").setShort("cd", (short) 0);
+			chestContents[i] = curItemStack;
 		}
 	}
 	
