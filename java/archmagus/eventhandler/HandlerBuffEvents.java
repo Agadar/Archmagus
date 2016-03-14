@@ -2,17 +2,26 @@ package archmagus.eventhandler;
 
 import archmagus.potion.ModPotions;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-/** For applying magical shield effects and the potion effects they apply. */
-public class HandlerShieldEvents
+/** For handling buff effects and the potion effects they apply. */
+public class HandlerBuffEvents
 {
+	/**
+	 * Called when an entity attacks another entity.
+	 *
+	 * @param event
+	 */
 	@SubscribeEvent
 	public void onLivingAttack(LivingAttackEvent event)
 	{
@@ -24,11 +33,15 @@ public class HandlerShieldEvents
 		if (attacker == null)
 			return;
 
-		/** If entity has projectile immunity and is struck by a projectile, ignore the damage. */
+		// If the attacker has Pacifism, remove it.
+		if (attacker instanceof EntityLivingBase && ((EntityLivingBase)attacker).isPotionActive(ModPotions.pacifism))
+			((EntityLivingBase)attacker).removePotionEffect(ModPotions.pacifism.getId());
+		
+		// If entity has projectile immunity and is struck by a projectile, ignore the damage.
 		if (event.entityLiving.isPotionActive(ModPotions.projectileImmunity) && event.source.isProjectile())
 			event.setCanceled(true);
 		
-		/** If entity has knockback immunity, give him full knockback resistance. Otherwise, take it away. */
+		// If entity has knockback immunity, give him full knockback resistance. Otherwise, take it away.
 		if (event.entityLiving.isPotionActive(ModPotions.knockbackImmunity))
 			event.entityLiving.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0F);		
 		else
@@ -79,5 +92,36 @@ public class HandlerShieldEvents
 			((EntityLivingBase) attacker).addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 80, amplifier));
 			((EntityLivingBase) attacker).addPotionEffect(new PotionEffect(Potion.weakness.getId(), 80, amplifier));
 		}
+	}
+	
+	/**
+	 * For adjusting the player's falling speed when under the influence of Slow Fall.
+	 *
+	 * @param event
+	 */
+	@SubscribeEvent
+	public void OnPlayerUpdate(LivingUpdateEvent event)
+	{
+		if (event.entityLiving instanceof EntityPlayer && event.entityLiving.fallDistance > 0 && event.entityLiving.isPotionActive(ModPotions.slowFall)) 
+		{		
+			event.entityLiving.motionY *= 0.6d;
+			event.entityLiving.fallDistance = event.entityLiving.worldObj.isRemote ? 0.0F : -0.2F;
+		}
+	}
+	
+	/**
+	 * Ensures hostile mobs don't attack the target when target has the Pacifism buff active.
+	 *
+	 * @param event
+	 */
+	@SubscribeEvent
+	public void onLivingSetAttackTarget(LivingSetAttackTargetEvent event) 
+	{
+		if (!event.entityLiving.worldObj.isRemote && event.target != null && 
+				event.target.isPotionActive(ModPotions.pacifism) && event.entityLiving instanceof EntityLiving)
+		{
+			((EntityLiving)event.entityLiving).setAttackTarget(null);
+			((EntityLiving)event.entityLiving).setRevengeTarget(null);
+		}		
 	}
 }

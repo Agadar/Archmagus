@@ -12,6 +12,9 @@ import archmagus.entity.EntitySummonedWolf;
 import archmagus.potion.ModPotions;
 import archmagus.spell.aoe.SpellBlazeStorm;
 import archmagus.spell.aoe.SpellLightningStorm;
+import archmagus.spell.buff.SpellBuff;
+import archmagus.spell.buff.SpellPacifism;
+import archmagus.spell.buff.SpellShield;
 import archmagus.spell.summon.SpellSummon;
 import archmagus.spell.summon.SpellSummonMount;
 import archmagus.spell.targeted.SpellBlazeFire;
@@ -52,6 +55,7 @@ public final class Spells
 	public final static Spell raise_zombie_horse = new SpellSummonMount("zombie_horse", EntityRisenHorse.class, 3);
 	public final static Spell raise_skeleton_horse = new SpellSummonMount("skeleton_horse", EntityRisenHorse.class, 4);
 	public final static Spell slowFall = new SpellBuff("slowfall", ModPotions.slowFall);
+	public final static Spell pacifism = new SpellPacifism();
 	
 	/** Registers a new spell. */
 	public final static int registerSpell(Spell par1Spell)

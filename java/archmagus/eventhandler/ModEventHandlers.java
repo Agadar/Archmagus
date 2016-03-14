@@ -18,7 +18,7 @@ public class ModEventHandlers
 		MinecraftForge.EVENT_BUS.register(new HandlerOnAnvilUpdate());
 		
 		/** For applying magical shield effects and the potions effects they apply. */
-		MinecraftForge.EVENT_BUS.register(new HandlerShieldEvents());
+		MinecraftForge.EVENT_BUS.register(new HandlerBuffEvents());
 
 		/** For hiding the player's hand in case he is polymorphed. */
 		//MinecraftForge.EVENT_BUS.register(new HandlerOnRenderHand());

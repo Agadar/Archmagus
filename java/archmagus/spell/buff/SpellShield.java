@@ -1,4 +1,4 @@
-package archmagus.spell;
+package archmagus.spell.buff;
 
 import java.util.ArrayList;
 import java.util.List;

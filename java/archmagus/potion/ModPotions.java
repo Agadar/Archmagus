@@ -29,6 +29,8 @@ public class ModPotions
 	public final static Potion manaRegen;
 	/** The slow fall potion effect. */
 	public final static Potion slowFall;
+	/** The pacifism potion effect. */
+	public final static Potion pacifism;
 	
 	static
 	{
@@ -46,6 +48,7 @@ public class ModPotions
 		mana = new PotionBase(new ResourceLocation("mana"), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.instant");
 		manaRegen = new PotionBase(new ResourceLocation("manaRegen"), false, 6253497).setIconIndex(1, 1).setPotionName("potion.mana.regen");
 		slowFall = new PotionBase(new ResourceLocation("slowfall"), false, 0).setIconIndex(2, 1).setPotionName("potion.buff.slowfall");
+		pacifism = new PotionBase(new ResourceLocation("pacifism"), false, 0).setIconIndex(3, 1).setPotionName("potion.buff.pacifism");
 	}
 	
 	/** Calling this method allows us to register new Potions and modify existing Potions. */

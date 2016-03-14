@@ -1,5 +1,6 @@
-package archmagus.spell;
+package archmagus.spell.buff;
 
+import archmagus.spell.Spell;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;

@@ -35,6 +35,7 @@ spell.buff.frost=Frost Shield
 spell.blazestorm=Blazestorm
 spell.lightningstorm=Lightning Storm
 spell.buff.slowfall=Slow Fall
+spell.buff.pacifism=Pacifism
 
 spell.level.1=I
 spell.level.2=II
@@ -79,6 +80,7 @@ potion.mana.instant.postfix=Potion of Mana
 potion.mana.regen=Mana Surge
 potion.mana.regen.postfix=Potion of Mana Surge
 potion.buff.slowfall=Slow Fall
+potion.buff.pacifism=Pacifism
 
 key.spellbook=Spells
 
